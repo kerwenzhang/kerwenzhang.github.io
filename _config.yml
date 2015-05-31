@@ -12,13 +12,13 @@ defaults:
     scope:
       path: "" # empty string for all files
     values:
-      title: "P_Chou Tech Space"
+      title: "Kerwen Blog"
 
-description: "P_Chou Tech Space, share technology post"
+description: "Kerwen Zhang Blog"
 author:
-  name: P_Chou
-  email: dbyll@ismaildemirbilek.com
-  github: dbtek
+  name: Kerwen
+  email: kzhang6@ra.rockwell.com
+  github: kerwenzhang
   twitter: dbtek
   pinterest: asd123
   linkedin: asd123
