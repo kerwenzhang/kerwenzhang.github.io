@@ -49,7 +49,7 @@ body{
 
 .sidebar .category ul {
       list-style: none;
-      margin: 40px 40px;
+      margin: 40px 20px;
       -webkit-padding-start: 0px; }
       .sidebar .category ul li {
         border-bottom: 1px solid #aaaaaa;
