@@ -33,7 +33,7 @@ body{
 }
 
 .sidebar .navigator a {
-    padding: 10px;
+    padding: 5px;
     font-family: 'iconfont';
     -display: inline-block;
     border-radius: 50% 50% 50% 50%;
