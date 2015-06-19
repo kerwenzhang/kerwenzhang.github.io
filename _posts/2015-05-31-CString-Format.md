@@ -8,6 +8,7 @@ tags: [MFC, CString, Format]
 ---
 
 <div id="cnblogs_post_body"><p>%c 单个字符<br />%d 十进制整数(int)<br />%ld 十进制整数(long)</p>
+
 <p>%lu unsigned long<br />%f 十进制浮点数(float)<br />%lf 十进制浮点数(double)<br />%o 八进制数<br />%s 字符串<br />%u 无符号十进制数<br />%x 十六进制数</p>
 <p>&nbsp;</p>
 <p>int转换为CString：<br />　　CString str;<br />　　int number=15;<br />　　//str="15"<br />　　str.Format(_T("%d"),number);<br />　　//str=" 15"(前面有两个空格；4表示将占用4位，如果数字超过4位将输出所有数字，不会截断)<br />　　str.Format(_T("%4d"),number);<br />　　//str="0015"(.4表示将占用4位，如果数字超过4位将输出所有数字，不会截断)<br />　　str.Format(_T("%.4d"),number);<br />　　long转换为CString的方法与上面相似，只需要把%d改为%ld就可以了。</p>
