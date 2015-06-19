@@ -63,7 +63,7 @@ body{
           .sidebar .category ul li a:hover, .sidebar .category ul li a:focus {
             color: #fff; }
             .sidebar .category ul li a:hover span, .sidebar .category ul li a:focus span {
-              border: 1px solid #fff; }
+              }
           .sidebar .category ul li a span {
             display: inline-block;
             float: right;            
