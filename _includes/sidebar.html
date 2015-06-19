@@ -24,7 +24,7 @@
 <div class='category'>
 	<ul>
 		{% for cat in site.categories %}
-			<a href="{{ site.BASE_PATH }}/category.html#{{ cat[0] }}">{{ cat[0] }}<span>{{ cat[1].size }}</span></a>
+			<li><a href="{{ site.BASE_PATH }}/category.html#{{ cat[0] }}">{{ cat[0] }} {{ cat[1].size }}</a></li>
 		{% endfor %}
 	</ul>
 </div>
