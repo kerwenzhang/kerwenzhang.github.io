@@ -66,9 +66,7 @@ body{
               border: 1px solid #fff; }
           .sidebar .category ul li a span {
             display: inline-block;
-            float: right;
-            border: 1px solid #aaaaaa;
-            border-radius: 15px 15px 15px 15px;
+            float: right;            
             padding: 0px 8px;
             line-height: 20px;
             margin-top: 10px; }
