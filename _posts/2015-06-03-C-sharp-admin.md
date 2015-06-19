@@ -8,10 +8,8 @@ tags: [C#, Admin]
 
 <p><br>
 转自： &nbsp;<a target="_blank" href="http://www.cnblogs.com/Interkey/p/RunAsAdmin.html">Cosmic_Spy&nbsp;</a>&nbsp;&nbsp;<a target="_blank" href="http://www.cnblogs.com/Interkey/p/RunAsAdmin.html">http://www.cnblogs.com/Interkey/p/RunAsAdmin.html</a></p>
-<p><br>
-</p>
-<p></p>
 <p>在Vista 和 Windows 7 及更新版本的操作系统，增加了 UAC(用户账户控制) 的安全机制，如果 UAC 被打开，用户即使以管理员权限登录，其应用程序默认情况下也无法对系统目录、系统注册表等可能影响系统正常运行的设置进行写操作。这个机制大大增强了系统的安全性，但对应用程序开发者来说，我们不能强迫用户去关闭UAC，但有时我们开发的应用程序又需要以 Administrator 的方式运行，如何实现这样的功能呢？</p>
+
 <p>下面演示 C# 程序如何实现提示用户以管理员权限运行。</p>
 <p>本例以WinForm程序演示，新建一项目生成后进行相应修改：</p>
 <p><strong>方法一：通过 System.Diagnostics.Process.Start() 方式启动：</strong></p>
