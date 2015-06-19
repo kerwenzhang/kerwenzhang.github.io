@@ -2,11 +2,9 @@
 layout: postlayout
 title: "C#程序以管理员权限运行"
 date:   2015-06-07 10:19:00 
-thumbimg: 1346208288725.jpg
 categories: [C#]
 tags: [C#, Admin]
 ---
-<div id="article_content" class="article_content">
 
 <p><br>
 转自： &nbsp;<a target="_blank" href="http://www.cnblogs.com/Interkey/p/RunAsAdmin.html">Cosmic_Spy&nbsp;</a>&nbsp;&nbsp;<a target="_blank" href="http://www.cnblogs.com/Interkey/p/RunAsAdmin.html">http://www.cnblogs.com/Interkey/p/RunAsAdmin.html</a></p>

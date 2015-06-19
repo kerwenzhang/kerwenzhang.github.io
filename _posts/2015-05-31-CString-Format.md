@@ -6,7 +6,6 @@ thumbimg: 1346208288725.jpg
 categories: [MFC]
 tags: [MFC, CString, Format]
 ---
-<h2>{{ page.title }}</h2>
 
 <div id="cnblogs_post_body"><p>%c 单个字符<br />%d 十进制整数(int)<br />%ld 十进制整数(long)</p>
 <p>%lu unsigned long<br />%f 十进制浮点数(float)<br />%lf 十进制浮点数(double)<br />%o 八进制数<br />%s 字符串<br />%u 无符号十进制数<br />%x 十六进制数</p>

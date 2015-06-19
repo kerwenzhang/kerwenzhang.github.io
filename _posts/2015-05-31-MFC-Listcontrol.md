@@ -1,14 +1,12 @@
 ---
-layout: post
-layout: default
+layout: postlayout
 title: "[转] MFC中ListControl控件的使用"
 date:   2015-05-31 00:18:23 
 categories: [MFC]
 tags: [MFC, ListControl]
 ---
-<h2>{{ page.title }}</h2>
 
-<div id="cnblogs_post_body"><p>以下未经说明，listctrl默认view 风格为report</p>
+<p>以下未经说明，listctrl默认view 风格为report</p>
 <hr />
 <h3 id="section1"><a name="t0"></a>1. CListCtrl 风格</h3>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LVS_ICON: 为每个item显示大图标<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LVS_SMALLICON: 为每个item显示小图标<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LVS_LIST: 显示一列带有小图标的item<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LVS_REPORT: 显示item详细资料</p>
@@ -74,5 +72,5 @@ tags: [MFC, ListControl]
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>修改某一行的某一项</p>
-<p>m_listRecvDetail.SetItem(m_listItemCount-2,3,LVIF_TEXT,"不应答",0,0,0,NULL);</p></div>
+<p>m_listRecvDetail.SetItem(m_listItemCount-2,3,LVIF_TEXT,"不应答",0,0,0,NULL);</p>
 <p>Post Date: {{ page.date | date_to_string }}</p>

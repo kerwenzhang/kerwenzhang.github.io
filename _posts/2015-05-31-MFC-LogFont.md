@@ -6,7 +6,6 @@ thumbimg: 1346208288725.jpg
 categories: [MFC]
 tags: [MFC, Font]
 ---
-<h2>{{ page.title }}</h2>
 
 <div id="cnblogs_post_body"><p><strong>实际上就是逻辑字体和物理字体的区别</strong></p>
 <p>LOGFONT:&nbsp;一个结构，用来逻辑上表达一个字体，比如LOGFONT.lfFaceName是字体的名字&nbsp;<br />HFONT:&nbsp;一个句柄，相当于表示内存中的一个字体对象，它可以马上拿来用&nbsp;<br />CFont:&nbsp;是mfc对于HFONT的一种封装&nbsp;<br /><br />可以说LOGFONT是一种墨水的名字，比如英雄牌，比较抽象&nbsp;<br />而HFONT表示实实在在的一瓶墨水，打开瓶盖就可以用&nbsp;<br />CFont只是把一瓶墨水外面包了一层纸，其实它还是一瓶墨水</p>
