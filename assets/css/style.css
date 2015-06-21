@@ -13,6 +13,7 @@ body{
   font-family: 'iconfont'; }
 
 .sidebar {
+	position: fixed;
 	padding-top: 5%;
 	background-color: #333333;
 	color: #fff;
