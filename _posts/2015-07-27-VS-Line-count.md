@@ -11,4 +11,4 @@ tags: [MFC]
   ^:b*[^:b\*#/]+.*$  <br />
   <br />
   VS的搜索表达式没有兼容很多通用的表达式的内容，所以如果你想修改的话，要参照其规定。<br />
-  [链接地址如下]: (http://msdn.microsoft.com/zh-cn/library/2k3te2cs(v=vs.80).aspx)<br />
+  [链接地址如下]: http://msdn.microsoft.com/zh-cn/library/2k3te2cs(v=vs.80).aspx <br />
