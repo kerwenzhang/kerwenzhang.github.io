@@ -21,8 +21,8 @@ tags: [MFC,Message]
 
 在Resource.h中添加如下代码：
 
-		//推荐用户自定义消息至少是WM_USER+100，因为很多新控件也要使用WM_USER消息。
-		#define WM_MY_MESSAGE (WM_USER+100)
+	//推荐用户自定义消息至少是WM_USER+100，因为很多新控件也要使用WM_USER消息。
+	#define WM_MY_MESSAGE (WM_USER+100)
 		
 ### 第二步：声明消息处理函数
 
@@ -30,37 +30,37 @@ tags: [MFC,Message]
 
 在MainFrm.h文件中，类CMainFrame内，声明消息处理函数，代码如下:
 
-		protect:
-		fx_msg LRESULT OnMyMessage(WPARAM wParam, LPARAM lParam); 
+	protect:
+	fx_msg LRESULT OnMyMessage(WPARAM wParam, LPARAM lParam); 
 		
 ### 第三步：实现消息处理函数
 
 在MainFrm.cpp文件中添加如下代码：
 
-		LRESULT CMainFrame::OnMyMessage(WPARAM wParam, LPARAM lParam)
-		{
-			//TODO: Add your message handle code
-			return 0;
-		}
+	LRESULT CMainFrame::OnMyMessage(WPARAM wParam, LPARAM lParam)
+	{
+		//TODO: Add your message handle code
+		return 0;
+	}
 		
 ### 第四步：添加消息映射
 
 在CMainFrame类的消息块中，使用ON_MESSAGE宏指令将消息映射到消息处理函数中
 
-		BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
-			ON_WM_CREATE()
-			ON_MESSAGE(WM_MY_MESSAGE,OnMyMessage)
-			//ON_REGISTERED_MESSAGE (WM_MY_MESSAGE,OnMyMessage)
-		END_MESSAGE_MAP()
+	BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
+		ON_WM_CREATE()
+		ON_MESSAGE(WM_MY_MESSAGE,OnMyMessage)
+		//ON_REGISTERED_MESSAGE (WM_MY_MESSAGE,OnMyMessage)
+	END_MESSAGE_MAP()
 
 如果用户需要一个定义整个系统唯一的消息,可以调用SDK函数RegisterWindowMessage定义消息:
 
 在Resource.h中将代码
 
-		#define WM_MY_MESSAGE (WM_USER+100)
+	#define WM_MY_MESSAGE (WM_USER+100)
 替换为：
 
-		static UINT WM_MY_MESSAGE=RegisterWindowMessage(_T("User"));
+	static UINT WM_MY_MESSAGE=RegisterWindowMessage(_T("User"));
 
 并使用ON_REGISTERED_MESSAGE宏指令取代ON_MESSAGE宏指令,其余步骤同上。
 
