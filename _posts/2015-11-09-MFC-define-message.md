@@ -31,7 +31,7 @@ tags: [MFC,Message]
 在MainFrm.h文件中，类CMainFrame内，声明消息处理函数，代码如下:
 
 	protect:
-	fx_msg LRESULT OnMyMessage(WPARAM wParam, LPARAM lParam); 
+	afx_msg LRESULT OnMyMessage(WPARAM wParam, LPARAM lParam); 
 		
 ### 第三步：实现消息处理函数
 
