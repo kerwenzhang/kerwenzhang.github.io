@@ -12,17 +12,23 @@ tags: [MFC,Message]
 就遇到了一些困难。在MFC ClassWizard中不允许添加用户自定义消息，所以我们必须手动在程序中添加相应代码，以便可以象处理其它消息一样处理自定义消息。
 
 自定义消息的步骤如下：
+
 （1）建立Single Document的MFC Application，工程名为：MyMessage
+
 （2）自定义消息：
+
 ### 第一步：定义消息
+
 在Resource.h中添加如下代码：
 		//推荐用户自定义消息至少是WM_USER+100，因为很多新控件也要使用WM_USER消息。
 		#define WM_MY_MESSAGE (WM_USER+100)
+		
 ### 第二步：声明消息处理函数
 选择CMainFrame类中添加消息处理函数
 在MainFrm.h文件中，类CMainFrame内，声明消息处理函数，代码如下:
 		protect:
 		fx_msg LRESULT OnMyMessage(WPARAM wParam, LPARAM lParam); 
+		
 ### 第三步：实现消息处理函数
 在MainFrm.cpp文件中添加如下代码：
 		LRESULT CMainFrame::OnMyMessage(WPARAM wParam, LPARAM lParam)
@@ -30,6 +36,7 @@ tags: [MFC,Message]
 			//TODO: Add your message handle code
 			return 0;
 		}
+		
 ### 第四步：添加消息映射
 在CMainFrame类的消息块中，使用ON_MESSAGE宏指令将消息映射到消息处理函数中
 
