@@ -67,7 +67,7 @@ tags: [MFC, ListControl]
 
 ##7. 得到listctrl中所有选中行的序号  
 
-方法一：      
+方法一：  
 	CString str;  
 	for(int i=0; i&lt;m_list.GetItemCount(); i++)  
 	{  
@@ -134,7 +134,7 @@ Q173242: Use Masks to Set/Get Item States in CListCtrl
 
 
 ##12. 删除所有列
-方法一：  
+方法一：    
 	while ( m_list.DeleteColumn (0))  
 	因为你删除了第一列后，后面的列会依次向上移动。
 方法二：  
@@ -227,5 +227,5 @@ Q173242: Use Masks to Set/Get Item States in CListCtrl
  
  
 修改某一行的某一项
-m_listRecvDetail.SetItem(m_listItemCount-2,3,LVIF_TEXT,"不应答",0,0,0,NULL);
+	m_listRecvDetail.SetItem(m_listItemCount-2,3,LVIF_TEXT,"不应答",0,0,0,NULL);
 Post Date: {{ page.date | date_to_string }}
