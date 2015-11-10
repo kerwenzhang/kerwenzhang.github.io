@@ -6,10 +6,11 @@ categories: [C++]
 tags: [Type]
 ---
 
-## CString与int
-CString ->int
-_ttoi(CString)
+## CString与int  
 
-int->CString
-CString str;
-str.Format("%d",int)
+	CString ->int     
+	_ttoi(CString)  
+
+	int->CString   
+	CString str;   
+	str.Format("%d",int)   
