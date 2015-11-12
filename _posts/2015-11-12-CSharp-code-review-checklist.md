@@ -43,6 +43,6 @@ Bad: string s = (string)myObject;
 	
 7.Avoid using GC.Collect()  
 8.Prefer 'foreach' to 'for' or 'do while'.  
-9.Prefer XmlTextReader over XmlDocument or XPathDocument when parsing large XML documents for one time use.
-10.Limit visibility of types in the assembly. Not every class and method need to be public
-11.Prefer Try-Parse pattern if type supports it to void expensive exception handling
+9.Prefer XmlTextReader over XmlDocument or XPathDocument when parsing large XML documents for one time use.  
+10.Limit visibility of types in the assembly. Not every class and method need to be public  
+11.Prefer Try-Parse pattern if type supports it to void expensive exception handling  
