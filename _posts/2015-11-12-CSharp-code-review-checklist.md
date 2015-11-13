@@ -22,6 +22,7 @@ tags: [C#]
 Bad: string s = (string)myObject;  
 
 2.Prefer StringBuilder to string concatenation  
+  String is used to save string data, StringBulder is used to string operation: Add, append, delete string.  
 	
 	StringBuilder sb = new StringBuilder(str1,50);
 	sb.Append(str2);
