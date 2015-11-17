@@ -1,10 +1,10 @@
----<br/>
-layout: postlayout<br/>
-title: "C# 事件(三)"<br/>
-date:   2015-11-17 12:01:00 <br/>
-categories: [C#]<br/>
-tags: [C#]<br/>
----<br/>
+---
+layout: postlayout
+title: "C# 事件(三)"
+date:   2015-11-17 12:01:00 
+categories: [C#]
+tags: [C#]
+---
 原文地址： http://www.cnblogs.com/wudiwushen/archive/2010/04/23/1717829.html<br/><br/>
 今天是大白话系列之C#委托与事件讲解的大结局，也是我们最关心的，在日常的MES系统编程中到底怎样使用这样的利器，其实我们每天都在使用事件，一个窗体，一个按钮都包含这事件，只是很少用到自己写的委托和事件，说白了不知道如何下手，也不知道在什么样的场景下应用。<br/>
 <br/>

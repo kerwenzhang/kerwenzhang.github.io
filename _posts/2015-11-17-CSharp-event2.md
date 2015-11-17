@@ -1,10 +1,10 @@
----<br/>
-layout: postlayout<br/>
-title: "C# 事件(二)"<br/>
-date:   2015-11-17 11:54:00 <br/>
-categories: [C#]<br/>
-tags: [C#]<br/>
----<br/>
+---
+layout: postlayout
+title: "C# 事件(二)"
+date:   2015-11-17 11:54:00 
+categories: [C#]
+tags: [C#]
+---
 原文地址： http://www.cnblogs.com/wudiwushen/archive/2010/04/21/1717378.html<br/><br/>
 <br/>
 为什么我们在日常的编程活动中遇到这么多sender,EventArgs e 参数：<br/><br/>
