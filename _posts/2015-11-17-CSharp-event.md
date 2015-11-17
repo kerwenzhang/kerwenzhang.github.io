@@ -83,7 +83,7 @@ tags: [C#]
 如果童靴们，从上到下仔细看一边的话，我想应该知道什么是发布者，什么是订阅者了吧，那至于事件呢<br/>
 <br/>
 我们先看这句<br/>
-<br/>
+
 	publisher.OnPublish += new Publisher.PublishEventHander(MrMing.Receive);
 
 这就是小明向出版社订阅他喜欢看的火影忍者，小张没有订阅所以小张没有收到书，<br/> 
@@ -91,9 +91,9 @@ tags: [C#]
 我们再仔细看看这个赋值语句，是不是似曾相识过呢？是的就是我们在上一讲，在讲委托声明的时候，简直就是一个眸子里刻出来的嘛<br/>
 <br/>
 委托赋值：<br/>
-<br/>
+
 	BugTicketEventHandler myDelegate = new BugTicketEventHandler(MrZhang.BuyTicket);
-<br/>
+
 所以，大家不要对事件有什么好怕的，其实事件的本质就是一个委托链，<br/>
 <br/>
 我们看一下事件的声明：<br/>
