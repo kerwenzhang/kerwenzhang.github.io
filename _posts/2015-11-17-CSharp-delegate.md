@@ -75,38 +75,38 @@ delegate 是关键词，【注：EventHandler是一个声明委托的微软C#的
 
 而我们程序世界里的表述为：    
 
-	//小张类<br/>
-    public class MrZhang<br/>
-    {<br/>
-        //其实买车票的悲情人物是小张<br/>
-        public static void BuyTicket()<br/>
-        {<br/>
-            Console.WriteLine("NND,每次都让我去买票，鸡人呀！");<br/>
-        }<br/>
-<br/>
-        public static void BuyMovieTicket()<br/>
-        {<br/>
-            Console.WriteLine("我去，自己泡妞，还要让我带电影票！");<br/>
-        }<br/>
-    }<br/>
+	//小张类
+    public class MrZhang
+    {
+        //其实买车票的悲情人物是小张
+        public static void BuyTicket()
+        {
+            Console.WriteLine("NND,每次都让我去买票，鸡人呀！");
+        }
 
-    //小明类<br/>
-    class MrMing<br/>
-    {<br/>
-        //声明一个委托，其实就是个“命令”<br/>
-        public delegate void BugTicketEventHandler();<br/>
+        public static void BuyMovieTicket()
+        {
+            Console.WriteLine("我去，自己泡妞，还要让我带电影票！");
+        }
+    }
 
-        public static void Main(string[] args)<br/>
-        {<br/>
-            //这里就是具体阐述这个命令是干什么的，本例是MrZhang.BuyTicket“小张买车票”<br/>
-            BugTicketEventHandler myDelegate = new BugTicketEventHandler(MrZhang.BuyTicket);<br/>
+    //小明类
+    class MrMing
+    {
+        //声明一个委托，其实就是个“命令”
+        public delegate void BugTicketEventHandler();
 
-            myDelegate += MrZhang.BuyMovieTicket;<br/>
-            //这时候委托被附上了具体的方法<br/>
-            myDelegate();<br/>
-            Console.ReadKey();<br/>
-        }<br/>
-    } <br/>
+        public static void Main(string[] args)
+        {
+            //这里就是具体阐述这个命令是干什么的，本例是MrZhang.BuyTicket“小张买车票”
+            BugTicketEventHandler myDelegate = new BugTicketEventHandler(MrZhang.BuyTicket);
+
+            myDelegate += MrZhang.BuyMovieTicket;
+            //这时候委托被附上了具体的方法
+            myDelegate();
+            Console.ReadKey();
+        }
+    } 
  
 其实，我们只是在程序中加了 myDelegate += MrZhang.BuyMovieTicket;<br/>
 这时这个委托就相当于要做2件事情，先是买车票，再是买电影票拉！<br/>
