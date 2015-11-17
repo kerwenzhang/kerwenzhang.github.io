@@ -6,19 +6,22 @@ categories: [C#]
 tags: [C#]
 ---
 原文地址： http://www.cnblogs.com/wudiwushen/archive/2010/04/21/1717378.html<br/><br/>
-<br/>
-为什么我们在日常的编程活动中遇到这么多sender,EventArgs e 参数：<br/><br/>
-	void Page_Load(object sender, EventArgs e)<br/>
+
+
+为什么我们在日常的编程活动中遇到这么多sender,EventArgs e 参数：<br/>
+
+	void Page_Load(object sender, EventArgs e)
 	{	
 	}
-<br/>
-	protected void btnSearch_Click(object sender, ImageClickEventArgs e)<br/>
+	
+	protected void btnSearch_Click(object sender, ImageClickEventArgs e)
 	{
 	}
-<br/>
-	protected void grdBill_RowDataBound(object sender, GridViewRowEventArgs e)<br/>
+	
+	protected void grdBill_RowDataBound(object sender, GridViewRowEventArgs e)
 	{          
 	}
+
 那他们到底表示什么呢？<br/>
 <br/>
 在回答上面的问题之前，我们先搞懂 .Net Framework的编码规范：<br/>
@@ -29,8 +32,7 @@ tags: [C#]
 四、继承自EventArgs的类型应该以EventArgs结尾。<br/>
 <br/>
 这就是微软编码的规范，当然这不仅仅是规则，而是在这种规则下使程序有更大的灵活性，那我们就继续重构第三讲的例子，让他符合微软的规范。<br/>
-<br/>
-代码<br/>
+
     //所有订阅者【Subscriber】感兴趣的对象，也就是e,都要继承微软的EventArgs
     //本例中订阅者【也称观察者】MrMing，MrZhang他们感兴趣的e对象，就是杂志【magazine】
     public class PubEventArgs : EventArgs
@@ -118,7 +120,7 @@ tags: [C#]
             Console.ReadKey();
         }
     }
-<br/>
+
 输入火影忍者后，触发小明订阅的事件<br/>
 <br/>
 通过例子我再做一次说明，其实我们不用把Sender,e想的过于可怕<br/>
@@ -136,8 +138,7 @@ tags: [C#]
 最后我们来看一个我们日常最最常用的观察者模式：<br/>
 <br/>
 场景：当我们用信用卡刷完钱的时候，我们就会接收到手机短信，或者是电子邮件，其实这就是Observer pattern<br/>
- <br/>
-代码<br/>
+
     //---本例场景为当用户从银行账号里取出钱后，马上通知电子邮件和发手机短信---
     //本例中的订阅者，也就是观察者是电子邮件与手机
     //发布者，也就是被监视对象是银行账号
@@ -228,7 +229,7 @@ tags: [C#]
             Console.ReadKey();
         }
     }
-<br/>
+
 网上还有个热水器烧水的OBSERVER PATTERN 也是蛮经典的，大家可以看看。<br/>
 <br/>
 下一讲我们要讲讲，在我们的日常的MES系统开发中，到底在什么场景用到委托事件，毕竟我们学了这样的技术，我们必须要用起来，这才有价值嘛！<br/>
