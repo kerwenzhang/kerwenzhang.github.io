@@ -5,7 +5,8 @@ date:   2015-11-17 12:01:00
 categories: [C#]
 tags: [C#]
 ---
-原文地址： http://www.cnblogs.com/wudiwushen/archive/2010/04/23/1717829.html<br/><br/>
+原文地址： http://www.cnblogs.com/wudiwushen/archive/2010/04/23/1717829.html<br/>
+
 今天是大白话系列之C#委托与事件讲解的大结局，也是我们最关心的，在日常的MES系统编程中到底怎样使用这样的利器，其实我们每天都在使用事件，一个窗体，一个按钮都包含这事件，只是很少用到自己写的委托和事件，说白了不知道如何下手，也不知道在什么样的场景下应用。<br/>
 <br/>
 用到事件的地方有很多，这次讲解就MES系统开发中我们经常应用的场景。<br/>
@@ -21,10 +22,7 @@ tags: [C#]
 有了思路，我们就开始行动吧！<br/>
 <br/>
 第一步，我们编写发布者代码，也就是这个控件代码<br/>
-<br/>
- <br/>
-<br/>
-代码<br/>
+
    //和我们上一讲讲的一样，我们先定义订阅者所感兴趣的对象，这里我们将它抽象成Action，也就是首页、下页、上页之类的动作
     public class PageChangeEventArgs : EventArgs
     {
@@ -178,13 +176,11 @@ tags: [C#]
         }
         #endregion   
     }
- <br/>
-<br/>
- 当然控件代码还不值这些，我这里就列举出我们委托事件需要的代码：<br/>
+
+当然控件代码还不值这些，我这里就列举出我们委托事件需要的代码：<br/>
 <br/>
 然后我们看一下调用页面的代码，也就是观察者，本例中是角色页面RoleManage.aspx<br/>
-<br/>
-代码<br/>
+
     //角色管理页面代码类
     public partial class RoleManage : BasePage
     {
@@ -220,7 +216,7 @@ tags: [C#]
             }
         }
 }
-<br/>
+
  其实原理很简单，当控件上按下下页或者其它按钮的时候，这时候因为角色管理页面已经订阅了这个事件，所以它会执行具体委托的那个实体函数，就这么简单<br/>
 <br/>
 大家了看了可能会头大，那就自己动手试着做一下，只有做了才能真正的体会到里面的奥妙，其实和我上一讲内容很相识，只是稍微有一点点的变化而已。<br/>
@@ -243,9 +239,7 @@ tags: [C#]
  这是一个工作流审批用户控件，做MES系统的其实经常会和这个打交道，然而我们把这个逻辑封装成一个控件，那我们在今后维护上将会减轻很多工作量<br/>
 <br/>
 这里我只介绍这控件技术上我们用到的委托和事件的代码<br/>
-<br/>
- <br/>
-代码<br/>
+
 	public partial class ApprovalResults : System.Web.UI.UserControl
 	{
 		//EventHandler是微软默认的委托，在本例中我们直接就用EventHandler来表示委托，当然它的参数是Sender,e
@@ -270,13 +264,9 @@ tags: [C#]
 			}
 		}  ...
 	}
- <br/>
-<br/>
+
 然后我们到订阅这个事件的页面上看一下代码<br/>
-<br/>
- <br/>
-<br/>
-代码<br/>
+
     public partial class Preview : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -300,9 +290,7 @@ tags: [C#]
             }
         }
     }
-<br/>
- <br/>
-<br/>
+
 这样我想大家都理解了，当审批控件点击提交按钮，其实访问的就是订阅者页面的功能函数。<br/>
 <br/>
 其实委托事件应用的场景还有很多，它就是观察者模式的提炼。<br/>

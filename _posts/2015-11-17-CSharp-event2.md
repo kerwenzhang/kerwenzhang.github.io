@@ -7,7 +7,6 @@ tags: [C#]
 ---
 原文地址： http://www.cnblogs.com/wudiwushen/archive/2010/04/21/1717378.html<br/><br/>
 
-
 为什么我们在日常的编程活动中遇到这么多sender,EventArgs e 参数：<br/>
 
 	void Page_Load(object sender, EventArgs e)
@@ -23,7 +22,6 @@ tags: [C#]
 	}
 
 那他们到底表示什么呢？<br/>
-<br/>
 在回答上面的问题之前，我们先搞懂 .Net Framework的编码规范：<br/>
 <br/>
 一、委托类型的名称都应该以EventHandler结束。 <br/>
