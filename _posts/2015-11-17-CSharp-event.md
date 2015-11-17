@@ -6,6 +6,7 @@ categories: [C#]
 tags: [C#]
 ---
 原文地址： http://www.cnblogs.com/wudiwushen/archive/2010/04/20/1703763.html<br/>
+
 <br/>
 什么是事件？EVENT？点击事件？加载事件？一连串的模糊的概念冲击着我们弱小的脑袋<br/>
 <br/>
@@ -21,7 +22,6 @@ tags: [C#]
 <br/>
 为了更好的让大家理解上面的概念，我先什么都不讲，我们先来看一段简单的代码：<br/>
 
-代码<br/>
 	//发布者（Publiser)
     public class Publisher
     {
