@@ -93,7 +93,7 @@ tags: [C#]
 委托赋值：<br/>
 <br/>
 	BugTicketEventHandler myDelegate = new BugTicketEventHandler(MrZhang.BuyTicket);
-
+<br/>
 所以，大家不要对事件有什么好怕的，其实事件的本质就是一个委托链，<br/>
 <br/>
 我们看一下事件的声明：<br/>
