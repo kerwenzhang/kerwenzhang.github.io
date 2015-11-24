@@ -1,7 +1,7 @@
 ---
 layout: postlayout
 title: "C# Form.Close VS Form.Dispose"
-date:   2015-11-124 09:43:00 
+date:   2015-11-24 09:43:00 
 categories: [C#]
 tags: [C#]
 ---
