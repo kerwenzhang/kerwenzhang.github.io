@@ -6,6 +6,10 @@ categories: [C#]
 tags: [C#]
 ---
 
+* content
+{:toc}
+
+
 原文地址：http://blog.csdn.net/sweety820/article/details/25218691   
 
 有时候我们想让程序的exe文件和dll文件分开在不同目录，这时候可以有４种方法   

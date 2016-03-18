@@ -7,6 +7,9 @@ categories: [MFC]
 tags: [MFC, CString, Format]
 ---
 
+* content
+{:toc}
+
 %c 单个字符  
 %d 十进制整数(int)  
 %ld 十进制整数(long)  
