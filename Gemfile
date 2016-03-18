@@ -1,6 +1,2 @@
-source 'https://rubygems.org'
-
+source 'http://ruby.taobao.org/'
 gem 'github-pages'
-gem 'pygments.rb'
-gem 'redcarpet'
-gem 'jekyll'
