@@ -1,5 +1,5 @@
 ---
-title: Introduction
+title: test
 tags: [getting_started]
 audience: field engineers, clients
 type: first_page
