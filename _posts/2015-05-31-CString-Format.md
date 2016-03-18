@@ -1,5 +1,5 @@
 ---
-layout: postlayout
+layout: post
 title: "MFC中CString.Format使用方法"
 date:   2013-12-23 00:18:23 
 thumbimg: 1346208288725.jpg

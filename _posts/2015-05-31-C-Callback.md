@@ -1,5 +1,5 @@
 ---
-layout: postlayout
+layout: post
 title: "[转]C++回调函数(callback)的使用"
 date:   2015-05-31 00:18:23
 categories: [C++]

@@ -1,5 +1,5 @@
 ---
-layout: postlayout
+layout: post
 title: "C#程序以管理员权限运行"
 date:   2015-06-07 10:19:00 
 categories: [C#]

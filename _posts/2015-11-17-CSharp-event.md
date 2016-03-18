@@ -1,5 +1,5 @@
 ---
-layout: postlayout
+layout: post
 title: "C# 事件(一)"
 date:   2015-11-17 11:07:00 
 categories: [C#]

@@ -1,5 +1,5 @@
 ---
-layout: postlayout
+layout: post
 title: "Install IIS by commandline"
 date:   2015-11-10 10:10:00 
 categories: [IIS]

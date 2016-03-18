@@ -1,5 +1,5 @@
 ---
-layout: postlayout
+layout: post
 title: "C# Code Review Checklist"
 date:   2015-11-12 17:05:00 
 categories: [C#]

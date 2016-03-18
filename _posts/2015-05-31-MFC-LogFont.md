@@ -1,5 +1,5 @@
 ---
-layout: postlayout
+layout: post
 title: "[转]LOGFont, HFont和CFont"
 date:   2015-05-31 00:18:23 
 thumbimg: 1346208288725.jpg
