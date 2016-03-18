@@ -5,6 +5,10 @@ date:   2015-11-17 11:54:00
 categories: [C#]
 tags: [C#]
 ---
+
+* content
+{:toc}
+
 原文地址： http://www.cnblogs.com/wudiwushen/archive/2010/04/21/1717378.html<br/><br/>
 
 为什么我们在日常的编程活动中遇到这么多sender,EventArgs e 参数：<br/>

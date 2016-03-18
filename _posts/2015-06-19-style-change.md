@@ -6,6 +6,9 @@ categories: [C++]
 tags: [Type]
 ---
 
+* content
+{:toc}
+
 ## CString与int  
 
 	CString ->int     

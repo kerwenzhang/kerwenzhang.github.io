@@ -6,6 +6,9 @@ categories: [C#]
 tags: [C#]
 ---
 
+* content
+{:toc}
+
 原文地址： http://www.cnblogs.com/wudiwushen/archive/2010/04/20/1703368.html  
 
 首先，我们还是先说说委托吧，从字面上理解，只要是中国人应该都知道这个意思，除非委托2个中文字不认识，举个例子，小明委托小张去买车票。   

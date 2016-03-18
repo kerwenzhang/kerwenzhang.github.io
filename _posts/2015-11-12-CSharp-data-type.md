@@ -6,6 +6,9 @@ categories: [C#]
 tags: [C#]
 ---
 
+* content
+{:toc}
+
 ## 值类型  
 
 ### 整型  

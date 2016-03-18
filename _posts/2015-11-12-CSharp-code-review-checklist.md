@@ -6,6 +6,9 @@ categories: [C#]
 tags: [C#]
 ---
 
+* content
+{:toc}
+
 1.Prefer the 'is' or 'as' operator to type casts. Try to avoid casting directly.  
 	
 	if(myObj is Class1)

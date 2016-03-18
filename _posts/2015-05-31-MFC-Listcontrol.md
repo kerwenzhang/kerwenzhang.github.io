@@ -6,6 +6,9 @@ categories: [MFC]
 tags: [MFC, ListControl]
 ---
 
+* content
+{:toc}
+
 以下未经说明，listctrl默认view 风格为report
 
 ##1. CListCtrl 风格

@@ -6,6 +6,9 @@ categories: [MFC]
 tags: [MFC,Message]
 ---
 
+* content
+{:toc}
+
 原文地址:http://www.cnblogs.com/xulei/archive/2007/11/22/968170.html
 
 消息映射、循环机制是Windows程序运行的基本方式。VC++ MFC 中有许多现成的消息句柄，可当我们需要完成其它的任务，需要自定义消息，
