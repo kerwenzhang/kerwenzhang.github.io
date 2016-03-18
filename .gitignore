@@ -1,2 +1,3 @@
-_site/*
-*Thumbs.db
+_site/
+.sass-cache/
+.idea

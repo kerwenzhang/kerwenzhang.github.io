@@ -15,8 +15,17 @@ layout: default
 
     {% if site.github_editme_path %}
 
-    <a target="_blank" href="https://github.com/{{site.github_editme_path}}{% unless page.url contains "html" %}{{page.url | replace: '.html', '.md'}}{% endunless %}{% if page.url contains "html" %}{{page.url }}{% endif %}" class="btn btn-default githubEditButton" role="button"><i class="fa fa-github fa-lg"></i> Edit me</a>
+    <a target="_blank" href="https://github.com/{{site.github_editme_path}}{{page.url | replace: '.html', '.md'}}" class="btn btn-default githubEditButton" role="button"><i class="fa fa-github fa-lg"></i> Edit me</a>
     {% endif %}
+    <h2>sample link</h2>
+samplelink: {{page.samplelink}}
+    samplelinktoo: {{page.samplelinktoo}}
+    <h2>Endpoint</h2>
+{{page.paths.service/matchdevice.post.summary}}
+
+    <h2>hmac</h2>
+{{page.securityDefinitions.hmac.type}}
+
   {{content}}
 
 <div class="tags">
