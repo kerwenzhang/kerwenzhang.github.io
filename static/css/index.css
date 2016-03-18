@@ -340,29 +340,6 @@ blockquote:last-child {
 	text-align: right;
 }
 
-/**
- * demo
- * 瀑布流
- * 使用多栏布局
- */
-#fall{
-	font-size: 0;
-	text-align: center;
-	/*margin: 0 auto;*/
-	/*background-color: #ddd;*/
-
-}
-#fall ul{
-	margin: 0 10px;
-	padding: 0;
-	width: 240px;
-	/*background-color: red;*/
-	display: inline-block;
-	vertical-align: top;
-	/*float: left;*/
-
-
-}
 
 @media screen and (max-width: 1200px) {
 	#fall ul{
