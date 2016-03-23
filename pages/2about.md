@@ -15,6 +15,8 @@ icon: glyphicon-heart
 
 * email：[kzhang6@ra.rockwell.com](mailto:{{ site.email }})
 
+* Github address: [https://github.com/kerwenzhang/kerwenzhang.github.io](https://github.com/kerwenzhang/kerwenzhang.github.io)  
+
 
 ---
 
