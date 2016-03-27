@@ -3,7 +3,7 @@ layout: post
 title: Notepad++配置Python开发环境
 date:   2016-03-27 18:54:03
 categories: [Python]
-tags: [Python] [Notepad++]
+tags: [Python]
 ---
 
 * content
