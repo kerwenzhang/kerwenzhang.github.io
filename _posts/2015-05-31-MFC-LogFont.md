@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [转]LOGFont, HFont和CFont
+title: LOGFont, HFont和CFont
 date:   2015-05-31 11:54:03
 categories: [MFC]
 tags: [MFC, Font]
@@ -113,27 +113,27 @@ CFont:
 
 参数：     
   
-<strong>nHeight：     
+nHeight：     
 指定字体高度（逻辑单位）。有三种取值：&gt;0，字体映射器将高度值转换为设备单位，并与可用字体的字符元高度进行匹配；=0，字体映射器使用默认的高度值；&lt;0，字体映射器将高度值转换为设备单位，用其绝对值与可用字体的字符高度进行匹配。nHeight转换后的绝对值不应超过16384个设备单位。     
-<strong>nWidth：     
+nWidth：     
 指定字体中字符的平均宽度（逻辑单位）。     
-<strong>nEscapement：     
+nEscapement：     
 指定偏离垂线和显示界面X轴之间的角度，以十分之一度为单位。偏离垂线是穿过一行文本中第一个字符和最后一个字符的直线。     
-<strong>nOrientation：     
+nOrientation：     
 指定每个字符的基线和设备X轴之间的角度，以十分之一度为单位。     
-<strong>nWeight：     
+nWeight：     
 指定字体磅数（每1000点中墨点像素数）。可取0到1000之间的任意整数值。     
-<strong>bItalic：     
+bItalic：     
 指定字体是否为斜体。     
-<strong>bUnderline：     
+bUnderline：     
 指定字体是否带有下划线。     
-<strong>bStrikeOut：     
+bStrikeOut：     
 指定字体是否带有删除线。     
-<strong>nCharSet：     
+nCharSet：     
 指定字体的字符集。预定义的字符集：     
 ANSI_CHARSET;BALTIC_CHARSET;CHINESEBIG5_CHARSET;DEFAULT_CHARSET;EASTEUROPE_CHARSET; GB2312_CHARSET; GREEK_CHARSET;HANGUL_CHARSET; MAC_CHARSET; OEM_CHARSET; RUSSIAN_CHARSET; SHIFTJIS_CHARSET;SYMBOL_CHARSET; TURKISH_CHARSET。韩国Windows：JOHAB_CHARSET；中东地区Windows：HEBREW_CHARSSET，ARABIC_CHARSET；泰国Windows：THAI_CHARSET。     
 应用程序可以使用DEFAULT_CHARSET以允许字体名和大小完全指定逻辑字体，如果指定的字体名不存在则可能会用任意字符集的字体来代替，所以为避免不可预料的结果，应谨慎使用DEFAULT_CHARSET。     
-<strong>nOutPrecision：     
+nOutPrecision：     
 指定输出精度。输出精度定义了输出与要求的字体高度、宽度、字符方向、移位和间距等的接近程度。它的取值及含义如下（只能取其一）：     
 OUT_CHARACTER_PRECIS；未用。     
 OUT_DEFAULT_PRECIS：指定缺省的字体映射器状态。     
@@ -144,7 +144,7 @@ OUT_STRING_PRECIS：此值没有被字体映射器使用，但是当列举光栅
 OUT_STROKE_PRECIS：没有被字体映射器使用，但是当列举TrueType字体、其他基于边框的字体和向量字体时它会被返回。     
 OUT_TT_ONLY_PRECIS：指示字体映射器仅从TrueType字体中选择，如果系统中没有安装TrueType字体，则字体映射返回缺省状态。     
 OUT_TT_PRECIS：在当系统里有多种同名的字体时指示字体映射器选择一种TrueType字体。当操作系统含有多种与指定名字同名的字体时，应用程序可以使用OUT_DEVICE_PRECIS，OUT_RASTER_PRECIS和OUT_TT_PRECIS值来控制字体映射器如何选择一种字体，例如，如果操作系统含有名字Symbol的光栅和TrueType两种字体，指定OUT_TT_PRECIS使字体映射器选择TrueType方式（指定OUT_TT_ONLY_PRECIS强制字体映射器选择一种TrueType字体，尽管这会给TrueType字体换一个名字）。     
-<strong>nClipPrecision：     
+nClipPrecision：     
 指定裁剪精度。裁剪精度定义了怎样裁剪部分超出裁剪区域的字符。它的取值及含义如下（可取一个或多个值）：     
 CLIP_DEFAULT_PRECIS：指定缺省裁剪状态。     
 CLIP_CHARACTER_PRECIS：未用。     
@@ -153,12 +153,12 @@ CLIP_MASK：未用。
 CLIP_EMBEDDED：要使用嵌入式只读字体必须使用此标志。     
 CLIP_LH_ANGLES：当此值被使用时，所有字体的旋转依赖于坐标系统的定位是朝左的还是朝右的。如果未使用此值，设备字体总是逆时针方向旋转，但其他字体的旋转依赖于坐标系统的定向。     
 CLIP_TT_ALWAYS：未用。     
-<strong>nQuality：     
+nQuality：     
 指定字体的输出质量。输出质量定义了GDI将逻辑字体属性匹配到实际物理字体的细致程度。它的各个取值及含义如下（取其一）：     
 DEFAULT_QUALITY：字体的外观不重要。     
 DRAFT_QUALITY：字体外观的重要性次于使用PROOF_QUALITY时，对GDI光栅字体，缩放比例是活动的，这意味着多种字体大小可供选择，但质量可能不高，如果有必要，粗体、斜体、下划线、strikeout字体可被综合起来使用。     
 PROOF_QUALITY：字符质量比精确匹配逻辑字体字体属性更重要。对GDI扫描字体，缩放比例是活动的，并选择最接近的大小。尽管当使用PROOF_QUALITY时，选择字体大小并不完全匹配，但字体的质量很高，并没有外观上的变形。如果有必要，粗体、斜体、下划线、strikeout字体可被综合起来使用。     
-<strong>nPitchAndFamily：     
+nPitchAndFamily：     
 指定字体间距和字体族。低2位用来指定字体的间距，可取下列值中的一个：DEFAULT_PITCH，FIXED_PITCH，VARIABLE_PITCH。高4位指定字体族，取值及含义如下（取其一）：     
 FF_DECORATIVE：新奇的字体，如老式英语（Old English）。     
 FF_DONTCARE：不关心或不知道。    
@@ -168,8 +168,6 @@ FF_SCRIPT：设计成看上去象手写体的字体。如Script和Cursive。
 FF_SWISS：笔划宽度变动的字体，无斜线。如MS Sans Serif。     
 应用程序可以用运算符OR将字符间距和字体族组合起来给nPitchAndFamily赋值。     
 字体族描述一种字体的普通外观，当所有的精确字样都不能使用时，可用它们来指定字体。     
-<strong>lpszFacename：     
+lpszFacename：     
 指定字体的字样名的字符串。此字符串的长度不应超过30个字符。Windows函数EnumFontFamilies可以枚举出当前所有可用字体的字样名。如果lpszFacename为NULL，则GDI使用一种与设备无关的字体。     
 返回值：此函数成功则返回TRUE，否则返回FALSE。     
-  
-Post Date: {{ page.date | date_to_string }}	
