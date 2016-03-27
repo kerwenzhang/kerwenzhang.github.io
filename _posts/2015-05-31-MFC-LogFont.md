@@ -3,7 +3,7 @@ layout: post
 title: [转]LOGFont, HFont和CFont
 date:   2015-05-31 11:54:03
 categories: [MFC]
-tags: [MFC] [Font]
+tags: [MFC, Font]
 ---
 
 * content
