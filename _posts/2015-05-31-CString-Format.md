@@ -1,28 +1,36 @@
 ---
 layout: post
-title: "MFC中CString.Format使用方法"
-date:   2013-12-23 00:18:23 
-thumbimg: 1346208288725.jpg
-categories: [MFC]
-tags: [MFC, CString, Format]
+title: ---
+date:   2016-03-27 11:54:03
+categories: [layout: post]
+tags: [title:] ["MFC中CString.Format使用方法"]
 ---
 
 * content
 {:toc}
 
-%c 单个字符  
-%d 十进制整数(int)  
-%ld 十进制整数(long)  
+thumbimg: 1346208288725.jpg   
+categories: [MFC]   
+tags: [MFC, CString, Format]   
+---   
 
-%lu unsigned long  
-%f 十进制浮点数(float)  
-%lf 十进制浮点数(double)  
-%o 八进制数  
-%s 字符串  
-%u 无符号十进制数  
-%x 十六进制数  
+* content   
+{:toc}   
+
+%c 单个字符     
+%d 十进制整数(int)     
+%ld 十进制整数(long)     
+
+%lu unsigned long     
+%f 十进制浮点数(float)     
+%lf 十进制浮点数(double)     
+%o 八进制数     
+%s 字符串     
+%u 无符号十进制数     
+%x 十六进制数     
 
 ### int转换为CString：  
+
 	CString str;
 	int number=15;  
 	str.Format(_T("%d"),number); //str="15"  
@@ -32,6 +40,7 @@ tags: [MFC, CString, Format]
 	long转换为CString的方法与上面相似，只需要把%d改为%ld就可以了。
 
 ### double转换为CString：  
+
 	CString str;  
 	double num=1.46;  
 	str.Format(_T("%lf"),num); //str="1.46"  
@@ -42,12 +51,14 @@ tags: [MFC, CString, Format]
 	float转换为CString的方法也同上面相似，将lf%改为f%就可以了。
 
 ### 将十进制数转换为八进制：
+
 	CString str;  
 	int num=255;  
 	str.Format(_T("%o"),num); //str="377"  
 	str.Format(_T("%.8o"),num); //str="00000377"  
 
 ### bool转换为CString
+
 	CString cs_tmp;
 	cs_tmp = m_Bool1 ? "1" : "0";
 	或者

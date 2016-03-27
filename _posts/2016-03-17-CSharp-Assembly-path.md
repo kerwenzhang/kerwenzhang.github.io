@@ -42,7 +42,9 @@ new AppDomainSetup().PrivateBinPath 来设置
 		setup.ApplicationBase = System.Environment.CurrentDirectory;  
 		setup.PrivateBinPath = "Libs";  
 		setup.ConfigurationFile = setup.ApplicationBase +  
-             string.Format("\\Config\\{0}.config", appName);  
+
+             string.Format("\\Config\\{0}.config", appName);     
+
 		AppDomain newDomain = AppDomain.CreateDomain("NewAppDomain", null, setup);  
 		int ret = newDomain.ExecuteAssemblyByName(currentAssembly.FullName, e.Args);  
 		AppDomain.Unload(newDomain);  
@@ -62,8 +64,9 @@ AppDomain有个AssemblyResolve事件，加载dll失败的时候触发，可以�
 	
 	static System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)  
 	{  
-        string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Libs\");  
-        path = System.IO.Path.Combine(path, args.Name.Split(',')[0]);  
-        path = String.Format(@"{0}.dll", path);  
-        return System.Reflection.Assembly.LoadFrom(path);  
+
+        string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Libs\");     
+        path = System.IO.Path.Combine(path, args.Name.Split(',')[0]);     
+        path = String.Format(@"{0}.dll", path);     
+        return System.Reflection.Assembly.LoadFrom(path);     
     }  

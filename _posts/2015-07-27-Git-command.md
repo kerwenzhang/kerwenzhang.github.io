@@ -9,7 +9,7 @@ tags: [Github]
 * content
 {:toc}
 
-  Git add .<br />
-  Git commit -m "comments"<br />
-  Git push origin master<br />
+  Git add .<br />   
+  Git commit -m "comments"<br />   
+  Git push origin master<br />   
   Git pull<br />
