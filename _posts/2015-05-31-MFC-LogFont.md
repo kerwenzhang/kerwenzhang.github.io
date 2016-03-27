@@ -1,7 +1,7 @@
 ---
 layout: post
 title: [转]LOGFont, HFont和CFont
-date:   2016-03-27 11:54:03
+date:   2015-05-31 11:54:03
 categories: [MFC]
 tags: [MFC] [Font]
 ---
