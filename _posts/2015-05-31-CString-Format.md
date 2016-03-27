@@ -1,21 +1,13 @@
 ---
 layout: post
-title: ---
+title: MFC中CString.Format使用方法
 date:   2016-03-27 11:54:03
-categories: [layout: post]
-tags: [title:] ["MFC中CString.Format使用方法"]
+categories: [MFC]
+tags: [MFC] [CString] [Format]
 ---
 
 * content
 {:toc}
-
-thumbimg: 1346208288725.jpg   
-categories: [MFC]   
-tags: [MFC, CString, Format]   
----   
-
-* content   
-{:toc}   
 
 %c 单个字符     
 %d 十进制整数(int)     
