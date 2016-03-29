@@ -75,7 +75,6 @@ tags: [Python, MD]
 		
 		# tags
 
-		tags = tags.replace(" ","] [")
 		tags = "[" + tags +"]"
 		header[5] += tags
 		return header
