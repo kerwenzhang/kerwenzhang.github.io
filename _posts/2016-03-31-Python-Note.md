@@ -12,11 +12,32 @@ tags: [Python]
 Python入门教程， 提供了很多的实例，但是基于Python2.0 的， 目前Python已经更新到Python3.5，里面的一些函数（如Print）已经不一样了。   
 [笨办法学Python](http://www.jb51.net/shouce/Pythonbbf/latest/index.html)   
 
-编码注释：   
+### 编码注释：   
 
 	# -*- coding:utf-8 -*-
 
-文件读写操作：   
+### print
+
+print带参数输出   
+
+	int1=30
+	int2=20
+	str1="test"
+	print("int1 is %d, int2 is %d, str1 is %s" %(int1,int2,str1))
+
+%r可以输出任何一种格式   
+
+	formater ="%r %r %r %r"
+	print (formater % (1,2,3,4))
+	print (formater % ("one", "two", "three", "four"))
+	print (formater % (True, False, True, False))
+	
+input   
+input用于获取用户的输入   
+
+	s=input("提示信息")	
+
+### 文件读写操作：   
 
 	fo = open(strFilePath,"r", encoding="utf-8")
 	fileData = fo.readlines()
@@ -24,7 +45,7 @@ Python入门教程， 提供了很多的实例，但是基于Python2.0 的， �
 	fo = open(filePath,"w", encoding="utf-8")
 	fo.writelines(newLinelists)	
 
-获取一个文件夹下的制定格式文件   
+获取一个文件夹下的指定格式文件   
 
 	
 	''''' 
