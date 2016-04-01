@@ -39,6 +39,7 @@ input用于获取用户的输入
 
 ### 函数
 参数
+
 	def function1(*args):
 		arg1, arg2 = args
 		print("arg1: %r, arg2: %r" % (arg1, arg2))
