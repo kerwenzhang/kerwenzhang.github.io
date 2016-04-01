@@ -10,11 +10,13 @@ tags: [Clear Case]
 {:toc}
 
 ## Merge
-在一个branch创建的文件Merge到另一个branch
-You have to merge the parent directory first, so that the file shows up in the directory in the destination branch. At this point the new file will have zero size. You can then merge the file itself. The easiest way to do both of these operations is via the Version Tree view - much less error-prone than doing it via the command line.
+
+在一个branch创建的文件Merge到另一个branch   
+You have to merge the parent directory first, so that the file shows up in the directory in the destination branch. At this point the new file will have zero size. You can then merge the file itself. The easiest way to do both of these operations is via the Version Tree view - much less error-prone than doing it via the command line.   
 
 ## View相关
-强制删除一个View
+
+强制删除一个View   
 
 	cleartool lsview -l theViewToRemove # get its uuid
 	cleartool rmtag -view theViewToRemove
