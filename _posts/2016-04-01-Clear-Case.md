@@ -2,7 +2,7 @@
 layout: post
 title: Clear Case 常用操作
 date:   2016-04-01 08:30:03
-categories: [Clear Case]
+categories: [Others]
 tags: [Clear Case]
 ---
 
