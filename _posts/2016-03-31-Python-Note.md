@@ -45,6 +45,22 @@ input用于获取用户的输入
 		arg1, arg2 = args
 		print("arg1: %r, arg2: %r" % (arg1, arg2))
 
+
+### import 文件
+在一个文件中定义一个函数：
+	def break_words(stuff):
+		"""This function will break up words for us."""
+		words = stuff.split(' ')
+		return words
+在另一个文件中可以通过import调用函数
+	import xxx
+	sentence ="All good things come to those who wait"
+	words = function1.break_words(sentence)
+
+调用
+	help(function1.break_words)
+可以得到模组帮助文档的方式，所谓帮助文档就是定义函数时放在 """ 之间的东西
+
 ### 文件读写操作：   
 
 	fo = open(strFilePath,"r", encoding="utf-8")
