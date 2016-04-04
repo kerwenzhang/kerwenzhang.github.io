@@ -31,7 +31,19 @@ print带参数输出
 	print (formater % (1,2,3,4))
 	print (formater % ("one", "two", "three", "four"))
 	print (formater % (True, False, True, False))
-	
+
+Python3 提供了一种新的格式化字符串方法 str.format()   
+
+	print('We are the {} who say "{}!"'.format('knights', 'Ni'))
+
+括号及其里面的字符 (称作格式化字段) 将会被 format() 中的参数替换。   
+在括号中的数字用于指向传入对象在 format() 中的位置，如下所示：   
+
+	>>> print('{0} and {1}'.format('spam', 'eggs'))
+	spam and eggs
+	>>> print('{1} and {0}'.format('spam', 'eggs'))
+	eggs and spam
+
 input   
 input用于获取用户的输入   
 
@@ -47,19 +59,25 @@ input用于获取用户的输入
 
 
 ### import 文件
-在一个文件中定义一个函数：
+
+在一个文件中定义一个函数：   
+
 	def break_words(stuff):
 		"""This function will break up words for us."""
 		words = stuff.split(' ')
 		return words
-在另一个文件中可以通过import调用函数
+
+在另一个文件中可以通过import调用函数   
+
 	import xxx
 	sentence ="All good things come to those who wait"
 	words = function1.break_words(sentence)
 
-调用
+调用   
+
 	help(function1.break_words)
-可以得到模组帮助文档的方式，所谓帮助文档就是定义函数时放在 """ 之间的东西
+
+可以得到模组帮助文档的方式，所谓帮助文档就是定义函数时放在 """ 之间的东西   
 
 ### 文件读写操作：   
 
