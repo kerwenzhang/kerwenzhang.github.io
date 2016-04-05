@@ -1,9 +1,9 @@
 ---
 layout: post
-title: PyQt 爬虫入门笔记
+title: Python 爬虫入门笔记
 date:   2016-04-04 19:36:03
 categories: [Python]
-tags: [PyQt]
+tags: [Pthon]
 ---
 
 * content
@@ -19,11 +19,12 @@ HTML是一种标记语言，用标签标记内容并加以解析和区分。
 
 爬虫最主要的处理对象就是URL，它根据URL地址取得所需要的文件内容，然后对它 进行进一步的处理。   
 
-## urllib2
+## urllib
 
-在Python中，我们使用urllib2这个组件来抓取网页。   
-urllib2是Python的一个获取URLs(Uniform Resource Locators)的组件。   
+在Python中，我们使用urllib这个组件来抓取网页。   
+urllib是Python的一个获取URLs(Uniform Resource Locators)的组件。   
 它以urlopen函数的形式提供了一个非常简单的接口。   
+官方文档在这： https://docs.python.org/3/library/urllib.html   
 最简单的urllib2的应用代码只需要四行。   
 
 	import urllib2  
@@ -37,29 +38,147 @@ Python 3.x中urllib2被整合到了urllib中，用urllib.request替代。在3.x�
 	response = urllib.request.urlopen('http://www.baidu.com/')
 	html = response.read()
 	print (html)
+	
+用Python简单处理URL   
+如果要抓取百度上面搜索关键词为Jecvay Notes的网页, 则代码如下   
 
-在HTTP请求时，允许你做额外的两件事。   
-1.发送data表单数据   
-有时候你希望发送一些数据到URL(通常URL与CGI[通用网关接口]脚本，或其他WEB应用程序挂接)。   
-在HTTP中,这个经常使用熟知的POST请求发送。   
-一般的HTML表单，data需要编码成标准形式。然后做为data参数传到Request对象。   
-
-	import urllib.parse
+	import urllib
 	import urllib.request
+	 
+	data={}
+	data['word']='Jecvay Notes'
+	 
+	url_values=urllib.parse.urlencode(data)
+	url="http://www.baidu.com/s?"
+	full_url=url+url_values
+	 
+	data=urllib.request.urlopen(full_url).read()
+	data=data.decode('UTF-8')
+	print(data)
 
-	url = 'http://www.someserver.com/register.cgi' 
+data是一个字典, 然后通过urllib.parse.urlencode()来将data转换为 ‘word=Jecvay+Notes’的字符串, 最后和url合并为full_url,    
 
-	value ={'name':'WHY',
-			'location':'SDU',
-			'language':'Python'}
+## Python的队列和集合
 
-	data = urllib.parse.urlencode(value)
-	binary_data = data.encode('utf-8')
+在爬虫程序中, 用到了广度优先搜索(BFS)算法. 这个算法用到的数据结构就是队列.   
+Python的List功能已经足够完成队列的功能,但是List用来完成队列功能其实是低效率的, 因为List在队首使用 pop(0) 和 insert() 都是效率比较低的, Python官方建议使用collection.deque来高效的完成队列任务.   
 
-	req = urllib.request.Request(url,binary_data)
-	response = urllib.request.urlopen(req)
-	the_page = response.read()
+	from collections import deque
+	queue = deque(["Eric","John","Michael"])
+	queue.append("Terry")
+	queue.append("Graham")
+	print(queue.popleft())
+	print(queue.popleft())
+	print(queue)
 
+在爬虫程序中, 为了不重复爬那些已经爬过的网站, 我们需要把爬过的页面的url放进集合中, 在每一次要爬某一个url之前, 先看看集合里面是否已经存在. 如果已经存在, 我们就跳过这个url; 如果不存在, 我们先把url放入集合中, 然后再去爬这个页面.   
+Python提供了set这种数据结构. set是一种无序的, 不包含重复元素的结构. 一般用来测试是否已经包含了某元素, 或者用来对众多元素们去重.    
+
+	basket ={'apple', 'orange','apple','pear','orange'}
+	print(basket)
+	print('orange' in basket)
+	print('crabgrass' in basket)
+
+	emptySet = set()
+
+## 正则表达式
+
+在爬虫程序中, 爬回来的数据是一个字符串, 字符串的内容是页面的html代码. 我们要从字符串中, 提取出页面提到过的所有url. 这就要求爬虫程序要有简单的字符串处理能力, 而正则表达式可以很轻松的完成这一任务.   
+
+爬虫Ver 1.0   
+
+	import re
+	import urllib.request
+	import urllib
+	 
+	from collections import deque
+	 
+	queue = deque()
+	visited = set()
+	 
+	url = 'http://news.dbanotes.net'  # 入口页面, 可以换成别的
+	 
+	queue.append(url)
+	cnt = 0
+	 
+	while queue:
+	  url = queue.popleft()  # 队首元素出队
+	  visited |= {url}  # 标记为已访问
+	 
+	  print('已经抓取: ' + str(cnt) + '   正在抓取 <---  ' + url)
+	  cnt += 1
+	  urlop = urllib.request.urlopen(url)
+	  if 'html' not in urlop.getheader('Content-Type'):
+		continue
+	 
+	  # 避免程序异常中止, 用try..catch处理异常
+
+	  try:
+		data = urlop.read().decode('utf-8')
+	  except:
+		continue
+	 
+	  # 正则表达式提取页面中所有队列, 并判断是否已经访问过, 然后加入待爬队列
+
+	  linkre = re.compile('href=\"(.+?)\"')
+	  for x in linkre.findall(data):
+		if 'http' in x and x not in visited:
+		  queue.append(x)
+		  print('加入队列 --->  ' + x)
+		  
+## 超时跳过
+
+urlop = urllib.request.urlopen(url, timeout = 2)   
+当发生超时, 程序因为exception中断. 于是把这一句也放在try .. except 结构里, 问题解决.   
+
+## 伪装浏览器
+
+在 GET 的时候将 User-Agent 添加到header里   
+
+	import urllib.request
+	import http.cookiejar
+	 
+	# head: dict of header
+
+	def makeMyOpener(head = {
+		'Connection': 'Keep-Alive',
+		'Accept': 'text/html, application/xhtml+xml, */*',
+		'Accept-Language': 'en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3',
+		'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko'
+	}):
+		cj = http.cookiejar.CookieJar()
+		opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
+		header = []
+		for key, value in head.items():
+			elem = (key, value)
+			header.append(elem)
+		opener.addheaders = header
+		return opener
+	 
+	oper = makeMyOpener()
+	uop = oper.open('http://www.baidu.com/', timeout = 1000)
+	data = uop.read()
+	print(data)
+
+保存抓回来的报文   
+
+	def saveFile(data):
+		save_path = 'D:\\temp.out'
+		f_obj = open(save_path, 'wb') # wb 表示打开方式
+		f_obj.write(data)
+		f_obj.close()
+	 
+	# 这里省略爬虫代码
+
+	# ...
+	 
+	# 爬到的数据放到 dat 变量里
+
+	# 将 dat 变量保存到 D 盘下
+
+	saveFile(dat)
+	
+	
 参考资料：   
 http://blog.csdn.net/column/details/why-bug.html   
 http://python.jobbole.com/77821/
