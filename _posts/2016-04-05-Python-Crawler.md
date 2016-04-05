@@ -178,6 +178,15 @@ urlop = urllib.request.urlopen(url, timeout = 2)
 
 	saveFile(dat)
 	
+使用 Requests 库来代替 urllib, 用 BeautifulSoup 来代替 re 模块.   
+官方文档:   
+http://docs.python-requests.org/en/latest/   
+http://www.crummy.com/software/BeautifulSoup/   
+
+在 Windows 下如果安装了 Python3, 那么在 cmd 下直接可以通过 pip 来安装这两个模块, 命令如下:   
+
+	pip install requests
+	pip install beautifulsoup4
 	
 参考资料：   
 http://blog.csdn.net/column/details/why-bug.html   
