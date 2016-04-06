@@ -25,7 +25,7 @@ tags: [Pthon]
 
 解决办法   
 
-	print(soup.encode("utf-8"))
+	print(soup		)
 	
 	
 

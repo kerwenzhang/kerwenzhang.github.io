@@ -190,4 +190,6 @@ http://www.crummy.com/software/BeautifulSoup/
 	
 参考资料：   
 http://blog.csdn.net/column/details/why-bug.html   
-http://python.jobbole.com/77821/
+http://python.jobbole.com/77821/   
+https://jecvay.com/2014/09/python3-web-bug-series1.html   
+http://cuiqingcai.com/category/technique/python
