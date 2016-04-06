@@ -51,3 +51,5 @@ tags: [Pthon]
 解决办法   
 
 	fo.writelines(data.decode('utf-8'))
+	
+更新
