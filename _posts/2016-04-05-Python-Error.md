@@ -9,15 +9,13 @@ tags: [Pthon]
 * content
 {:toc}
 
+错误1：
+
 	import urllib.request
-	from bs4 import BeautifulSoup
-
-	get = urllib.request.urlopen("https://www.website.com/")
-	html = get.read()
-
-	soup = BeautifulSoup(html)
-
-	print(soup)
+	response=urllib.request.urlopen("http://www.baidu.com/")
+	html = response.read()
+	html=html.decode('UTF-8')
+	print(html)
 
 在print时报以下错误：   
 
@@ -25,9 +23,22 @@ tags: [Pthon]
 
 解决办法   
 
-	print(soup		)
+我遇到这个问题是因为我用的win7是英文的操作系统，在用print输出时找不到对应的中文字符。
+办法1： 将控制面板-> Regin and Language -> system locale改到中文，重启
+办法2： 将要输出的东西保存到文件中，在保存的过程中需要转成UTF-8格式
 	
+	import urllib.request
+	def WriteToFile(data):
+		fo = open("C:\\test.txt","w", encoding="utf-8")
+		fo.writelines(data)
+		fo.close()
 	
+	response=urllib.request.urlopen("http://www.baidu.com/")
+	html = response.read()
+	html=html.decode('UTF-8')
+	WriteToFile(html)
+	
+错误2：
 
 	fo = open(filePath,"w", encoding="utf-8")
 	fo.writelines(data)

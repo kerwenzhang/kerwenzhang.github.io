@@ -34,10 +34,11 @@ urllib是Python的一个获取URLs(Uniform Resource Locators)的组件。
 
 Python 3.x中urllib2被整合到了urllib中，用urllib.request替代。在3.x中代码如下：   
 
-	import urllib.request
-	response = urllib.request.urlopen('http://www.baidu.com/')
+	import urllib.request	 
+	response=urllib.request.urlopen("http://www.baidu.com/")
 	html = response.read()
-	print (html)
+	html=html.decode('UTF-8')
+	Print(html)
 	
 用Python简单处理URL   
 如果要抓取百度上面搜索关键词为Jecvay Notes的网页, 则代码如下   
