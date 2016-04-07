@@ -47,6 +47,9 @@ path是我的仓库根目录，它下面包含一个.git的隐藏文件夹
 	fileList = repo.untracked_files
 注意这个只会打印出你未上传的新文件，如果你只是更新了某个原先已经存在的文件，则repo.is_dirty()应该返回True
 
+origins = repo.remotes
+origin = origins.pop()
+
 GitDB
 官方文档：
 [http://gitdb.readthedocs.org/en/latest/index.html](http://gitdb.readthedocs.org/en/latest/index.html)
