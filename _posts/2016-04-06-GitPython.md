@@ -52,10 +52,10 @@ path是我的仓库根目录，它下面包含一个.git的隐藏文件夹
 
 注意这个只会打印出你未上传的新文件，如果你只是更新了某个原先已经存在的文件，则repo.is_dirty()应该返回True   
 
-origins = repo.remotes   
-origin = origins.pop()   
+	origins = repo.remotes   
+	origin = origins.pop()   
 
-GitCommandError: 'git push --porcelain prigin' returned with exit code 128   
+	GitCommandError: 'git push --porcelain prigin' returned with exit code 128   
 
 GitDB   
 官方文档：   
