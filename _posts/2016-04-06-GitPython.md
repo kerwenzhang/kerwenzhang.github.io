@@ -49,6 +49,7 @@ path是我的仓库根目录，它下面包含一个.git的隐藏文件夹
 
 origins = repo.remotes
 origin = origins.pop()
+test
 
 GitDB
 官方文档：
