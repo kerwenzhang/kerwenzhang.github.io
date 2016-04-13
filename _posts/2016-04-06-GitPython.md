@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 用GitPython实现Git自动化上传代码
-date:   2016-04-06 16:52:03
+date:   2016-04-13 17:11:56
 categories: [Python]
 tags: [GitPython]
 ---
@@ -52,17 +52,19 @@ path是我的仓库根目录，它下面包含一个.git的隐藏文件夹
 
 注意这个只会打印出你未上传的新文件，如果你只是更新了某个原先已经存在的文件，则repo.is_dirty()应该返回True   
 
-<<<<<<< HEAD
+<<<<<<< HEAD   
 origins = repo.remotes   
 origin = origins.pop()   
 
 GitCommandError: 'git push --porcelain prigin' returned with exit code 128   
-=======
+=======   
+
 	origins = repo.remotes   
 	origin = origins.pop()   
 
 	GitCommandError: 'git push --porcelain prigin' returned with exit code 128   
->>>>>>> 34dde15aed02e1e28e02d50715b486c466cafc53
+
+>>>>>>> 34dde15aed02e1e28e02d50715b486c466cafc53   
 
 GitDB   
 官方文档：   
