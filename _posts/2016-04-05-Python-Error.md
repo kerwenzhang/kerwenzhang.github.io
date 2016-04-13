@@ -9,7 +9,7 @@ tags: [Pthon]
 * content
 {:toc}
 
-错误1：
+错误1：   
 
 	import urllib.request
 	response=urllib.request.urlopen("http://www.baidu.com/")
@@ -23,9 +23,10 @@ tags: [Pthon]
 
 解决办法   
 
-我遇到这个问题是因为我用的win7是英文的操作系统，在用print输出时找不到对应的中文字符。
-办法1： 将控制面板-> Regin and Language -> system locale改到中文，重启
-办法2： 将要输出的东西保存到文件中，在保存的过程中需要转成UTF-8格式
+我遇到这个问题是因为我用的win7是英文的操作系统，在用print输出时找不到对应的中文字符。   
+办法1： 将控制面板-> Regin and Language -> system locale改到中文，重启   
+办法2： 将要输出的东西保存到文件中，在保存的过程中需要转成UTF-8格式   
+
 	
 	import urllib.request
 	def WriteToFile(data):
@@ -38,7 +39,7 @@ tags: [Pthon]
 	html=html.decode('UTF-8')
 	WriteToFile(html)
 	
-错误2：
+错误2：   
 
 	fo = open(filePath,"w", encoding="utf-8")
 	fo.writelines(data)
