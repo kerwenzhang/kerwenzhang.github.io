@@ -15,9 +15,9 @@ tags: [MFC]
 代码：   
 
 	CString str;         	  
-	longt1=GetTickCount();//程序段开始前取得系统运行时间(ms)        
+	long t1=GetTickCount();//程序段开始前取得系统运行时间(ms)        
 	。。。。。。//to do sth
-	longt2=GetTickCount();//程序段结束后取得系统运行时间(ms)  
+	long t2=GetTickCount();//程序段结束后取得系统运行时间(ms)  
 	str.Format("time:%dms",t2-t1);//前后之差即程序运行时间        
 	AfxMessageBox(str); 
  
