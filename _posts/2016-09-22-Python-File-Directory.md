@@ -13,16 +13,16 @@ python中对文件、文件夹（文件操作函数）的操作需要涉及到os
 
 导入的方法是:   
 
-import os   
-import shutil   
+	import os   
+	import shutil   
 
 ### 取得当前目录
 
-s = os.getcwd()   
+	s = os.getcwd()   
 
 ### 更改当前目录
 
-os.chdir( "C:\\123")   
+	os.chdir( "C:\\123")   
 
 ### 路径名分解
 
@@ -83,34 +83,34 @@ os.chdir( "C:\\123")
 获取指定目录下的所有子目录的列表   
 
 	
-	>>> def getDirList( p ):
-			p = str( p )
-			if p=="":
-				  return [ ]
-			p = p.replace( "/","\\")
-			if p[ -1] != "\\":
-				 p = p+"\\"
-			a = os.listdir( p )
-			b = [ x   for x in a if os.path.isdir( p + x ) ]
-			return b
+	def getDirList( p ):
+		p = str( p )
+		if p=="":
+			return [ ]
+		p = p.replace( "/","\\")
+		if p[ -1] != "\\":
+			p = p+"\\"
+		a = os.listdir( p )
+		b = [ x   for x in a if os.path.isdir( p + x ) ]
+		return b
 	 
-	>>> getDirList( "C:\\" )
+	getDirList( "C:\\" )
 	
 获取指定目录下所有文件的列表   
 
 	
-	>>> def getFileList( p ):
-			p = str( p )
-			if p=="":
-				  return [ ]
-			p = p.replace( "/","\\")
-			if p[ -1] != "\\":
-				 p = p+"\\"
-			a = os.listdir( p )
-			b = [ x   for x in a if os.path.isfile( p + x ) ]
-			return b
+	def getFileList( p ):
+		p = str( p )
+		if p=="":
+			return [ ]
+		p = p.replace( "/","\\")
+		if p[ -1] != "\\":
+			p = p+"\\"
+		a = os.listdir( p )
+		b = [ x   for x in a if os.path.isfile( p + x ) ]
+		return b
 	 
-	>>> getFileList( "C:\\" )
+	getFileList( "C:\\" )
 
 ### 创建目录
 
