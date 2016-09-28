@@ -177,3 +177,28 @@ rb+    以二进制读写模式打开 (参见 r+ )
 wb+    以二进制读写模式打开 (参见 w+ )   
 ab+    以二进制读写模式打开 (参见 a+ )   
 
+### 按时间排序目录下的文件
+
+排序可以通过list.sort来巧妙的实现：   
+
+	import os
+
+	DIR = "/home/serho/workspace/lisp"
+
+	def compare(x, y):
+		stat_x = os.stat(DIR + "/" + x)
+		stat_y = os.stat(DIR + "/" + y)
+		if stat_x.st_ctime < stat_y.st_ctime:
+			return -1
+		elif stat_x.st_ctime > stat_y.st_ctime:
+			return 1
+		else:
+			return 0
+
+	iterms = os.listdir(DIR)
+
+	iterms.sort(compare)
+
+	for iterm in iterms:
+		print iterm
+
