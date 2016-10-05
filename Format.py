@@ -246,7 +246,7 @@ def FormatMDFile(filePath):
 # Main Entry
 
 import os
-folder = "C:\kerwenzhang.github.io\_posts"
+folder = "E:\kerwenzhang.github.io\_posts"
 fileFlag = [".md",".txt"]
 FileLists = GetFileList(folder, fileFlag)
 if not FileLists:
