@@ -1,11 +1,9 @@
-# Abstract
+# HuxBlog Boilerplate
 
-Fork from: https://github.com/Gaohaoyang/gaohaoyang.github.io
----
+##### This is the boilerplate of [Hux Blog](https://github.com/Huxpro/huxpro.github.io), all documents is over there!
 
-LICENSE
+#### [View Boilerplate &rarr;](http://huangxuan.me/huxblog-boilerplate/)
 
-[MIT License](https://github.com/Gaohaoyang/gaohaoyang.github.io/blob/master/LICENSE.md)
+#### [View Live Hux Blog &rarr;](http://huangxuan.me)
 
-
-
+## If you like Hux Blog, Please star [huxpro.github.io repo](https://github.com/Huxpro/huxpro.github.io) instead of this! Thank you!
