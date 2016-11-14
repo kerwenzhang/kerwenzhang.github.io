@@ -2,8 +2,9 @@
 layout: post
 title: Python正则表达式
 date:   2016-04-13 17:05:03
-categories: [Python]
-tags: [Python]
+categories: "Python"
+tags: 
+    - Python
 ---
 
 正则表达式是一个特殊的字符序列，它能帮助你方便的检查一个字符串是否与某种模式匹配。

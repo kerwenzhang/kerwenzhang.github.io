@@ -2,8 +2,9 @@
 layout: post
 title: "C# 委托"
 date:   2015-11-17 10:50:00 
-categories: [C#]
-tags: [C#]
+categories: "C#"
+tags: 
+    - C#
 ---
 
 * content

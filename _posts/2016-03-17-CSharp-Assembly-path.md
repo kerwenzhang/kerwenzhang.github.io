@@ -2,8 +2,9 @@
 layout: post
 title: "c# 用代码来设置程序的PrivatePath"
 date:   2016-03-17 15:30:00 
-categories: [C#]
-tags: [C#]
+categories: "C#"
+tags: 
+    - C#
 ---
 
 * content

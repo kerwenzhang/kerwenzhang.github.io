@@ -2,8 +2,9 @@
 layout: post
 title: Python文件与文件夹的操作
 date:   2016-09-22 13:53:14
-categories: [Python]
-tags: [Python]
+categories: "Python"
+tags: 
+    - Python
 ---
 
 * content

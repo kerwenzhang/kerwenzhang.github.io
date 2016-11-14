@@ -2,8 +2,11 @@
 layout: post
 title: "Install IIS by commandline"
 date:   2015-11-10 10:10:00 
-categories: [Others]
-tags: [IIS, Commandline]
+categories: "Others"
+tags: 
+    - IIS
+	- Commandline
+	- Others
 ---
 
 * content

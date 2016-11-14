@@ -2,8 +2,10 @@
 layout: post
 title: "MFC中自定义消息"
 date:   2015-11-09 8:41:00 
-categories: [MFC]
-tags: [MFC,Message]
+categories: "MFC"
+tags: 
+    - MFC
+	- Message
 ---
 
 * content

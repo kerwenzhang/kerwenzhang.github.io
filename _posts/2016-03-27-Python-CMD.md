@@ -2,8 +2,9 @@
 layout: post
 title: python 命令行参数
 date:   2016-03-27 11:54:03
-categories: [Python]
-tags: [Python]
+categories: "Python"
+tags: 
+    - Python
 ---
 
 * content

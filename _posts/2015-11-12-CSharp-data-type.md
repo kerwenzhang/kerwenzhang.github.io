@@ -2,8 +2,9 @@
 layout: post
 title: "C# 数据类型"
 date:   2015-11-12 14:50:00 
-categories: [C#]
-tags: [C#]
+categories: "C#"
+tags: 
+    - C#
 ---
 
 * content

@@ -2,8 +2,11 @@
 layout:	post
 title:	MFC中CString.Format使用方法
 date:	2015-05-31 11:54:03
-categories:	[MFC]
-tags:	[MFC, CString, Format]
+categories:	"MFC"
+tags:	
+    - MFC
+	- CString
+	- Format
 ---
 
 * content

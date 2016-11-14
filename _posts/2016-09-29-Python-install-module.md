@@ -2,8 +2,10 @@
 layout: post
 title: Python 安装模块的几种方式
 date:   2016-09-29 10:09:14
-categories: [Python]
-tags: [Install]
+categories: "Python"
+tags: 
+    - Python
+    - Install
 ---
 
 * content

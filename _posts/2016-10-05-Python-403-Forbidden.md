@@ -2,8 +2,10 @@
 layout: post
 title: HTTP Error 403: Forbidden
 date:   2016-10-05 10:09:14
-categories: [Python]
-tags: [Web]
+categories: "Python"
+tags: 
+    - Web
+	- Python
 ---
 
 * content
@@ -18,7 +20,7 @@ tags: [Web]
  
 会出现以下异常:   
 
-	[python]  
+	"Python"  
 	<span style="color:#FF0000;">  File "D:\Python32\lib\urllib\request.py", line 475, in open  
 		response = meth(req, response)  
 	  File "D:\Python32\lib\urllib\request.py", line 587, in http_response  
@@ -38,7 +40,7 @@ tags: [Web]
 方案:   
 对于Python 3.x来说,在请求中添加UserAgent的信息非常简单,代码如下   
 
-	[python]  
+	"Python"  
 
 	#如果不加上下面的这行出现会出现urllib2.HTTPError: HTTP Error 403: Forbidden错误  
 

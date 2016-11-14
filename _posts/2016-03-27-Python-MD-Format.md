@@ -2,8 +2,10 @@
 layout: post
 title: 用Python格式化MarkDown文件
 date:   2016-03-27 17:50:03
-categories: [Python]
-tags: [Python, MD]
+categories: "Python"
+tags: 
+    - Python
+	- MD
 ---
 
 * content

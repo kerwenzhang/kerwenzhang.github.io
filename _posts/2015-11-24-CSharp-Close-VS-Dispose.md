@@ -2,8 +2,9 @@
 layout: post
 title: "C# Form.Close VS Form.Dispose"
 date:   2015-11-24 09:43:00 
-categories: [C#]
-tags: [C#]
+categories: "C#"
+tags: 
+    - C#
 ---
 
 * content
