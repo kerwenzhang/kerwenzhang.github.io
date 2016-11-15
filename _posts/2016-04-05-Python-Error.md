@@ -3,6 +3,7 @@ layout: post
 title: Python 错误信息
 date:   2016-04-05 15:36:03
 categories: [Python]
+catalog: true
 tags: 
     - Python
 ---

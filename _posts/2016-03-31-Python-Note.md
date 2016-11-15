@@ -3,6 +3,7 @@ layout: post
 title: Python学习笔记
 date:   2016-03-31 16:30:03
 categories: "Python"
+catalog: true
 tags: 
     - Python
 ---

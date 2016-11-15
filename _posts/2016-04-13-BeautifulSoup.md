@@ -3,6 +3,7 @@ layout: post
 title: BeautifulSoup 笔记
 date:   2016-04-13 15:52:03
 categories: "Python"
+catalog: true
 tags: 
     - Python
     - BeautifulSoup

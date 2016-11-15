@@ -3,6 +3,7 @@ layout: post
 title: "C# 动态加载dll"
 date:   2015-12-02 10:50:00 
 categories: "C#"
+catalog: true
 tags: 
     - C#
 	- dll

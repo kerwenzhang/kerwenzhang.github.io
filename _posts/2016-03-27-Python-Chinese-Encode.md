@@ -3,6 +3,7 @@ layout: post
 title: Python3 读取中文
 date:   2016-03-27 19:00:03
 categories: "Python"
+catalog: true
 tags: 
     - Python
 ---

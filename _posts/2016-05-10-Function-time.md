@@ -3,6 +3,7 @@ layout: post
 title: MFC中计算程序运行时间
 date:   2016-05-10 17:00:14
 categories: "MFC"
+catalog: true
 tags: 
     - MFC
 ---

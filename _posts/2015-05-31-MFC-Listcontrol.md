@@ -3,6 +3,7 @@ layout: post
 title: "[转] MFC中ListControl控件的使用"
 date:   2015-05-31 00:18:23 
 categories: "MFC"
+catalog: true
 tags: 
     - MFC
 	- ListControl

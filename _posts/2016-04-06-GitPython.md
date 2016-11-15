@@ -3,6 +3,7 @@ layout: post
 title: 用GitPython实现Git自动化上传代码
 date:   2016-04-13 17:11:56
 categories: "Python"
+catalog: true
 tags: 
     - Git
     - Python

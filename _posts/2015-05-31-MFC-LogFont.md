@@ -3,6 +3,7 @@ layout: post
 title: LOGFont, HFont和CFont
 date:   2015-05-31 11:54:03
 categories: "MFC"
+catalog: true
 tags: 
     - MFC
 	- Font

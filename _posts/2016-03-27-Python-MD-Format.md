@@ -3,6 +3,7 @@ layout: post
 title: 用Python格式化MarkDown文件
 date:   2016-03-27 17:50:03
 categories: "Python"
+catalog: true
 tags: 
     - Python
 	- MD
@@ -62,7 +63,8 @@ tags:
 	# Generate MarkDown header
 
 	def GenerateHeader(title, categories, tags):
-		header = ["---","layout: post", "title: ", "date:   ", "categories: ", "tags: ", "---", "", "* content", "{:toc}", ""]
+		header = ["---","layout: post", "title: ", "date:   ", "categories: ", "catalog: true
+tags: ", "---", "", "* content", "{:toc}", ""]
 		header[2] += title
 		
 		# Get current time

@@ -3,6 +3,7 @@ layout: post
 title: "MFC ActiveX新增属性页 控件不响应"
 date:   2015-05-31 00:18:23 
 categories: "MFC"
+catalog: true
 tags: 
     - MFC
 	- Activex

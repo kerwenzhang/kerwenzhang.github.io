@@ -3,6 +3,7 @@ layout: post
 title: Python GUI 编程各种实现的对比
 date:   2016-04-04 19:30:03
 categories: "Python"
+catalog: true
 tags: 
     - Python
 ---
