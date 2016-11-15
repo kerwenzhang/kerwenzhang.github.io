@@ -9,8 +9,7 @@ tags:
 	- ListControl
 ---
 
-* content
-{:toc}
+
 
 以下未经说明，listctrl默认view 风格为report   
 

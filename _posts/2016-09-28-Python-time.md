@@ -9,8 +9,7 @@ tags:
     - Python
 ---
 
-* content
-{:toc}
+
 
 ## datetime
 

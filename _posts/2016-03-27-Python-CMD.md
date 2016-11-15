@@ -8,8 +8,7 @@ tags:
     - Python
 ---
 
-* content
-{:toc}
+
 
 本篇将介绍python中sys, getopt模块处理命令行参数   
 如果想对python脚本传参数，python中对应的argc, argv(c语言的命令行参数)是什么呢？   

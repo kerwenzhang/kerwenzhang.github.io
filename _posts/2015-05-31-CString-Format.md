@@ -10,8 +10,7 @@ tags:
 	- Format
 ---
 
-* content
-{:toc}
+
 
 %c 单个字符     
 %d 十进制整数(int)     

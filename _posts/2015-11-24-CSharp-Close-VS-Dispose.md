@@ -8,8 +8,7 @@ tags:
     - C#
 ---
 
-* content
-{:toc}
+
 
 Form.Close() sends the proper windows messages to shut down the win32 window. During that process, if the form was not shown modally, Dispose is called on the form. Disposing the form frees up the unmanaged resources that the form is holding onto.     
 

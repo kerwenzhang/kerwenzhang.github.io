@@ -8,8 +8,7 @@ tags:
     - Python
 ---
 
-* content
-{:toc}
+
 
 ## 安装Python
 

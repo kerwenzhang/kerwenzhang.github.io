@@ -8,7 +8,6 @@ tags:
     - Python
 ---
 
-* content
-{:toc}
+
 
 http://www.cnblogs.com/sysu-blackbear/p/3830402.html

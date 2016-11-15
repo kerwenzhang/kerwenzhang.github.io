@@ -9,8 +9,7 @@ tags:
 	- C++
 ---
 
-* content
-{:toc}
+
 
 
 原文地址：http://blog.sina.com.cn/s/blog_6568e7880100p77y.html     

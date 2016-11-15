@@ -9,8 +9,7 @@ tags:
 	- Message
 ---
 
-* content
-{:toc}
+
 
 原文地址:http://www.cnblogs.com/xulei/archive/2007/11/22/968170.html   
 

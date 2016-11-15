@@ -8,8 +8,7 @@ tags:
     - Python
 ---
 
-* content
-{:toc}
+
 
 Python在读取带有中文的文本时，经常会报以下错误：   
 

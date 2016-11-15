@@ -9,8 +9,7 @@ tags:
 	- Clear Case
 ---
 
-* content
-{:toc}
+
 
 ## Merge
 

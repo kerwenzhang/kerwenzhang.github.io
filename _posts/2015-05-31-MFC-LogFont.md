@@ -9,8 +9,7 @@ tags:
 	- Font
 ---
 
-* content
-{:toc}
+
 
 实际上就是逻辑字体和物理字体的区别   
 LOGFONT: 一个结构，用来逻辑上表达一个字体，比如LOGFONT.lfFaceName是字体的名字 HFONT: 一个句柄，相当于表示内存中的一个字体对象，它可以马上拿来用 CFont: 是mfc对于HFONT的一种封装 可以说LOGFONT是一种墨水的名字，比如英雄牌，比较抽象 而HFONT表示实实在在的一瓶墨水，打开瓶盖就可以用 CFont只是把一瓶墨水外面包了一层纸，其实它还是一瓶墨水     

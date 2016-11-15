@@ -8,8 +8,7 @@ tags:
     - Python
 ---
 
-* content
-{:toc}
+
 
 python中对文件、文件夹（文件操作函数）的操作需要涉及到os模块和shutil模块。   
 

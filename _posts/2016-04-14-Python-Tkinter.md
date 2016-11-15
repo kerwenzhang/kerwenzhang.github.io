@@ -9,8 +9,7 @@ tags:
     - Tkinter
 ---
 
-* content
-{:toc}
+
 
 http://www.runoob.com/python/python-gui-tkinter.html   
 

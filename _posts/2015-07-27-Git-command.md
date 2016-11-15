@@ -8,8 +8,7 @@ tags:
     - Github
 ---
 
-* content
-{:toc}
+
 
   Git add .<br />   
   Git commit -m "comments"<br />   

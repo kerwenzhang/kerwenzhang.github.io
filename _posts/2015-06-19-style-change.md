@@ -8,8 +8,7 @@ tags:
     - Type
 ---
 
-* content
-{:toc}
+
 
 ## CString与int  
 

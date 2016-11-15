@@ -8,8 +8,7 @@ tags:
     - Python
 ---
 
-* content
-{:toc}
+
 
 Python入门教程， 提供了很多的实例，但是基于Python2.0 的， 目前Python已经更新到Python3.5，里面的一些函数（如Print）已经不一样了。   
 [笨办法学Python](http://www.jb51.net/shouce/Pythonbbf/latest/index.html)   

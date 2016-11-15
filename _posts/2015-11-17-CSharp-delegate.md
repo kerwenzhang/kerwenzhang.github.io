@@ -8,8 +8,7 @@ tags:
     - C#
 ---
 
-* content
-{:toc}
+
 
 原文地址： http://www.cnblogs.com/wudiwushen/archive/2010/04/20/1703368.html     
 

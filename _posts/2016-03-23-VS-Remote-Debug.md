@@ -9,8 +9,7 @@ tags:
     - VS
 ---
 
-* content
-{:toc}
+
 
 第一步：将vs工具里的Remote Debugger文件夹拷贝到目标机器。大致的目录应该是：C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\Remote Debugger，或者从开始菜单那里可以找到它的快捷方式   
 

@@ -9,8 +9,7 @@ tags:
     - Install
 ---
 
-* content
-{:toc}
+
 
 ## 单文件模块
 
