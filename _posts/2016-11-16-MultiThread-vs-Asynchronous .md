@@ -4,11 +4,13 @@ title: 异步，多线程和并行的区别
 date:   2016-11-16 16:03:14
 categories: "C#"
 catalog: true
-tags:
+tags: 
     - C#
-	- Thread
-	- Asynchronous
+    - Thread
+    - Asynchronous
 ---
+
+
 
 首先， Asynchronized （异步）和 Synchronised （同步）是相对应的。    
 
