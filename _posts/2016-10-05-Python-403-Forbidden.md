@@ -11,6 +11,7 @@ tags:
 
 
 
+
 问题:   
 
  urllib.request.urlopen() 方法经常会被用来打开一个网页的源代码,然后会去分析这个页面源代码,但是对于有的网站使用这种方法时会抛出"HTTP Error 403: Forbidden"异常   
