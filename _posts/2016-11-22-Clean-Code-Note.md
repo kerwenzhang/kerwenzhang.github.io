@@ -28,7 +28,8 @@ tags:
 变量、函数或类的名称应该已经答复了所有的大问题。它该告诉你，它为什么会存在，它做什么事，应该怎么用。<b>如果名称需要注释来补充，那就不算是名副其实。</b>  
 代码示例：
 
-	public List<int[]> getThem() {
+	public List<int[]> getThem() 
+	{
 		List<int[]> list1 = new ArrayList<int[]>();
 		for (int[] x: theList)
 			if (x[0] == 4)
@@ -90,29 +91,40 @@ if语句、else语句、while语句等，其中的代码块应该只有一行。
 
 #### 使用异常替代返回错误代码
 
-	if (deletePage(page) == E_OK) {
-		if (registry.deleteReference(page.name) == E_OK) {
-			if (configKeys.deleteKey(page.name.makeKey()) == E_OK) {
+	if (deletePage(page) == E_OK) 
+	{
+		if (registry.deleteReference(page.name) == E_OK) 
+		{
+			if (configKeys.deleteKey(page.name.makeKey()) == E_OK) 
+			{
 				logger.log("page deleted");
-			} else {
+			} 
+			else 
+			{
 				logger.log("configKey not deleted");
 			}
-		} else {
+		} 
+		else 
+		{
 			logger.log("deleteReference from registry failed");
 		}
-	} else {
+	} 
+	else 
+	{
 		logger.log("delete failed");
 		return E_ERROR;
 	}
 	
 如果使用异常替代返回错误码， 错误处理代码就能从主路径代码中分离出来，得到简化：  
 
-	try {
+	try 
+	{
 		deletePage(page);
 		registry.deleteReference(page.name);
 		configKeys.deleteKey(page.name.makeKey());
 	}
-	catch (Exception e) {
+	catch (Exception e) 
+	{
 		logger.log(e.getMessage());
 	}
 
@@ -120,21 +132,26 @@ if语句、else语句、while语句等，其中的代码块应该只有一行。
 
 Try/Catch代码块会搞乱代码结构，把错误处理与正常流程混为一谈。最好把try和catch代码块的主体部分抽离出来，另外形成函数.  
 
-	public void delete(Page page) {
-		try {
+	public void delete(Page page) 
+	{
+		try 
+		{
 			deletePageAndAllReferences(page);
 		}
-		catch (Exception e) {
+		catch (Exception e) 
+		{
 			logError(e);
 		}
 	}
 	
-	private void deletePageAndAllReferences(Page page) throws Exception {
+	private void deletePageAndAllReferences(Page page) throws Exception 
+	{
 		deletePage(page);
 		registry.deleteReference(page.name);
 		configKeys.deleteKey(page.name.makeKey());
 	}
 	
-	private void logError(Exception e) {
+	private void logError(Exception e) 
+	{
 		logger.log(e.getMessage());
 	}
