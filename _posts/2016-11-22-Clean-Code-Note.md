@@ -61,3 +61,18 @@ if语句、else语句、while语句等，其中的代码块应该只有一行。
 如果函数只是做了该函数名下同一抽象层上的步骤，则函数只做了一件事。  
 
 要判断函数是否不止做了一件事，还有一个方法，就是看<b>是否能再拆出一个函数，该函数不仅只是单纯地重新诠释其实现</b>。  
+
+#### 每个函数一个抽象层级
+
+<b>自顶向下读代码： 向下规则</b>   
+
+程序就像是一系列To起头的段落, 每一段都描述当前抽象层级， 并引用位于下一抽象层级的后续To起头段落。  
+
+<I>To include the setups and teardowns, we include setups, then we inlude the test page content, and then we include the teardowns.  
+
+To include the setups, we include the suite setup if this is a suite, then we include the regular setup.  
+
+To include the suite setup, we search the parent and add an include statement.  
+
+To search the parent...</I>   
+
