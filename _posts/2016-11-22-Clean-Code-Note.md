@@ -76,3 +76,65 @@ if语句、else语句、while语句等，其中的代码块应该只有一行。
 
 <I>To search the parent...</I>   
 
+#### 函数参数
+
+最理想的参数数量是零， 其次是一， 再次是二， 应尽量避免三。  
+
+标识参数丑陋不堪。向函数传入布尔值显示的表明本函数不止做一件事。如果标识为true将会这样做， 标识为false则会那样做。  
+
+<b>如果函数看来需要两个、三个或三个以上参数， 就说明其中一些参数应该封装为类了。</b>
+
+#### 分隔指令与询问
+
+函数要么做什么事，要么回答什么事， 但两者不可兼得。
+
+#### 使用异常替代返回错误代码
+
+	if (deletePage(page) == E_OK) {
+		if (registry.deleteReference(page.name) == E_OK) {
+			if (configKeys.deleteKey(page.name.makeKey()) == E_OK) {
+				logger.log("page deleted");
+			} else {
+				logger.log("configKey not deleted");
+			}
+		} else {
+			logger.log("deleteReference from registry failed");
+		}
+	} else {
+		logger.log("delete failed");
+		return E_ERROR;
+	}
+	
+如果使用异常替代返回错误码， 错误处理代码就能从主路径代码中分离出来，得到简化：  
+
+	try {
+		deletePage(page);
+		registry.deleteReference(page.name);
+		configKeys.deleteKey(page.name.makeKey());
+	}
+	catch (Exception e) {
+		logger.log(e.getMessage());
+	}
+
+#### 抽离 Try/Catch 代码块
+
+Try/Catch代码块会搞乱代码结构，把错误处理与正常流程混为一谈。最好把try和catch代码块的主体部分抽离出来，另外形成函数.  
+
+	public void delete(Page page) {
+		try {
+			deletePageAndAllReferences(page);
+		}
+		catch (Exception e) {
+			logError(e);
+		}
+	}
+	
+	private void deletePageAndAllReferences(Page page) throws Exception {
+		deletePage(page);
+		registry.deleteReference(page.name);
+		configKeys.deleteKey(page.name.makeKey());
+	}
+	
+	private void logError(Exception e) {
+		logger.log(e.getMessage());
+	}
