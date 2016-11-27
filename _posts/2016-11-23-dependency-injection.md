@@ -16,10 +16,8 @@ tags:
 
 #### 讨论会
 话说有一个叫IGame的游戏公司，正在开发一款ARPG游戏（动作&角色扮演类游戏，如魔兽世界、梦幻西游这一类的游戏）。一般这类游戏都有一个基本的功能，就是打怪（玩家攻击怪物，借此获得经验、虚拟货币和虚拟装备），并且根据玩家角色所装备的武器不同，攻击效果也不同。这天，IGame公司的开发小组正在开会对打怪功能中的某一个功能点如何实现进行讨论，他们面前的大屏幕上是这样一份需求描述的ppt：  
-
-
-
-图1.1 需求描述ppt
+![]http://ww3.sinaimg.cn/mw690/6c02e057gw1fa6m46i0cpg20e00ajjsl.gif 
+图1.1 需求描述ppt  
 
 各个开发人员，面对这份需求，展开了热烈的讨论，下面我们看看讨论会上都发生了什么。  
 
@@ -189,7 +187,7 @@ tags:
     
 程序运行结果如下：  
 
-
+![]http://ww2.sinaimg.cn/mw690/6c02e057gw1fa6m47agztg208106amx4.gif
 
 图1.2 小李程序的运行结果
 
@@ -213,8 +211,8 @@ Tip：OCP原则，即开放关闭原则，指设计应该对扩展开放，对�
 
 Tip：策略模式，英文名Strategy Pattern，指定义算法族，分别封装起来，让他们之间可以相互替换，此模式使得算法的变化独立于客户。
 
-小于边说，边画了一幅UML类图，用于直观表示他的思想。
-
+小于边说，边画了一幅UML类图，用于直观表示他的思想。 
+![]http://ww2.sinaimg.cn/mw690/6c02e057gw1fa6m497pkmj20ga0bbgmd.jpg
 
 图1.3 小于的设计
 
@@ -461,7 +459,7 @@ IGame公司的讨论会还在进行着，内容是非常精彩，不过我们先
 
 Setter注入（Setter Injection）是指在客户类中，设置一个服务类接口类型的数据成员，并设置一个Set方法作为注入点，这个Set方法接受一个具体的服务类实例为参数，并将它赋给服务类接口类型的数据成员。
 
-
+![]http://ww3.sinaimg.cn/mw690/6c02e057gw1fa6m4clq3mj20fq09s74t.jpg  
 图3.1 Setter注入示意
 
 上图展示了Setter注入的结构示意图，客户类ClientClass设置IServiceClass类型成员_serviceImpl，并设置Set_ServiceImpl方法作为注入点。Context会负责实例化一个具体的ServiceClass，然后注入到ClientClass里。
@@ -557,7 +555,7 @@ Setter注入（Setter Injection）是指在客户类中，设置一个服务类�
     
 运行结果如下：
 
-
+![]http://ww3.sinaimg.cn/mw690/6c02e057gw1fa6m4e99xgj205402w747.jpg
 图3.2 Setter注入运行结果
 
 ##### 构造注入
@@ -566,7 +564,7 @@ Setter注入（Setter Injection）是指在客户类中，设置一个服务类�
 
 构造注入（Constructor Injection）是指在客户类中，设置一个服务类接口类型的数据成员，并以构造函数为注入点，这个构造函数接受一个具体的服务类实例为参数，并将它赋给服务类接口类型的数据成员。
 
-
+![]http://ww1.sinaimg.cn/mw690/6c02e057gw1fa6m4f5gejj20fq08n3z0.jpg
 图3.3 构造注入示意
 
 图3.3是构造注入的示意图，可以看出，与Setter注入很类似，只是注入点由Setter方法变成了构造方法。这里要注意，由于构造注入只能在实例化客户类时注入一次，所以一点注入，程序运行期间是没法改变一个客户类对象内的服务类实例的。
@@ -610,7 +608,7 @@ Setter注入（Setter Injection）是指在客户类中，设置一个服务类�
 
 下面给一个具体的例子，现在我们假设有个程序，既可以使用Windows风格外观，又可以使用Mac风格外观，而内部业务是一样的。
 
-
+![]http://ww4.sinaimg.cn/mw690/6c02e057gw1fa6m4i21z3j20iz0jpdhv.jpg
 图3.4 依赖获取示意
 
 上图乍看有点复杂，不过如果读者熟悉Abstract Factory模式，应该能很容易看懂，这就是Abstract Factory在实际中的一个应用。这里的Factory Container作为获取点，是一个静态类，它的“Type构造函数”依据外部的XML配置文件，决定实例化哪个工厂。下面还是来看示例代码。由于不同组件的代码是相似的，这里只给出Button组件的示例代码，完整代码请参考文末附上的完整源程序。
@@ -803,12 +801,12 @@ Setter注入（Setter Injection）是指在客户类中，设置一个服务类�
     
 可以看到，这里我们将配置设置为Mac风格，编译运行上述代码，运行结果如下：
 
-
+![]http://ww2.sinaimg.cn/mw690/6c02e057gw1fa6m4iqyvtj205s03b0sq.jpg
 图3.5 配置Mac风格后的运行结果
 
 现在，我们不动程序，仅仅将配置文件中的“Mac”改为Windows，运行后结果如下：
 
-
+![]http://ww3.sinaimg.cn/mw690/6c02e057gw1fa6m4k4knqj205r02zaa3.jpg
 图3.6 配置为Windows风格后的运行结果
 
 从运行结果看出，我们仅仅通过修改配置文件，就改变了整个程序的行为（我们甚至没有重新编译程序），这就是多态性的威力，也是依赖注入效果。
