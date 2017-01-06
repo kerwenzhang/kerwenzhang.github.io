@@ -46,10 +46,10 @@ tags:
 工厂模式定义了一个创建对象的接口， 由子类决定要实例化的类是哪一个。 工厂方法让类把实例化推迟到子类。
 
     public abstract class Pizza
-	{
+    {
         protected string name;
         public virtual string Bake()
-		{
+        {
         }
     }
     
@@ -64,33 +64,33 @@ tags:
     }
     
     public abstract class PizzaStore
-	{
+    {
         public Pizza OrderPizza(string type)
-		{
-			Pizza pizza = CreatePizza(type);
+        {
+            Pizza pizza = CreatePizza(type);
 
-			pizza.Bake();
+            pizza.Bake();
 
-			return pizza;
-		}
+            return pizza;
+        }
         
         protected abstract Pizza CreatePizza(string type);
     }
     
     public class PizzaStoreI : PizzaStore
-	{
+    {
         protected override Pizza CreatePizza(string type)
-		{
-			if(type.Equals("A"))
-			{
-				return new Pizza_KindA();
-			}
+        {
+            if(type.Equals("A"))
+            {
+                return new Pizza_KindA();
+            }
             if(type.Equals("B"))
             {
                 return new Pizza_KindB();
             }
-			else return null;
-		}
+            else return null;
+        }
     }
     
     int main()
