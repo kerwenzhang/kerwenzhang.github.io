@@ -111,8 +111,9 @@ tags:
     public interface Veggie
     {
     }
+    
     //四种具体产品：北方水果，热带水果，北方蔬菜，热带蔬菜
-    /Northern Fruit
+    /北方水果
     public class NorthernFruit implements Fruit
     {
         private String name;
@@ -120,7 +121,7 @@ tags:
         {
         }
     }
-    //TropicalFruit
+    //热带水果
     public class TropicalFruit implements Fruit
     {
         private String name;
@@ -129,7 +130,7 @@ tags:
         }
     }
     
-    //NorthernVeggie
+    //北方蔬菜
     public class NorthernVeggie implements Veggie
     {
         private String name;
@@ -137,7 +138,7 @@ tags:
         {
         }    
     }
-    //TropicalVeggie
+    //热带蔬菜
     public class TropicalVeggie implements Veggie
     {
         private String name;
@@ -176,5 +177,10 @@ tags:
         {
             return new TropicalVeggie(name);
         }
+    }
+    
+    int main()
+    {
+        NorthernGardener north = new NorthernGardener();
     }
     
