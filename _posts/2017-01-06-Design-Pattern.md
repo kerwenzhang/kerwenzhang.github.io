@@ -98,3 +98,83 @@ tags:
         PizzaStore store = new PizzaStoreI();
         store.OrderPizza("A");
     }
+
+
+## 抽象工厂模式
+
+抽象工厂模式提供一个接口， 用于创建相关或依赖对象的家族， 而不需要明确指定具体类。
+
+    //两种抽象产品：水果、蔬菜
+    public interface Fruit
+    {
+    }
+    public interface Veggie
+    {
+    }
+    //四种具体产品：北方水果，热带水果，北方蔬菜，热带蔬菜
+    /Northern Fruit
+    public class NorthernFruit implements Fruit
+    {
+        private String name;
+        public NorthernFruit(String name)
+        {
+        }
+    }
+    //TropicalFruit
+    public class TropicalFruit implements Fruit
+    {
+        private String name;
+        public TropicalFruit(String name)
+        {
+        }
+    }
+    
+    //NorthernVeggie
+    public class NorthernVeggie implements Veggie
+    {
+        private String name;
+        public NorthernVeggie(String name)
+        {
+        }    
+    }
+    //TropicalVeggie
+    public class TropicalVeggie implements Veggie
+    {
+        private String name;
+        public TropicalVeggie(String name)
+        {
+        }   
+    }
+    
+    //抽象工厂角色
+    public interface Gardener
+    {
+        public Fruit createFruit(String name);
+        public Veggie createVeggie(String name);
+    }
+    
+    //具体工厂角色：北方工厂
+    public class NorthernGardener implements Gardener
+    {
+        public Fruit createFruit(String name)
+        {
+            return new NorthernFruit(name);
+        }
+        public Veggie createVeggie(String name)
+        {
+            return new NorthernVeggie(name);
+        }
+    }
+    //热带工厂
+    public class TropicalGardener implements Gardener
+    {
+        public Fruit createFruit(String name)
+        {
+            return new TropicalFruit(name);
+        }
+        public Veggie createVeggie(String name)
+        {
+            return new TropicalVeggie(name);
+        }
+    }
+    
