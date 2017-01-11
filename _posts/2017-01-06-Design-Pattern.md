@@ -182,5 +182,7 @@ tags:
     int main()
     {
         NorthernGardener north = new NorthernGardener();
+        north.createFruit();
+        north.createVeggie();
     }
     
