@@ -186,3 +186,134 @@ tags:
         north.createVeggie();
     }
     
+## 策略模式
+
+定义了算法家族， 分别封装起来， 让它们之间可以互相替换。 从概念上来看， 所有这些算法完成的都是相同的工作， 只是实现不同， 它可以以相同的方式调用所有的算法， 减少了各种算法类与使用算法类之间的耦合。 此模式让算法的变化， 不会影响到使用算法的客户。
+
+当不同的行为堆砌在一个类中时， 就很难避免使用条件语句来选择合适的行为。 将这些行为封装在一个个独立的Strategy类中， 可以在使用这些行为的类中消除条件语句。
+
+在实践中， 我们可以用它来封装几乎任何类型的规则， 只要在分析过程中听到需要在不同时间应用不同的业务规则， 就可以考虑使用策略模式处理这种变化的可能性。
+
+    abstract class CashBase
+    {
+        public abstract double acceptCash(double money);
+    }
+    
+    class CashNormal : CashBase        // 正常销售
+    {
+        public override double acceptCash(double money)
+        {
+            return money;
+        } 
+    }
+    
+    class CashRebate : CashBase    // 打折促销
+    {
+        private double moneyRebate = 1d;
+        public CashRebate(string moneyRebate)
+        {
+            this.moneyRebate = double.Parse(moneyRebate);
+        }
+
+        public override double acceptCash(double money)
+        {
+            return money * moneyRebate;
+        } 
+    }
+    
+    class CashReturn : CashBase    // 返利
+    {
+        private double moneyCondition = 0.0d;
+        private double moneyReturn = 0.0d;
+        
+        public CashReturn(string moneyCondition,string moneyReturn)
+        {
+            this.moneyCondition = double.Parse(moneyCondition);
+            this.moneyReturn = double.Parse(moneyReturn);
+        }
+
+        public override double acceptCash(double money)
+        {
+            double result = money;
+            if (money >= moneyCondition)
+                result=money- Math.Floor(money / moneyCondition) * moneyReturn;
+                
+            return result;
+        } 
+    }
+    
+    //收费策略Context
+    class CashContext
+    {
+        private CashBase cs;
+
+        public CashContext(CashBase csuper)
+        {
+            this.cs = csuper;
+        }
+
+        //得到现金促销计算结果（利用了多态机制，不同的策略行为导致不同的结果）
+        public double GetResult(double money)
+        {
+            return cs.acceptCash(money);
+        }
+    }
+    
+    int main()
+    {
+        CashContext cc = null;
+        switch (type)
+        {
+            case "正常收费":
+                cc = new CashContext(new CashNormal());
+                break;
+            case "满300返100":
+                cc = new CashContext(new CashReturn("300", "100"));
+                break;
+            case "打8折":
+                cc = new CashContext(new CashRebate("0.8"));
+                break;
+        }
+        double result = cc.GetResult(100);
+    }
+    
+策略模式将选择的时机移到了客户端，可以通过和工厂模式结合实现优化：  
+
+    ...
+    //收费策略与工厂结合
+    class CashContext
+    {
+        CashSuper cs = null;
+
+        //根据条件返回相应的对象
+        public CashContext(string type)
+        {
+            switch (type)
+            {
+                case "正常收费":
+                    CashNormal cs0 = new CashNormal();
+                    cs = cs0;
+                    break;
+                case "满300返100":
+                    CashReturn cr1 = new CashReturn("300", "100");
+                    cs = cr1;
+                    break;
+                case "打8折":
+                    CashRebate cr2 = new CashRebate("0.8");
+                    cs = cr2;
+                    break;
+            }
+        }
+
+        public double GetResult(double money)
+        {
+            return cs.acceptCash(money);
+        }
+    }
+    
+    int main()
+    {
+        CashContext csuper = new CashContext(type);
+        double totalPrices = csuper.GetResult(100);
+    }
+    
