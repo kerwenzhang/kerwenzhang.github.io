@@ -2,10 +2,10 @@
 layout: post
 title: 设计模式
 date:   2017-01-06 13:30:14
-categories: "C#"
+categories: "Design Pattern"
 catalog: true
 tags: 
-    - C#
+    - Design Pattern
 ---
 
 
