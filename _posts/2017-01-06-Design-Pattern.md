@@ -102,7 +102,7 @@ tags:
 
 ## 抽象工厂模式
 
-抽象工厂模式提供一个接口， 用于创建相关或依赖对象的家族， 而不需要明确指定具体类。
+抽象工厂模式提供一个接口， 用于创建相关或依赖对象的家族， 而不需要明确指定具体类。  
 
     //两种抽象产品：水果、蔬菜
     public interface Fruit
@@ -188,11 +188,11 @@ tags:
     
 ## 策略模式
 
-定义了算法家族， 分别封装起来， 让它们之间可以互相替换。 从概念上来看， 所有这些算法完成的都是相同的工作， 只是实现不同， 它可以以相同的方式调用所有的算法， 减少了各种算法类与使用算法类之间的耦合。 此模式让算法的变化， 不会影响到使用算法的客户。
+定义了算法家族， 分别封装起来， 让它们之间可以互相替换。 从概念上来看， 所有这些算法完成的都是相同的工作， 只是实现不同， 它可以以相同的方式调用所有的算法， 减少了各种算法类与使用算法类之间的耦合。 此模式让算法的变化， 不会影响到使用算法的客户。  
 
-当不同的行为堆砌在一个类中时， 就很难避免使用条件语句来选择合适的行为。 将这些行为封装在一个个独立的Strategy类中， 可以在使用这些行为的类中消除条件语句。
+当不同的行为堆砌在一个类中时， 就很难避免使用条件语句来选择合适的行为。 将这些行为封装在一个个独立的Strategy类中， 可以在使用这些行为的类中消除条件语句。  
 
-在实践中， 我们可以用它来封装几乎任何类型的规则， 只要在分析过程中听到需要在不同时间应用不同的业务规则， 就可以考虑使用策略模式处理这种变化的可能性。
+在实践中， 我们可以用它来封装几乎任何类型的规则， 只要在分析过程中听到需要在不同时间应用不同的业务规则， 就可以考虑使用策略模式处理这种变化的可能性。  
 
     abstract class CashBase
     {
@@ -315,5 +315,77 @@ tags:
     {
         CashContext csuper = new CashContext(type);
         double totalPrices = csuper.GetResult(100);
+    }
+    
+## 装饰模式
+
+动态的给一个对象添加一些额外的职责， 就增加功能来说， 装饰模式比生成子类更为灵活。  
+装饰模式是为已有功能动态地添加更多功能的一种方式。   
+当系统需要新功能的时候， 是向旧的类中添加新的代码。 这些新加的代码通常装饰了原有类的核心职责或主要行为。 在主类中添加新的字段， 新的方法和逻辑， 会增加了主类的复杂度。 而这些新加入的东西仅仅是为了满足一些只在某种特定情况下会执行的特殊行为的需要。 而装饰模式提供了一个非常好的解决方案， 它把每个要装饰的功能放在单独的类中，并让这个类包装它所要装饰的对象。  
+
+    class Person
+    {
+        public Person()
+        { }
+
+        private string name;
+        public Person(string name)
+        {
+            this.name = name;
+        }
+
+        public virtual void Show()
+        {
+            Console.WriteLine("装扮的{0}", name);
+        }
+    }
+    
+    class Finery : Person
+    {
+        protected Person component;
+
+        //打扮
+        public void Decorate(Person component)
+        {
+            this.component = component;
+        }
+
+        public override void Show()
+        {
+            if (component != null)
+            {
+                component.Show();
+            }
+        }
+    }
+    
+    class TShirts : Finery
+    {
+        public override void Show()
+        {
+            Console.Write("大T恤 ");
+            base.Show();
+        }
+    }
+
+    class BigTrouser : Finery
+    {
+        public override void Show()
+        {
+            Console.Write("垮裤 ");
+            base.Show();
+        }
+    }
+    
+    int main()
+    {
+        Person person = new Person("小菜");
+        
+        BigTrouser trouser = new BigTrouser();
+        TShirts tShirt = new TShirts();
+        
+        trouser.Decorate(person);
+        tShirt.Decorate(trouser);
+        tShirt.Show();
     }
     
