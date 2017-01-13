@@ -389,4 +389,92 @@ tags:
         tShirt.Show();
     }
     
-## 代理模式
+## 代理模式(Proxy)
+
+为其他对象提供一种代理以控制对这个对象的访问。  
+代理模式其实就是在访问对象时引入一定程度的间接性，因为这种间接性， 可以附加多种用途。  
+
+    class SchoolGirl
+    {
+        private string name;
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+    }
+    
+    //送礼物
+    interface GiveGift
+    {
+        void GiveDolls();
+        void GiveFlowers();
+        void GiveChocolate();
+    }
+    
+    // 追求者
+    class Pursuit : GiveGift
+    {
+        SchoolGirl mm;
+        public Pursuit(SchoolGirl mm)
+        {
+            this.mm = mm;
+        }
+        public void GiveDolls()
+        {
+            Console.WriteLine(mm.Name + " 送你洋娃娃");
+        }
+
+        public void GiveFlowers()
+        {
+            Console.WriteLine(mm.Name + " 送你鲜花");
+        }
+
+        public void GiveChocolate()
+        {
+            Console.WriteLine(mm.Name + " 送你巧克力");
+        }
+    }
+    
+    class Proxy : GiveGift
+    {
+        Pursuit gg;
+        public Proxy(SchoolGirl mm)
+        {
+            gg = new Pursuit(mm);
+        }
+
+
+        public void GiveDolls()
+        {
+            gg.GiveDolls();
+        }
+
+        public void GiveFlowers()
+        {
+            gg.GiveFlowers();
+        }
+
+        public void GiveChocolate()
+        {
+            gg.GiveChocolate();
+        }
+    }
+    
+    int Main(string[] args)
+    {
+        SchoolGirl jiaojiao = new SchoolGirl();
+        jiaojiao.Name = "李娇娇";
+
+        Proxy daili = new Proxy(jiaojiao);
+
+        daili.GiveDolls();
+        daili.GiveFlowers();
+        daili.GiveChocolate();
+    }
+    
+用途：  
+远程代理， 也就是为一个对象在不同的地址空间提供局部代表。 这样可以隐藏一个对象存在于不同地址空间的事实。  
+虚拟代理， 是根据需要创建开销很大的对象。 通过它来存放实例化需要很长时间的真实对象。
+安全代理， 用来控制真实对象访问时的权限。
+智能指引， 是指当调用真实的对象时， 代理处理另外一些事。
