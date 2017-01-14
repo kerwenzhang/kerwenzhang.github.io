@@ -479,3 +479,156 @@ tags:
 虚拟代理， 是根据需要创建开销很大的对象。 通过它来存放实例化需要很长时间的真实对象。  
 安全代理， 用来控制真实对象访问时的权限。  
 智能指引， 是指当调用真实的对象时， 代理处理另外一些事。  
+
+## 原型模式
+
+用原型实例指定创建对象的种类， 并且通过拷贝这些原型创建新的对象。  
+原型模式其实就是从一个对象再创建另外一个可定制的对象， 而且不需知道任何创建的细节。  
+一般在初始化的信息不发生变化的情况下， 克隆是最好的办法。 这既隐藏了对象创建的细节， 又对性能是大大的提高。  
+
+浅复制：  
+
+    //简历
+    class Resume : ICloneable
+    {
+        private string name;
+        private string sex;
+        private string age;
+
+        private WorkExperience work;
+
+        public Resume(string name)
+        {
+            this.name = name;
+            work = new WorkExperience();
+        }
+
+        //设置个人信息
+        public void SetPersonalInfo(string sex, string age)
+        {
+            this.sex = sex;
+            this.age = age;
+        }
+        //设置工作经历
+        public void SetWorkExperience(string workDate, string company)
+        {
+            work.WorkDate = workDate;
+            work.Company = company;
+        }
+
+        public Object Clone()
+        {
+            return (Object)this.MemberwiseClone();
+        }
+
+    }
+
+    //工作经历
+    class WorkExperience
+    {
+        private string workDate;
+        public string WorkDate
+        {
+            get { return workDate; }
+            set { workDate = value; }
+        }
+        private string company;
+        public string Company
+        {
+            get { return company; }
+            set { company = value; }
+        }
+    }
+    
+    int main()
+    {
+        Resume a = new Resume("大鸟");
+        a.SetPersonalInfo("男", "29");
+        a.SetWorkExperience("1998-2000", "XX公司");
+
+        Resume b = (Resume)a.Clone();
+        b.SetWorkExperience("1998-2006", "YY企业");
+    }
+    
+深复制：  
+
+    //简历
+    class Resume : ICloneable
+    {
+        private string name;
+        private string sex;
+        private string age;
+
+        private WorkExperience work;
+
+        public Resume(string name)
+        {
+            this.name = name;
+            work = new WorkExperience();
+        }
+
+        private Resume(WorkExperience work)
+        {
+            this.work = (WorkExperience)work.Clone();
+        }
+
+        //设置个人信息
+        public void SetPersonalInfo(string sex, string age)
+        {
+            this.sex = sex;
+            this.age = age;
+        }
+        //设置工作经历
+        public void SetWorkExperience(string workDate, string company)
+        {
+            work.WorkDate = workDate;
+            work.Company = company;
+        }
+
+        public Object Clone()
+        {
+            Resume obj = new Resume(this.work);
+
+            obj.name = this.name;
+            obj.sex = this.sex;
+            obj.age = this.age;
+
+
+            return obj;
+        }
+
+    }
+
+    //工作经历
+    class WorkExperience : ICloneable
+    {
+        private string workDate;
+        public string WorkDate
+        {
+            get { return workDate; }
+            set { workDate = value; }
+        }
+        private string company;
+        public string Company
+        {
+            get { return company; }
+            set { company = value; }
+        }
+
+        public Object Clone()
+        {
+            return (Object)this.MemberwiseClone();
+        }
+    }
+    
+    static void Main(string[] args)
+    {
+        Resume a = new Resume("大鸟");
+        a.SetPersonalInfo("男", "29");
+        a.SetWorkExperience("1998-2000", "XX公司");
+
+        Resume b = (Resume)a.Clone();
+        b.SetWorkExperience("1998-2006", "YY企业");
+    }
+    
+    
