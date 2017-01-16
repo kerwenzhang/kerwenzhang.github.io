@@ -635,3 +635,88 @@ tags:
 
 定义一个操作中的算法的骨架， 而将一些步骤延迟到子类中。 模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。  
 模板方法模式是通过把不变行为搬移到超类， 去除子类中的重复代码来体现它的优势。
+
+## 外观模式(Facade)
+
+为子系统中的一组接口提供一个一致的界面， 此模式定义了一个高层接口， 这个接口使得这一子系统更加容易使用。  
+
+用途：  
+在设计初期阶段， 应该要有意识的将不同的两个层分离。 层与层之间建立外观Facade， 这样可以为复杂的子系统提供一个简单的接口， 使得耦合大大降低。  
+在开发阶段， 子系统旺旺因为不断的重构演化而变得越来越复杂。增加外观Facade可以提供一个简单的接口， 减少它们之间的依赖。  
+在维护一个遗留的大型系统时， 可能这个系统已经非常难以维护和扩展了， 为新系统开发一个外观Facade类， 来提供遗留代码的比较清晰简单的接口， 让新系统与Facade对象交互。  
+
+    //股票1
+    class Stock1
+    {
+        public void Sell()
+        {
+            Console.WriteLine(" 股票1卖出");
+        }
+        public void Buy()
+        {
+            Console.WriteLine(" 股票1买入");
+        }
+    }
+    
+    //国债1
+    class NationalDebt1
+    {
+        public void Sell()
+        {
+            Console.WriteLine(" 国债1卖出");
+        }
+        public void Buy()
+        {
+            Console.WriteLine(" 国债1买入");
+        }
+    }
+
+    //房地产1
+    class Realty1
+    {
+        public void Sell()
+        {
+            Console.WriteLine(" 房产1卖出");
+        }
+        public void Buy()
+        {
+            Console.WriteLine(" 房产1买入");
+        }
+    }
+    
+    class Fund
+    {
+        Stock1 gu1;
+        NationalDebt1 nd1;
+        Realty1 rt1;
+
+        public Fund()
+        {
+            gu1 = new Stock1();
+            nd1 = new NationalDebt1();
+            rt1 = new Realty1();
+        }
+
+        public void BuyFund()
+        {
+            gu1.Buy();
+            nd1.Buy();
+            rt1.Buy();
+        }
+
+        public void SellFund()
+        {
+            gu1.Sell();
+            nd1.Sell();
+            rt1.Sell();
+        }
+    }
+    
+    int Main(string[] args)
+    {
+
+        Fund jijin = new Fund();
+
+        jijin.BuyFund();
+        jijin.SellFund();
+    }
