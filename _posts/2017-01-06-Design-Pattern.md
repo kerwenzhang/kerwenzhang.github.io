@@ -720,3 +720,103 @@ tags:
         jijin.BuyFund();
         jijin.SellFund();
     }
+    
+## 建造者模式（Builder）
+
+将一个复杂对象的构建与它的表示分离， 使得同样的构建过程可以创建不同的表示。  
+主要是用于创建一些复杂的对象， 这些对象内部构建间的建造顺序通常是稳定的， 但对象内部的构建通常面临着复杂的变化。  
+建造者模式的好处就是使得建造代码与表示代码分离，由于建造者隐藏了该产品是如何组装的， 所以若需要改变一个产品的内部表示， 只需要再定义一个具体的建造者就可以了  
+建造者模式是在当创建复杂对象的算法应该独立于该对象的组成部分以及它们的装配方式时适用的模式。  
+
+
+    abstract class PersonBuilder
+    {
+        protected Graphics g;
+        protected Pen p;
+
+        public PersonBuilder(Graphics g, Pen p)
+        {
+            this.g = g;
+            this.p = p;
+        }
+
+        public abstract void BuildHead();
+        public abstract void BuildBody();
+        public abstract void BuildArmLeft();
+        ...
+    }
+
+    class PersonThinBuilder : PersonBuilder
+    {
+        public PersonThinBuilder(Graphics g, Pen p)
+            : base(g, p)
+        { }
+
+        public override void BuildHead()
+        {
+            g.DrawEllipse(p, 50, 20, 30, 30);
+        }
+
+        public override void BuildBody()
+        {
+            g.DrawRectangle(p, 60, 50, 10, 50);
+        }
+
+        public override void BuildArmLeft()
+        {
+            g.DrawLine(p, 60, 50, 40, 100);
+        }
+        ...
+    }
+
+    class PersonFatBuilder : PersonBuilder
+    {
+        public PersonFatBuilder(Graphics g, Pen p)
+            : base(g, p)
+        { }
+
+        public override void BuildHead()
+        {
+            g.DrawEllipse(p, 50, 20, 30, 30);
+        }
+
+        public override void BuildBody()
+        {
+            g.DrawEllipse(p, 45, 50,40, 50);
+        }
+
+        public override void BuildArmLeft()
+        {
+            g.DrawLine(p, 50, 50, 30, 100);
+        }
+        ....
+    }
+
+    class PersonDirector
+    {
+        private PersonBuilder pb;
+        public PersonDirector(PersonBuilder pb)
+        {
+            this.pb = pb;
+        }
+
+        public void CreatePerson()
+        {
+            pb.BuildHead();
+            pb.BuildBody();
+            pb.BuildArmLeft();
+            ...
+        }
+    }
+    
+    int main()
+    {
+        PersonThinBuilder ptb = new PersonThinBuilder(pictureBox1.CreateGraphics(), new pen());
+        PersonDirector pdThin = new PersonDirector(ptb);
+        pdThin.CreatePerson();
+
+        PersonFatBuilder pfb = new PersonFatBuilder(pictureBox2.CreateGraphics(), new pen());
+        PersonDirector pdFat = new PersonDirector(pfb);
+        pdFat.CreatePerson();
+    }
+    
