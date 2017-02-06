@@ -1043,4 +1043,96 @@ tags:
         ...
     }
     
+## 适配器模式(Adapter)
+
+将一个类的接口转换成客户希望的另外一个接口。 适配器模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。  
+系统的数据和行为都正确， 但接口不符时， 我们应该考虑用适配器， 目的是使控制范围之外的一个原有对象与某个接口匹配。 适配器模式主要应用于希望复用一些现存的类， 但是接口又与复用环境要求不一致的情况。  
+
+    //篮球运动员
+    abstract class Player
+    {
+        protected string name;
+        public Player(string name)
+        {
+            this.name = name;
+        }
+
+        public abstract void Attack();
+        public abstract void Defense();
+    }
+
+    //前锋
+    class Forwards : Player
+    {
+        public Forwards(string name)
+            : base(name)
+        {
+        }
+
+        public override void Attack()
+        {
+            Console.WriteLine("前锋 {0} 进攻", name);
+        }
+
+        public override void Defense()
+        {
+            Console.WriteLine("前锋 {0} 防守", name);
+        }
+    }
+    
+    //外籍中锋
+    class ForeignCenter
+    {
+        private string name;
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public void 进攻()
+        {
+            Console.WriteLine("外籍中锋 {0} 进攻", name);
+        }
+
+        public void 防守()
+        {
+            Console.WriteLine("外籍中锋 {0} 防守", name);
+        }
+    }
+
+    //翻译者
+    class Translator : Player
+    {
+        private ForeignCenter wjzf = new ForeignCenter();
+
+        public Translator(string name)
+            : base(name)
+        {
+            wjzf.Name = name;
+        }
+
+        public override void Attack()
+        {
+            wjzf.进攻();
+        }
+
+        public override void Defense()
+        {
+            wjzf.防守();
+        }
+    }
+    
+    static void Main(string[] args)
+    {
+        Player b = new Forwards("巴蒂尔");
+        b.Attack();
+        
+        Player ym = new Translator("姚明");
+        ym.Attack();
+        ym.Defense();
+
+        Console.Read();
+    }
+    
     
