@@ -932,3 +932,115 @@ tags:
         huhansan.Notify();
     }
     
+## 状态模式(State)
+
+当一个对象的内在状态改变时允许改变其行为， 这个对象看起来像是改变了其类。  
+状态模式主要解决的是当控制一个对象状态转换的条件表达式过于复杂时的情况。 把状态的判断逻辑转移到表示不同状态的一系列类当中， 可以把复杂的判断逻辑简化。  
+状态模式的好处是将与特定状态相关的行为局部化， 并且将不同状态的行为分割开来。  
+当一个对象的行为取决于它的状态， 并且它必须在运行时刻根据状态改变它的行为时， 就可以考虑使用状态模式了。  
+
+    //抽象状态
+    public abstract class State
+    {
+        public abstract void WriteProgram(Work w);
+    }
+
+    //上午工作状态
+    public class ForenoonState : State
+    {
+        public override void WriteProgram(Work w)
+        {
+            if (w.Hour < 12)
+            {
+                Console.WriteLine("当前时间：{0}点 上午工作，精神百倍", w.Hour);
+            }
+            else
+            {
+                w.SetState(new NoonState());
+                w.WriteProgram();
+            }
+        }
+    }
+
+    //中午工作状态
+    public class NoonState : State
+    {
+        public override void WriteProgram(Work w)
+        {
+            if (w.Hour < 13)
+            {
+                Console.WriteLine("当前时间：{0}点 饿了，午饭；犯困，午休。", w.Hour);
+            }
+            else
+            {
+                w.SetState(new AfternoonState());
+                w.WriteProgram();
+            }
+        }
+    }
+
+    //下午工作状态
+    public class AfternoonState : State
+    {
+        public override void WriteProgram(Work w)
+        {
+            if (w.Hour < 17)
+            {
+                Console.WriteLine("当前时间：{0}点 下午状态还不错，继续努力", w.Hour);
+            }
+            else
+            {
+                w.SetState(new EveningState());
+                w.WriteProgram();
+            }
+        }
+    }
+    ...
+    
+    //工作
+    public class Work
+    {
+        private State current;
+        public Work()
+        {
+            current = new ForenoonState();
+        }
+
+        private double hour;
+        public double Hour
+        {
+            get { return hour; }
+            set { hour = value; }
+        }
+
+        private bool finish = false;
+        public bool TaskFinished
+        {
+            get { return finish; }
+            set { finish = value; }
+        }
+
+
+        public void SetState(State s)
+        {
+            current = s;
+        }
+
+        public void WriteProgram()
+        {
+            current.WriteProgram(this);
+        }
+    }
+    
+    static void Main(string[] args)
+    {
+        //紧急项目
+        Work emergencyProjects = new Work();
+        emergencyProjects.Hour = 9;
+        emergencyProjects.WriteProgram();
+        emergencyProjects.Hour = 10;
+        emergencyProjects.WriteProgram();
+        ...
+    }
+    
+    
