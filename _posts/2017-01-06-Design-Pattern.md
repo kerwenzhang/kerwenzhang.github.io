@@ -1379,3 +1379,126 @@ Memento模式比较适用于功能比较复杂的， 但需要维护或记录属
         Console.Read();
     }
     
+## 迭代器模式（Iterator)
+
+迭代器模式提供一种方法顺序访问一个聚合对象中各个元素， 而又不暴露该对象的内部表示。  
+为遍历不同的聚合结构提供如开始、下一个、是否结束、当前哪一项等统一的接口。  
+迭代器模式分离了集合对象的遍历行为， 抽象出一个迭代器类来负责， 这样既可以做到不暴露集合的内部结构， 又可以让外部代码透明地访问集合内部的数据。  
+
+    abstract class Aggregate
+    {
+        public abstract Iterator CreateIterator();
+    }
+    
+    abstract class Iterator
+    {
+        public abstract object First();
+        public abstract object Next();
+        public abstract bool IsDone();
+        public abstract object CurrentItem();
+    }
+
+    class ConcreteAggregate : Aggregate
+    {
+        private IList<object> items = new List<object>();
+        public override Iterator CreateIterator()
+        {
+            return new ConcreteIterator(this);
+        }
+
+        public int Count
+        {
+            get { return items.Count; }
+        }
+
+        public object this[int index]
+        {
+            get { return items[index]; }
+            set { items.Insert(index, value); }
+        }
+    }    
+
+    class ConcreteIterator : Iterator
+    {
+        private ConcreteAggregate aggregate;
+        private int current = 0;
+
+        public ConcreteIterator(ConcreteAggregate aggregate)
+        {
+            this.aggregate = aggregate;
+        }
+
+        public override object First()
+        {
+            return aggregate[0];
+        }
+
+        public override object Next()
+        {
+            object ret = null;
+            current++;
+
+            if (current < aggregate.Count)
+            {
+                ret = aggregate[current];
+            }
+
+            return ret;
+        }
+
+        public override object CurrentItem()
+        {
+            return aggregate[current];
+        }
+
+        public override bool IsDone()
+        {
+            return current >= aggregate.Count ? true : false;
+        }
+    }
+    
+    static void Main(string[] args)
+    {
+        ConcreteAggregate a = new ConcreteAggregate();
+
+        a[0] = "大鸟";
+        a[1] = "小菜";
+        a[2] = "行李";
+        a[3] = "老外";
+        a[4] = "公交内部员工";
+        a[5] = "小偷";
+
+        Iterator i = new ConcreteIterator(a);
+        object item = i.First();
+        while (!i.IsDone())
+        {
+            Console.WriteLine("{0} 请买车票!", i.CurrentItem());
+            i.Next();
+        }
+        Console.Read();
+    }
+    
+## 单例模式（Singleton)
+
+保证一个类仅有一个实例， 并提供一个访问它的全局访问点。  
+
+    public class FormToolbox : Form
+    {
+        private static FormToolbox ftb = null;
+
+        private  FormToolbox()
+        {
+            InitializeComponent();
+        }
+
+        public static FormToolbox GetInstance()
+        {
+            if (ftb == null || ftb.IsDisposed)
+            {
+                ftb = new FormToolbox();
+            }
+            return ftb;
+        }
+    }
+    
+## 桥接模式
