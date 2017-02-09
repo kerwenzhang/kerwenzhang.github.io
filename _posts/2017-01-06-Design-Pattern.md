@@ -1608,4 +1608,272 @@ Memento模式比较适用于功能比较复杂的， 但需要维护或记录属
         Console.Read();
     }
     
+## 命令模式(Command)
+
+将一个请求封装为一个对象， 从而使你可用不同的请求对客户进行参数化； 对请求排队或记录请求日志， 以及支持可撤销的操作。  
+
+优点：  
+1. 它能较容易的设计一个命令队列；  
+2. 在需要的情况下， 可以较容易的将命令记入日志；  
+3. 允许接收请求的一方决定是否要否决请求；  
+4. 可以容易地实现对请求的撤销和重做；  
+5. 由于加进新的具体命令类不影响其他的类， 因此增加新的具体命令类很容易；    
+6. 命令模式把请求一个操作的对象和知道怎么执行的一个操作的对象分割开  
+
+    //服务员
+    public class Waiter
+    {
+        private IList<Command> orders = new List<Command>();
+
+        //设置订单
+        public void SetOrder(Command command)
+        {
+            if (command.ToString() == "命令模式.BakeChickenWingCommand")
+            {
+                Console.WriteLine("服务员：鸡翅没有了，请点别的烧烤。");
+            }
+            else
+            {
+                orders.Add(command);
+                Console.WriteLine("增加订单：" + command.ToString() + "  时间：" + DateTime.Now.ToString());
+            }
+        }
+
+        //取消订单
+        public void CancelOrder(Command command)
+        {
+            orders.Remove(command);
+            Console.WriteLine("取消订单：" + command.ToString() + "  时间：" + DateTime.Now.ToString());
+        }
+
+        //通知全部执行
+        public void Notify()
+        {
+            foreach (Command cmd in orders)
+            {
+                cmd.ExcuteCommand();
+            }
+        }
+    }
+
+    //抽象命令
+    public abstract class Command
+    {
+        protected Barbecuer receiver;
+
+        public Command(Barbecuer receiver)
+        {
+            this.receiver = receiver;
+        }
+
+        //执行命令
+        abstract public void ExcuteCommand();
+    }
+
+    //烤羊肉串命令
+    class BakeMuttonCommand : Command
+    {
+        public BakeMuttonCommand(Barbecuer receiver)
+            : base(receiver)
+        { }
+
+        public override void ExcuteCommand()
+        {
+            receiver.BakeMutton();
+        }
+    }
+
+    //烤鸡翅命令
+    class BakeChickenWingCommand : Command
+    {
+        public BakeChickenWingCommand(Barbecuer receiver)
+            : base(receiver)
+        { }
+
+        public override void ExcuteCommand()
+        {
+            receiver.BakeChickenWing();
+        }
+    }
+
+    //烤肉串者
+    public class Barbecuer
+    {
+        public void BakeMutton()
+        {
+            Console.WriteLine("烤羊肉串!");
+        }
+
+        public void BakeChickenWing()
+        {
+            Console.WriteLine("烤鸡翅!");
+        }
+    }
     
+    static void Main(string[] args)
+    {
+        //开店前的准备
+        Barbecuer boy = new Barbecuer();
+        Command bakeMuttonCommand1 = new BakeMuttonCommand(boy);
+        Command bakeMuttonCommand2 = new BakeMuttonCommand(boy);
+        Command bakeChickenWingCommand1 = new BakeChickenWingCommand(boy);
+        Waiter girl = new Waiter();
+
+        //开门营业 顾客点菜
+        girl.SetOrder(bakeMuttonCommand1);
+        girl.SetOrder(bakeMuttonCommand2);
+        girl.SetOrder(bakeChickenWingCommand1);
+
+        //点菜完闭，通知厨房
+        girl.Notify();
+        Console.Read();
+    }
+    
+## 职责链模式(Chain of Responsibility)
+
+使多个对象都有机会处理请求， 从而避免请求的发送者和接收者之间的耦合关系。 将这个对象连城一条链， 并沿着这条链传递该请求， 直到有一个对象处理它为止。  
+
+优点：  
+职责链模式使得接收者和发送者都没有对方的明确信息， 且链中的对象自己也并不知道链的结构。 结果是职责链可简化对象的相互连接， 它们仅需要保持一个指向其后继者的引用， 而不需保持它所有的候选接受者的引用。  
+
+    //管理者
+    abstract class Manager
+    {
+        protected string name;
+        //管理者的上级
+        protected Manager superior;
+
+        public Manager(string name)
+        {
+            this.name = name;
+        }
+
+        //设置管理者的上级
+        public void SetSuperior(Manager superior)
+        {
+            this.superior = superior;
+        }
+
+        //申请请求
+        abstract public void RequestApplications(Request request);
+    }
+
+    //经理
+    class CommonManager : Manager
+    {
+        public CommonManager(string name)
+            : base(name)
+        { }
+        public override void RequestApplications(Request request)
+        {
+
+            if (request.RequestType == "请假" && request.Number <= 2)
+            {
+                Console.WriteLine("{0}:{1} 数量{2} 被批准", name, request.RequestContent, request.Number);
+            }
+            else
+            {
+                if (superior != null)
+                    superior.RequestApplications(request);
+            }
+
+        }
+    }
+
+    //总监
+    class Majordomo : Manager
+    {
+        public Majordomo(string name)
+            : base(name)
+        { }
+        public override void RequestApplications(Request request)
+        {
+
+            if (request.RequestType == "请假" && request.Number <= 5)
+            {
+                Console.WriteLine("{0}:{1} 数量{2} 被批准", name, request.RequestContent, request.Number);
+            }
+            else
+            {
+                if (superior != null)
+                    superior.RequestApplications(request);
+            }
+
+        }
+    }
+
+    //总经理
+    class GeneralManager : Manager
+    {
+        public GeneralManager(string name)
+            : base(name)
+        { }
+        public override void RequestApplications(Request request)
+        {
+
+            if (request.RequestType == "请假")
+            {
+                Console.WriteLine("{0}:{1} 数量{2} 被批准", name, request.RequestContent, request.Number);
+            }
+            else if (request.RequestType == "加薪" && request.Number <= 500)
+            {
+                Console.WriteLine("{0}:{1} 数量{2} 被批准", name, request.RequestContent, request.Number);
+            }
+            else if (request.RequestType == "加薪" && request.Number > 500)
+            {
+                Console.WriteLine("{0}:{1} 数量{2} 再说吧", name, request.RequestContent, request.Number);
+            }
+        }
+    }
+
+    //申请
+    class Request
+    {
+        //申请类别
+        private string requestType;
+        public string RequestType
+        {
+            get { return requestType; }
+            set { requestType = value; }
+        }
+
+        //申请内容
+        private string requestContent;
+        public string RequestContent
+        {
+            get { return requestContent; }
+            set { requestContent = value; }
+        }
+
+        //数量
+        private int number;
+        public int Number
+        {
+            get { return number; }
+            set { number = value; }
+        }
+    }
+    
+    static void Main(string[] args)
+    {
+
+        CommonManager jinli = new CommonManager("金利");
+        Majordomo zongjian = new Majordomo("宗剑");
+        GeneralManager zhongjingli = new GeneralManager("钟精励");
+        jinli.SetSuperior(zongjian);
+        zongjian.SetSuperior(zhongjingli);
+
+        Request request = new Request();
+        request.RequestType = "请假";
+        request.RequestContent = "小菜请假";
+        request.Number = 1;
+        jinli.RequestApplications(request)
+
+        Request request4 = new Request();
+        request4.RequestType = "加薪";
+        request4.RequestContent = "小菜请求加薪";
+        request4.Number = 1000;
+        jinli.RequestApplications(request4);
+
+        Console.Read();
+    }
