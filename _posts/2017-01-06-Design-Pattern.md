@@ -2092,3 +2092,180 @@ Mediator的出现减少了各个Colleague的耦合， 使得可以独立地改�
 
         Console.Read();
     }
+    
+## 解释器模式(Interpreter)
+
+给定一个语言， 定义它的文法的一种表示， 并定义一个解释器， 这个解释器使用该表示来解释语言中的句子。  
+当有一个语言需要解释执行， 并且你可将该语言中的句子表示为一个抽象语法树时， 可使用解释器模式。  
+
+    class Context
+    {
+        private string input;
+        public string Input
+        {
+            get { return input; }
+            set { input = value; }
+        }
+
+        private string output;
+        public string Output
+        {
+            get { return output; }
+            set { output = value; }
+        }
+    }
+
+    abstract class AbstractExpression
+    {
+        public abstract void Interpret(Context context);
+    }
+
+    class TerminalExpression : AbstractExpression
+    {
+        public override void Interpret(Context context)
+        {
+            Console.WriteLine("终端解释器");
+        }
+    }
+
+    class NonterminalExpression : AbstractExpression
+    {
+        public override void Interpret(Context context)
+        {
+            Console.WriteLine("非终端解释器");
+        }
+    }
+    
+    static void Main(string[] args)
+    {
+        Context context = new Context();
+        IList<AbstractExpression> list = new List<AbstractExpression>();
+        list.Add(new TerminalExpression());
+        list.Add(new NonterminalExpression());
+        list.Add(new TerminalExpression());
+        list.Add(new TerminalExpression());
+
+        foreach (AbstractExpression exp in list)
+        {
+            exp.Interpret(context);
+        }
+
+        Console.Read();
+    }
+    
+## 访问者模式(Visitor)
+
+表示一个作用于某个对象结构中的各元素的操作。 它使你可以在不改变各元素的类的前提下定义作用于这些元素的新操作。  
+
+访问者模式适用于数据结构相对稳定的系统。 它把数据结构和作用于结构上的操作之间的耦合解脱开， 使得操作集合可以相对自由的演化。  
+访问者模式的目的是把处理从数据结构中分离出来。  如果系统有比较稳定的数据结构， 又有易于变化的算法的话， 使用访问者模式就比较合适。 因为访问者模式使得算法操作的增加变得容易。  
+
+访问者模式的优点是增加新的操作容易。  
+缺点是增加新的数据结构困难。  
+
+    //状态
+    abstract class Action
+    {
+        //得到男人结论或反应
+        public abstract void GetManConclusion(Man concreteElementA);
+        //得到女人结论或反应
+        public abstract void GetWomanConclusion(Woman concreteElementB);
+    }
+
+
+    //成功
+    class Success : Action
+    {
+        public override void GetManConclusion(Man concreteElementA)
+        {
+            Console.WriteLine("{0}{1}时，背后多半有一个伟大的女人。", concreteElementA.GetType().Name, this.GetType().Name);
+        }
+
+        public override void GetWomanConclusion(Woman concreteElementB)
+        {
+            Console.WriteLine("{0}{1}时，背后大多有一个不成功的男人。", concreteElementB.GetType().Name, this.GetType().Name);
+        }
+    }
+    //失败
+    class Failing : Action
+    {
+        public override void GetManConclusion(Man concreteElementA)
+        {
+            Console.WriteLine("{0}{1}时，闷头喝酒，谁也不用劝。", concreteElementA.GetType().Name, this.GetType().Name);
+        }
+
+        public override void GetWomanConclusion(Woman concreteElementB)
+        {
+            Console.WriteLine("{0}{1}时，眼泪汪汪，谁也劝不了。", concreteElementB.GetType().Name, this.GetType().Name);
+        }
+    }
+    
+    //人
+    abstract class Person
+    {
+        //接受
+        public abstract void Accept(Action visitor);
+    }
+
+    //男人
+    class Man : Person
+    {
+        public override void Accept(Action visitor)
+        {
+            visitor.GetManConclusion(this);
+        }
+    }
+
+    //女人
+    class Woman : Person
+    {
+        public override void Accept(Action visitor)
+        {
+            visitor.GetWomanConclusion(this);
+        }
+    }
+    //对象结构
+    class ObjectStructure
+    {
+        private IList<Person> elements = new List<Person>();
+
+        //增加
+        public void Attach(Person element)
+        {
+            elements.Add(element);
+        }
+        //移除
+        public void Detach(Person element)
+        {
+            elements.Remove(element);
+        }
+        //查看显示
+        public void Display(Action visitor)
+        {
+            foreach (Person e in elements)
+            {
+                e.Accept(visitor);
+            }
+        }
+    }
+    
+    static void Main(string[] args)
+    {
+        ObjectStructure o = new ObjectStructure();
+        o.Attach(new Man());
+        o.Attach(new Woman());
+
+        Success v1 = new Success();
+        o.Display(v1);
+
+        Failing v2 = new Failing();
+        o.Display(v2);
+
+        Amativeness v3 = new Amativeness();
+        o.Display(v3);
+
+        Marriage v4 = new Marriage();
+        o.Display(v4);
+
+        Console.Read();
+    }
