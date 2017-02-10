@@ -1877,3 +1877,218 @@ Memento模式比较适用于功能比较复杂的， 但需要维护或记录属
 
         Console.Read();
     }
+    
+## 中介者模式（Mediator）
+
+用一个中介对象来封装一系列的对象交互。 中介者使各对象不需要显示的相互引用， 从而使其耦合松散， 而且可以独立的改变它们之间的交互。  
+
+优点:  
+Mediator的出现减少了各个Colleague的耦合， 使得可以独立地改变和复用各个Colleague和Mediator；  
+由于把对象如何协作进行了抽象， 将中介作为一个独立的概念并将其封装在一个对象中， 这样关注的对象就从对象各自本身的行为转移到它们之间的交互上来， 也就是站在一个更宏观的角度去看待系统。  
+
+缺点：  
+由于ConcreteMediator控制了集中化， 于是就把交互复杂性变成了中介者的复杂性， 也就使得中介者会变得比任何一个ConcreteColleague都复杂。  
+
+中介者模式一般应用于一组对象以定义良好但是复杂的方式进行通信的场合， 以及想定制一个分布在多个类中的行为， 而又不想生成太多的子类的场合。  
+
+     //联合国机构
+    abstract class UnitedNations
+    {
+        /// <summary>
+        /// 声明
+        /// </summary>
+        /// <param name="message">声明信息</param>
+        /// <param name="colleague">声明国家</param>
+        public abstract void Declare(string message, Country colleague);
+    }
+
+    //联合国安全理事会
+    class UnitedNationsSecurityCouncil : UnitedNations
+    {
+        private USA colleague1;
+        private Iraq colleague2;
+
+        public USA Colleague1
+        {
+            set { colleague1 = value; }
+        }
+
+        public Iraq Colleague2
+        {
+            set { colleague2 = value; }
+        }
+
+        public override void Declare(string message, Country colleague)
+        {
+            if (colleague == colleague1)
+            {
+                colleague2.GetMessage(message);
+            }
+            else
+            {
+                colleague1.GetMessage(message);
+            }
+        }
+    }
+
+    //国家
+    abstract class Country
+    {
+        protected UnitedNations mediator;
+
+        public Country(UnitedNations mediator)
+        {
+            this.mediator = mediator;
+        }
+    }
+
+    //美国
+    class USA : Country
+    {
+        public USA(UnitedNations mediator)
+            : base(mediator)
+        {
+
+        }
+        //声明
+        public void Declare(string message)
+        {
+            mediator.Declare(message, this);
+        }
+        //获得消息
+        public void GetMessage(string message)
+        {
+            Console.WriteLine("美国获得对方信息：" + message);
+        }
+    }
+
+    //伊拉克
+    class Iraq : Country
+    {
+        public Iraq(UnitedNations mediator)
+            : base(mediator)
+        {
+        }
+
+        //声明
+        public void Declare(string message)
+        {
+            mediator.Declare(message, this);
+        }
+        //获得消息
+        public void GetMessage(string message)
+        {
+            Console.WriteLine("伊拉克获得对方信息：" + message);
+        }
+
+    }
+    
+    static void Main(string[] args)
+    {
+        UnitedNationsSecurityCouncil UNSC = new UnitedNationsSecurityCouncil();
+
+        USA c1 = new USA(UNSC);
+        Iraq c2 = new Iraq(UNSC);
+
+        UNSC.Colleague1 = c1;
+        UNSC.Colleague2 = c2;
+
+        c1.Declare("不准研制核武器，否则要发动战争！");
+        c2.Declare("我们没有核武器，也不怕侵略。");
+
+        Console.Read();
+    }
+    
+## 享元模式（Flyweight）
+
+运用共享技术有效地支持大量细粒度的对象。  
+
+享元模式可以避免大量非常相似类的开销。  在程序设计中，有时需要生成大量细粒度的类实例来表示数据。 如果能发现这些实例除了几个参数外基本上都是相同的， 有时就能够大幅度的减少需要实例化的类的数量。 如果能把那些参数移到类实例的外面， 在方法调用时将它们传递进来， 就可以通过共享大幅度的减少单个实例的数目。  
+
+如果一个应用程序使用了大量的对象， 而大量的这些对象造成了很大的存储开销时就 应该考虑使用； 还有就是对象的大多数状态可以外部状态， 如果删除对象的外部状态， 那么可以用相对较少的共享对象取代很多组对象， 此时可以考虑使用享元模式。  
+
+    //用户
+    public class User
+    {
+        private string name;
+
+        public User(string name)
+        {
+            this.name = name;
+        }
+
+        public string Name
+        {
+            get { return name; }
+        }
+    }
+
+
+    //网站工厂
+    class WebSiteFactory
+    {
+        private Hashtable flyweights = new Hashtable();
+
+        //获得网站分类
+        public WebSite GetWebSiteCategory(string key)
+        {
+            if (!flyweights.ContainsKey(key))
+                flyweights.Add(key, new ConcreteWebSite(key));
+            return ((WebSite)flyweights[key]);
+        }
+
+        //获得网站分类总数
+        public int GetWebSiteCount()
+        {
+            return flyweights.Count;
+        }
+    }
+
+    //网站
+    abstract class WebSite
+    {
+        public abstract void Use(User user);
+    }
+
+    //具体的网站
+    class ConcreteWebSite : WebSite
+    {
+        private string name = "";
+        public ConcreteWebSite(string name)
+        {
+            this.name = name;
+        }
+
+        public override void Use(User user)
+        {
+            Console.WriteLine("网站分类：" + name + " 用户：" + user.Name);
+        }
+    }
+    
+    static void Main(string[] args)
+    {
+
+        WebSiteFactory f = new WebSiteFactory();
+
+        WebSite fx = f.GetWebSiteCategory("产品展示");
+        fx.Use(new User("小菜"));
+
+        WebSite fy = f.GetWebSiteCategory("产品展示");
+        fy.Use(new User("大鸟"));
+
+        WebSite fz = f.GetWebSiteCategory("产品展示");
+        fz.Use(new User("娇娇"));
+
+        WebSite fl = f.GetWebSiteCategory("博客");
+        fl.Use(new User("老顽童"));
+
+        WebSite fm = f.GetWebSiteCategory("博客");
+        fm.Use(new User("桃谷六仙"));
+
+        WebSite fn = f.GetWebSiteCategory("博客");
+        fn.Use(new User("南海鳄神"));
+
+        Console.WriteLine("得到网站分类总数为 {0}", f.GetWebSiteCount());
+
+        Console.Read();
+    }
