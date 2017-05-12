@@ -24,4 +24,3 @@ Visual Studio 2013 装在了host机上， 想remote debug Vmware机器中的程�
 9. host机上ping虚拟机， 应该能ping通  
 10. 将Remote debug的文件拷贝到虚拟机  
 11. 右键点击 msvsmon.exe, run as Administrator  
-12. 如果遇到连接失败Authentication问题， 菜单栏 Tools -> Options -> 将Windows认证改为No Authentication  
