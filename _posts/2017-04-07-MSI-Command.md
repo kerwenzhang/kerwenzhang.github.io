@@ -17,4 +17,4 @@ tags:
     
 ## Admin安装
 
-    msiexec /a foo.msi TARGETDIR=C:\EXTRACT\ /qn /l*v admin_install.log
+    msiexec /a foo.msi TARGETDIR=C:\EXTRACT\ /qn /norestart /l*v admin_install.log
