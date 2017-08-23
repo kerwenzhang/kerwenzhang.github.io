@@ -178,6 +178,28 @@ rb+    以二进制读写模式打开 (参见 r+ )
 wb+    以二进制读写模式打开 (参见 w+ )   
 ab+    以二进制读写模式打开 (参见 a+ )   
 
+读取文件：
+
+    def read_file():
+        try:
+            f = open("Student.txt", "r")
+            for str in f.readlines():
+                # do something
+            f.close()
+        except Exception:
+            print("Could not read file.")
+            
+写文件：
+    
+    def Save_file(str):
+        try:
+            f=open("student.txt","a")
+            f.write(str + "\n")
+            f.close()
+        except Exception:
+            print("Could not save file.")
+            
+
 ### 按时间排序目录下的文件
 
 排序可以通过list.sort来巧妙的实现：   

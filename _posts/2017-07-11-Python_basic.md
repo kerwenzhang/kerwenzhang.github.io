@@ -34,4 +34,7 @@ tags:
         return outputPara
         
         
-        test
+## input
+
+    StudentName = input("Enter student name:")
+    StudentId = input("Enter student id:")
