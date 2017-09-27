@@ -10,6 +10,10 @@ tags:
 
 
 
+## Python 标准库目录
+
+https://docs.python.org/3.5/library/index.html  
+
 
 ## Functions
 
