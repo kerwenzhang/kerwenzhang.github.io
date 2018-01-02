@@ -18,8 +18,7 @@ tags:
 
 为了了解这个问题，我们先看下面的代码，代码省略了一些内容，但功能是实现一个栈，这个栈只能处理int数据类型：
 
-public class Stack
-
+    public class Stack
     {
 
         private int[] m_item;
@@ -29,21 +28,18 @@ public class Stack
         public void Push(int item){...}
 
         public Stack(int i)
-
         {
 
             this.m_item = new int[i];
 
         }
 
-}
+    }
 
 上面代码运行的很好，但是，当我们需要一个栈来保存string类型时，该怎么办呢？很多人都会想到把上面的代码复制一份，把int改成string不就行了。当然，这样做本身是没有任何问题的，但一个优秀的程序是不会这样做的，因为他想到若以后再需要long、Node类型的栈该怎样做呢？还要再复制吗？优秀的程序员会想到用一个通用的数据类型object来实现这个栈：
 
-public class Stack
-
+    public class Stack
     {
-
         private object[] m_item;
 
         public object Pop(){...}
@@ -51,15 +47,11 @@ public class Stack
         public void Push(object item){...}
 
         public Stack(int i)
-
         {
 
             this.m_item = new[i];
 
         }
-
-      
-
     }
 
 这个栈写的不错，他非常灵活，可以接收任何数据类型，可以说是一劳永逸。但全面地讲，也不是没有缺陷的，主要表现在：
@@ -95,9 +87,7 @@ public class Stack
         public Stack(int i)
 
         {
-
             this.m_item = new T[i];
-
         }
 
     }
@@ -107,12 +97,9 @@ public class Stack
 //实例化只能保存int类型的类
 
     Stack<int> a = new Stack<int>(100);
-
-      a.Push(10);
-
-      a.Push("8888"); //这一行编译不通过，因为类a只接收int类型的数据
-
-      int x = a.Pop();
+    a.Push(10);
+    a.Push("8888"); //这一行编译不通过，因为类a只接收int类型的数据
+    int x = a.Pop();
 
  
 
