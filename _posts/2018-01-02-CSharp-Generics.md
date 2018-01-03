@@ -11,8 +11,9 @@ tags:
 
 
 原文地址： https://www.cnblogs.com/yueyue184/p/5032156.html   
+微软官方文档： https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/generics/    
 
- 我们在编写程序时，经常遇到两个模块的功能非常相似，只是一个是处理int数据，另一个是处理string数据，或者其他自定义的数据类型，但我们没有办法，只能分别写多个方法处理每个数据类型，因为方法的参数类型不同。有没有一种办法，在方法中传入通用的数据类型，这样不就可以合并代码了吗？泛型的出现就是专门解决这个问题的。读完本篇文章，你会对泛型有更深的了解。
+C# 语言和公共语言运行时 (CLR) 的 2.0 版本中添加了泛型。 泛型将类型参数的概念引入 .NET Framework，这样就可以设计具有以下特征的类和方法：在客户端代码声明并初始化这些类和方法之前，这些类和方法会延迟指定一个或多个类型。 例如，通过使用泛型类型参数 T，可以编写其他客户端代码能够使用的单个类，而不会产生运行时转换或装箱操作的成本或风险
 
 ## 为什么要使用泛型
 
@@ -113,6 +114,28 @@ tags:
 
     string y = b.Pop();
 
+微软官方提供的一个例子：
+
+    // Declare the generic class.
+    public class GenericList<T>
+    {
+        void Add(T input) { }
+    }
+    class TestGenericList
+    {
+        private class ExampleClass { }
+        static void Main()
+        {
+            // Declare a list of type int.
+            GenericList<int> list1 = new GenericList<int>();
+
+            // Declare a list of type string.
+            GenericList<string> list2 = new GenericList<string>();
+
+            // Declare a list of type ExampleClass.
+            GenericList<ExampleClass> list3 = new GenericList<ExampleClass>();
+        }
+    } 
  
 
 这个类和object实现的类有截然不同的区别：
@@ -124,11 +147,5 @@ tags:
 3. 无需类型转换。
 
  
-
-## 泛型类实例化的理论
-
-C#泛型类在编译时，先生成中间代码IL，通用类型T只是一个占位符。在实例化类时，根据用户指定的数据类型代替T并由即时编译器（JIT）生成本地代码，这个本地代码中已经使用了实际的数据类型，等同于用实际类型写的类，所以不同的封闭类的本地代码是不一样的。按照这个原理，我们可以这样认为：    
-泛型类的不同的封闭类是分别不同的数据类型。    
-例：Stack<int>和Stack<string>是两个完全没有任何关系的类，你可以把他看成类A和类B，这个解释对泛型类的静态成员的理解有很大帮助。
 
  
