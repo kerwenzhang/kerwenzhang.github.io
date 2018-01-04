@@ -270,3 +270,37 @@ Example:
             Console.ReadKey();
         }
     }
+    
+## 泛型约束  
+
+定义泛型类时，可以对实例化类时用的参数类型施加限制。 这些限制称为约束。 通过使用 where 关键字指定约束。  
+
+where T: struct	类型参数必须是值类型。 可以指定除 Nullable 以外的任何值类型。 有关详细信息，请参阅使用可以为 null 的类型。  
+where T : class	类型参数必须是引用类型；这同样适用于所有类、接口、委托或数组类型。  
+where T : new()	类型参数必须具有公共无参数构造函数。 与其他约束一起使用时，new() 约束必须最后指定。  
+where T : <base class name>	类型参数必须是指定的基类或派生自指定的基类。  
+where T : <interface name>	类型参数必须是指定的接口或实现指定的接口。 可指定多个接口约束。 约束接口也可以是泛型。  
+where T : U	为 T 提供的类型参数必须是为 U 提供的参数或派生自为 U 提供的参数。  
+
+例如：  
+
+    public class GenericList<T> where T : Employee
+    
+    class EmployeeList<T> where T : Employee, IEmployee, System.IComparable<T>, new()
+    
+## 泛型方法
+
+    static void Swap<T>(ref T data1, ref T data2)
+    {
+        T temp;
+        temp = data1;
+        data1 = data2;
+        data2 = temp;
+    }
+    
+    static void Main(string[] args)
+    {
+        int data1 = 2;
+        int data2 = 3;
+        Swap<int>(ref data1, ref data2);
+    }
