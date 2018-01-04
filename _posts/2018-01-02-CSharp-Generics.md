@@ -147,5 +147,130 @@ C# 语言和公共语言运行时 (CLR) 的 2.0 版本中添加了泛型。 泛�
 3. 无需类型转换。
 
  
+Example:
 
+    class IntStack
+    {
+        private int[] members;
+        private int point = 0;
+        public IntStack(int count)
+        {
+            members = new int[count];
+        }
+        public bool Push(int data)
+        {
+            if(point < members.Count())
+            {
+                members[point] = data;
+                point++;
+                return true;
+            }
+            return false;
+        }
+
+        public bool Pop(ref int data)
+        {
+            if(point > 0)
+            {
+                data = members[point - 1];
+                point--;
+                return true;
+            }
+            data = -1;
+            return false;
+        }
+
+        public void Display()
+        {
+            foreach(int data in members)
+            {
+                Console.WriteLine(data);
+            }
+        }
+    }
+    
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            IntStack stack = new IntStack(10);
+            int[] data = new int[] { 2, 43, 1, 7, 4, 8, 5, 67, 19, 30 };
+            foreach(int temp in data)
+            {
+                stack.Push(temp);
+            }
+            stack.Display();
+            Console.WriteLine("Begin to popup");
+            for(int i = 0; i < data.Count(); i++)
+            {
+                int temp = -1;
+                stack.Pop(ref temp);
+                Console.WriteLine(temp);
+            }
+            Console.ReadKey();
+        }
+    }
  
+改成泛型：
+
+    class GenericStack<T>
+    {
+        private T[] members;
+        private int point = 0;
+        public GenericStack(int count)
+        {
+            members = new T[count];
+        }
+        public bool Push(T data)
+        {
+            if (point < members.Count())
+            {
+                members[point] = data;
+                point++;
+                return true;
+            }
+            return false;
+        }
+
+        public bool Pop(ref T data)
+        {
+            if (point > 0)
+            {
+                data = members[point - 1];
+                point--;
+                return true;
+            }
+            return false;
+        }
+
+        public void Display()
+        {
+            foreach (T data in members)
+            {
+                Console.WriteLine(data);
+            }
+        }
+    }
+    
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] data = new int[] { 2, 43, 1, 7, 4, 8, 5, 67, 19, 30 };
+
+            GenericStack<int> stack2 = new GenericStack<int>(10);
+            foreach (int temp in data)
+            {
+                stack2.Push(temp);
+            }
+            stack2.Display();
+            Console.WriteLine("Begin to popup");
+            for (int i = 0; i < data.Count(); i++)
+            {
+                int temp = -1;
+                stack2.Pop(ref temp);
+                Console.WriteLine(temp);
+            }
+            Console.ReadKey();
+        }
+    }
