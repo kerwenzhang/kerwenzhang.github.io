@@ -167,7 +167,6 @@ Example:
             }
             return false;
         }
-
         public bool Pop(ref int data)
         {
             if(point > 0)
@@ -179,7 +178,6 @@ Example:
             data = -1;
             return false;
         }
-
         public void Display()
         {
             foreach(int data in members)
@@ -231,7 +229,6 @@ Example:
             }
             return false;
         }
-
         public bool Pop(ref T data)
         {
             if (point > 0)
@@ -242,7 +239,6 @@ Example:
             }
             return false;
         }
-
         public void Display()
         {
             foreach (T data in members)
