@@ -18,9 +18,9 @@ tags:
 
 泛型
 
-分部类型
+分部类型 （partial)
 
-匿名方法
+匿名方法 (在 C# 3.0 及更高版本中，Lambda 表达式取代匿名方法)
 
 可以为 null 的类型
 
@@ -32,9 +32,42 @@ tags:
 
 自动实现属性
 
+    class Customer
+    {
+        public double TotalPurchases { get; set; }
+        ...
+    }
+    
+    Customer cust1 = new Customer ()
+    cust1.TotalPurchases += 499.99;
+
 匿名类型
 
+    var v = new { Amount = 108, Message = "Hello" };  
+    
+匿名类型通常用在查询表达式的 select 子句中，以便返回源序列中每个对象的属性子集。   
+
 查询表达式
+
+查询表达式必须以 from 子句开头，且必须以 select 或 group 子句结尾。
+
+    int[] scores = { 90, 71, 82, 93, 75, 82 };
+    IEnumerable<int> scoreQuery =
+        from score in scores
+        where score > 80
+        orderby score descending
+        select score;
+        
+    foreach(int testScore in scoreQuery)
+    {
+        Console.WriteLine(testScore);
+    }
+    
+    IEnumerable<int> scoreQuery2 = scores.Where(c => c > 80);
+    foreach(int testScore in scoreQuery2)
+    {
+        Console.WriteLine(testScore);
+    }
 
 Lambda 表达式
 
