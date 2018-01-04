@@ -14,7 +14,7 @@ tags:
 中文版：　https://docs.microsoft.com/zh-cn/dotnet/csharp/whats-new/    
 
  
-## C# 2.0 版  Visual Studio .NET 2005
+## C# 2.0 版  VS2005
 
 泛型
 
@@ -28,7 +28,7 @@ tags:
 
 协变和逆变
 
-## C# 3.0 版 Visual Studio .NET 2008
+## C# 3.0 版 VS2008
 
 自动实现属性
 
@@ -42,7 +42,7 @@ Lambda 表达式
 
 扩展方法
 
-## C# 4.0 版 Visual Studio .NET 2010
+## C# 4.0 版 VS2010
 
 动态绑定
 
@@ -52,13 +52,13 @@ Lambda 表达式
 
 嵌入互操作类型
 
-## C# 版本 5.0 Visual Studio .NET 2012
+## C# 版本 5.0 VS2012
 
 异步成员
 
 调用方信息特性
 
-## C# 6.0
+## C# 6.0 VS2015
 
 只读自动属性：  可以创建只能在构造函数中设置的只读自动属性。  
 自动属性初始值设定项：
@@ -84,7 +84,7 @@ Catch 和 Finally 块中的 Await：
 改进了重载解析：
 先前生成了不明确的方法调用的某些构造现在可以正确解析。  
 
-## C# 7.0
+## C# 7.0 VS2017
 
 out 变量
 可以将 out 值内联作为参数声明到使用这些参数的方法中。  
