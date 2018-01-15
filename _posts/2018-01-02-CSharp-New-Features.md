@@ -71,6 +71,8 @@ tags:
 
 Lambda 表达式
 
+http://kerwenzhang.github.io/c%23/2016/11/16/CSharp-Lambda/  
+
 表达式树
 
 扩展方法
