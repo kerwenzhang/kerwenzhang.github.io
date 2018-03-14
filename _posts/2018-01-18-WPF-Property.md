@@ -1,6 +1,6 @@
 ---  
 layout: post  
-title: "WFP(2)依赖属性"  
+title: "WPF(2)依赖属性"  
 date:   2018-1-18 20:30:00   
 categories: "WPF"  
 catalog: true  

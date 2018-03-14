@@ -1,6 +1,6 @@
 ---  
 layout: post  
-title: "WFP布局"  
+title: "WPF布局"  
 date:   2018-1-17 20:30:00   
 categories: "WPF"  
 catalog: true  
