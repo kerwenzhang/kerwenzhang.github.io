@@ -92,7 +92,7 @@ tags:
 
 	BugTicketEventHandler myDelegate = new BugTicketEventHandler(MrZhang.BuyTicket);
 
-所以，大家不要对事件有什么好怕的，其实事件的本质就是一个委托链，   
+所以，大家不要对事件有什么好怕的，其实<b>事件的本质就是一个委托链</b>，   
 我们看一下事件的声明：   
 
 	//声明一个出版的委托
