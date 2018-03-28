@@ -9,16 +9,11 @@ tags:
 ---  
   
  
-1. IIS enable net.tcp 协议
+重构的第一步是为即将修改的代码建立一组可靠的测试环境。 好的测试是重构的根本。  
+好的代码应该清楚表达自己的功能， 变量名称是代码清晰的关键。  
 
-2. Database does not have priviledge to write
+重构时对软件内部结构的一种调整， 目的是在不改变软件可观察行为的前提下，提高其可理解性， 降低其修改成本。  
 
-3. Library project could not set config
+## 重构原则
 
-4. SQLLite binary 版本不兼容, release, debug 加新的配置
 
-5. IIS does not need to set notify port
-
-6. windows service install, use InstallUtil.exe
-
-7. 
