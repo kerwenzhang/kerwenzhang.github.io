@@ -21,4 +21,5 @@ tags:
 
 6. windows service install, use InstallUtil.exe
 
-7. 
+7. NuGet package restore failed for project PCDCInterface: Unable to find version '1.0.0.3' of package 'Newtonsoft.Json'.
+Solution: PCDCInterface need the libraies of Json during compile, please copy 'packages' to the root of solution
