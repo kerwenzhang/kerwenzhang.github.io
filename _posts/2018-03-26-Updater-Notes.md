@@ -23,3 +23,9 @@ tags:
 
 7. NuGet package restore failed for project PCDCInterface: Unable to find version '1.0.0.3' of package 'Newtonsoft.Json'.
 Solution: PCDCInterface need the libraies of Json during compile, please copy 'packages' to the root of solution
+
+8. WPF ContextMenu MenuItem binding command does not work
+Solution: [Check this](https://stackoverflow.com/questions/3583507/wpf-binding-a-contextmenu-to-an-mvvm-command)
+    a. Create a proxy class
+    b. Add proxy binding to resource
+    c. Modify ContextMenu
