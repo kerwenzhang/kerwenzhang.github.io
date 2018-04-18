@@ -36,5 +36,11 @@ Solution: PCDCInterface need the libraies of Json during compile, please copy 'p
 8. WPF ContextMenu MenuItem binding command does not work   
 Solution: [Check this](https://stackoverflow.com/questions/3583507/wpf-binding-a-contextmenu-to-an-mvvm-command)   
     a. Create a proxy class   
-    b. Add proxy binding to resource   
-    c. Modify ContextMenu
+    b. Add proxy binding to resource    
+    c. Modify ContextMenu  
+	
+9. How to show text in Progress bar  
+
+10. Button in DataGrid binding command does not work  
+
+11. How to popup context menu when click left mouse  
