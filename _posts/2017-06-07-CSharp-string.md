@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "C# string 特殊的引用类型"
+title: "C# string-特殊的引用类型"
 date:   2017-06-06 16:48:00 
 categories: "C#"
 catalog: true
