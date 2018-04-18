@@ -1,7 +1,7 @@
 ---  
 layout: post  
-title: "WFP(2)依赖属性"  
-date:   2018-1-18 20:30:00   
+title: "WFP 基础"  
+date:   2018-1-22 20:30:00   
 categories: "WPF"  
 catalog: true  
 tags:   
@@ -12,7 +12,5 @@ tags:
  
 http://www.cnblogs.com/chillsrc/category/684419.html
 
-在WPF库实现中，依赖属性使用普通的C#属性进行了包装. WPF中的依赖属性主要有以下三个优点：
-依赖属性加入了属性变化通知、限制、验证等功能。这样可以使我们更方便地实现应用，同时大大减少了代码量。许多之前需要写很多代码才能实现的功能，在WPF中可以轻松实现。
-节约内存：在WinForm中，每个UI控件的属性都赋予了初始值，这样每个相同的控件在内存中都会保存一份初始值。而WPF依赖属性很好地解决了这个问题，它内部实现使用哈希表存储机制，对多个相同控件的相同属性的值都只保存一份。
-支持多种提供对象：可以通过多种方式来设置依赖属性的值。可以配合表达式、样式和绑定来对依赖属性设置值。
+“WPF应用程序”会在“引用”里面自动添加下图中所示的 PresentationCore、PresentationFramework、WindowsBase三大核心程序集  
+在App.xaml中的“StartupUri”属性可以指定项目运行时的启动窗体。
