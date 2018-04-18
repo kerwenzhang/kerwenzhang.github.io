@@ -1,11 +1,11 @@
 ---
 layout: post
 title: 设计原则
-date:   2017-01-17 10:30:14
+date:   2017-01-12 10:30:14
 categories: "Design Pattern"
 catalog: true
 tags: 
-    - Design Pattern
+    - Book
 ---
 
 

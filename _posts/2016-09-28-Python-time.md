@@ -5,7 +5,6 @@ date:   2016-09-28 16:45:14
 categories: "Python"
 catalog: true
 tags: 
-    - time
     - Python
 ---
 
