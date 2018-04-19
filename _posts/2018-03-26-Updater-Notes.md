@@ -126,3 +126,7 @@ Solution: [Check this](https://stackoverflow.com/questions/3583507/wpf-binding-a
         <Image Height="12" Source="/UpdateServiceClient;component/Resources/Images/read_more.png" />
     </Button>
     -->
+    
+12. How to close window in ViewModel
+
+[Reference](https://stackoverflow.com/questions/16172462/close-window-from-viewmodel)
