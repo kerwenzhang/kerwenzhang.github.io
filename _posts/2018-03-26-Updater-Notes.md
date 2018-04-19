@@ -40,20 +40,25 @@ Solution: [Check this](https://stackoverflow.com/questions/3583507/wpf-binding-a
     c. Modify ContextMenu  
     
 9. How to show text in Progress bar  
-
+    
+    <!--
     <Grid>
         <ProgressBar Value="{Binding Path=Percent, Mode=OneWay}" Minimum="0" Maximum="100" />
         <TextBlock Text="{Binding Path=Percent , StringFormat={}{0}%}" HorizontalAlignment="Center" ></TextBlock>
     </Grid>
+    -->
     
 10. Button in DataGrid binding command does not work  
 
+    <!--
     <Button Margin="5,0,0,0" DockPanel.Dock="Right" VerticalContentAlignment="Center" Style="{StaticResource BasicButtonStyle}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.StopButtonClickCommand}" >
         <Image Height="12" Source="/UpdateServiceClient;component/Resources/Images/stop.png" />
     </Button>
+    -->
     
 11. How to popup context menu when click left mouse  
 
+    <!--
     <Page.Resources>
         <model:BindingProxy x:Key="Proxy" Data="{Binding}" />
         <Style TargetType="{x:Type Button}" x:Key="BasicButtonStyle">
@@ -120,4 +125,4 @@ Solution: [Check this](https://stackoverflow.com/questions/3583507/wpf-binding-a
     <Button Margin="5,0,0,0" DockPanel.Dock="Right" VerticalContentAlignment="Center" Style="{StaticResource ProductButtonStyle}" Visibility="{Binding LatestVersionVisibility, Converter={StaticResource BoolToVisibility}}" >
         <Image Height="12" Source="/UpdateServiceClient;component/Resources/Images/read_more.png" />
     </Button>
-    
+    -->
