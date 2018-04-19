@@ -38,9 +38,86 @@ Solution: [Check this](https://stackoverflow.com/questions/3583507/wpf-binding-a
     a. Create a proxy class   
     b. Add proxy binding to resource    
     c. Modify ContextMenu  
-	
+    
 9. How to show text in Progress bar  
 
+    <Grid>
+        <ProgressBar Value="{Binding Path=Percent, Mode=OneWay}" Minimum="0" Maximum="100" />
+        <TextBlock Text="{Binding Path=Percent , StringFormat={}{0}%}" HorizontalAlignment="Center" ></TextBlock>
+    </Grid>
+    
 10. Button in DataGrid binding command does not work  
 
+    <Button Margin="5,0,0,0" DockPanel.Dock="Right" VerticalContentAlignment="Center" Style="{StaticResource BasicButtonStyle}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.StopButtonClickCommand}" >
+        <Image Height="12" Source="/UpdateServiceClient;component/Resources/Images/stop.png" />
+    </Button>
+    
 11. How to popup context menu when click left mouse  
+
+    <Page.Resources>
+        <model:BindingProxy x:Key="Proxy" Data="{Binding}" />
+        <Style TargetType="{x:Type Button}" x:Key="BasicButtonStyle">
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Click">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
+                                    <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
+                                </BooleanAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ButtonBase}">
+                        <Border Name="Chrome"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        SnapsToDevicePixels="true">
+                            <ContentPresenter Name="Presenter" Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ProductButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButtonStyle}">
+            <Setter Property="ContextMenu">
+                <Setter.Value>
+                    <ContextMenu DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                        <MenuItem Header="Ignore" Command="{Binding Source={StaticResource Proxy}, Path=Data.ProductIgnoreButtonCommand}" >
+
+                        </MenuItem>
+                    </ContextMenu>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+        <Style x:Key="PatchButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BasicButtonStyle}">
+            <Setter Property="ContextMenu">
+                <Setter.Value>
+                    <ContextMenu>
+                        <MenuItem Header="Ignore" Command="{Binding Source={StaticResource Proxy}, Path=Data.PatchIgnoreButtonCommand}" />
+                        <MenuItem Header="Download" Command="{Binding Source={StaticResource Proxy}, Path=Data.PatchDownloadButtonCommand}"/>
+                    </ContextMenu>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    
+    <Button Margin="5,0,0,0" DockPanel.Dock="Right" VerticalContentAlignment="Center" Style="{StaticResource ProductButtonStyle}" Visibility="{Binding LatestVersionVisibility, Converter={StaticResource BoolToVisibility}}" >
+        <Image Height="12" Source="/UpdateServiceClient;component/Resources/Images/read_more.png" />
+    </Button>
+    
