@@ -12,6 +12,8 @@ tags:
 1. IIS enable net.tcp 协议   
 Right click on application, manage application -> Advanced setting   
 service change to "http,net.tcp"   
+
+1.1 IIS add application pool for .net 4.0
    
 2. Database does not have privilege to write   
 Modify database file and its folder's privilege setting   
@@ -130,3 +132,6 @@ Solution: [Check this](https://stackoverflow.com/questions/3583507/wpf-binding-a
 12. How to close window in ViewModel
 
 [Reference](https://stackoverflow.com/questions/16172462/close-window-from-viewmodel)
+
+13. Update WCF Service reference could not get the latest service contract
+Check the folder permission, unselect "ReadOnly"
