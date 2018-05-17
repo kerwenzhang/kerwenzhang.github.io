@@ -51,6 +51,6 @@ ADFS将同样的概念应用到Internet. 我们都知道Web应用访问位于SQL
 这些认证机制都可实现认证功能，但是也有一些不足之处。不足之一是账户管理。当应用仅被我们自己的员工访问时，账户管理并不是个大问题。但是，如果您的供应商、客户都使用该应用时，您会突然发现您需要为其他企业的员工建立新的用户账户。不足之二是维护问题。当其他企业的员工离职，雇佣新员工时，您需要删除旧的账户和创建新的账户。密码也是一个问题。一旦应用配置完成，您要不断的为那些甚至没有为您公司工作的人员重新修改密码。  
 
   
-[Reference1](https://baike.baidu.com/item/OpenID/2267230?fr=aladdin)  
-[Reference2](https://baike.baidu.com/item/ADFS/892989)
+[Reference1](https://baike.baidu.com/item/OpenID/2267230?fr=aladdin)   
+[Reference2](https://baike.baidu.com/item/ADFS/892989)  
 [Reference3](https://blog.csdn.net/nista/article/details/49099921)
