@@ -9,14 +9,6 @@ tags:
 ---  
   
 
-# OpenID
-
-OpenID 的创建基于这样一个概念：我们可以通过 URI （又叫 URL 或网站地址）来认证一个网站的唯一身份，同理，我们也可以通过这种方式来作为用户的身份认证。  
-目前的网站都是依靠用户名和密码来登录认证，这就意味着大家在每个网站都需要注册用户名和密码，即便你使用的是同样的密码。如果使用 OpenID ，你的网站地址（URI）就是你的用户名，而你的密码安全的存储在一个 OpenID 服务网站上（你可以自己建立一个 OpenID 服务网站，也可以选择一个可信任的 OpenID 服务网站来完成注册）  
-
-登录一个支持 OpenID 的网站非常简单（即便你是第一次访问这个网站也是一样）。只需要输入你注册号的 OpenID 用户名，然后你登录的网站会跳转到你的 OpenID 服务网站，在你的 OpenID 服务网站输入密码（或者其它需要填写的信息）验证通过后，你会回到登录的网站并且已经成功登录。  
-
-除了一处注册，到处通行以外，OpenID 给所有支持 OpenID 的网站带来了价值—共享用户资源。用户可以清楚的控制哪些信息可以被共享，例如姓名、地址、电话号码等。
 
 # Directory Services
 
@@ -50,7 +42,44 @@ ADFS将活动目录拓展到Internet。要理解这一点，可以考虑一般�
 ADFS将同样的概念应用到Internet. 我们都知道Web应用访问位于SQL Server或其他类型后端资源上的后端数据。对后端资源的安全认证问题往往比较复杂。可以有很多不同的认证方法提供这样的认证。例如，用户可能通过RADIUS(远程拨入用户服务认证)服务器或者通过应用程序代码的一部分实现所有权认证机制。  
 这些认证机制都可实现认证功能，但是也有一些不足之处。不足之一是账户管理。当应用仅被我们自己的员工访问时，账户管理并不是个大问题。但是，如果您的供应商、客户都使用该应用时，您会突然发现您需要为其他企业的员工建立新的用户账户。不足之二是维护问题。当其他企业的员工离职，雇佣新员工时，您需要删除旧的账户和创建新的账户。密码也是一个问题。一旦应用配置完成，您要不断的为那些甚至没有为您公司工作的人员重新修改密码。  
 
+
   
-[Reference1](https://baike.baidu.com/item/OpenID/2267230?fr=aladdin)   
 [Reference2](https://baike.baidu.com/item/ADFS/892989)  
 [Reference3](https://blog.csdn.net/nista/article/details/49099921)
+
+
+# oAuth   
+OAUTH协议为用户资源的授权提供了一个安全的、开放而又简易的标准。与以往的授权方式不同之处是OAUTH的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此OAUTH是安全的。oAuth是Open Authorization的简写。  
+OAUTH协议为用户资源的授权提供了一个安全的、开放而又简易的标准。同时，任何第三方都可以使用OAUTH认证服务，任何服务提供商都可以实现自身的OAUTH认证服务，因而OAUTH是开放的。  
+
+协议特点  
+(1). 简单：不管是OAUTH服务提供者还是应用开发者，都很易于理解与使用；  
+(2). 安全：没有涉及到用户密钥等信息，更安全更灵活；  
+(3). 开放：任何服务提供商都可以实现OAUTH，任何软件开发商都可以使用OAUTH；  
+  
+[Reference4](https://baike.baidu.com/item/oAuth/7153134?fr=aladdin)  
+
+
+
+# OpenID
+
+OpenID 的创建基于这样一个概念：我们可以通过 URI （又叫 URL 或网站地址）来认证一个网站的唯一身份，同理，我们也可以通过这种方式来作为用户的身份认证。  
+目前的网站都是依靠用户名和密码来登录认证，这就意味着大家在每个网站都需要注册用户名和密码，即便你使用的是同样的密码。如果使用 OpenID ，你的网站地址（URI）就是你的用户名，而你的密码安全的存储在一个 OpenID 服务网站上（你可以自己建立一个 OpenID 服务网站，也可以选择一个可信任的 OpenID 服务网站来完成注册）  
+
+登录一个支持 OpenID 的网站非常简单（即便你是第一次访问这个网站也是一样）。只需要输入你注册号的 OpenID 用户名，然后你登录的网站会跳转到你的 OpenID 服务网站，在你的 OpenID 服务网站输入密码（或者其它需要填写的信息）验证通过后，你会回到登录的网站并且已经成功登录。  
+
+除了一处注册，到处通行以外，OpenID 给所有支持 OpenID 的网站带来了价值—共享用户资源。用户可以清楚的控制哪些信息可以被共享，例如姓名、地址、电话号码等。
+[Reference1](https://baike.baidu.com/item/OpenID/2267230?fr=aladdin)   
+
+# OpenID Connect
+
+OpenID Connect 1.0 is a simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to verify the identity of the End-User based on the authentication performed by an Authorization Server, as well as to obtain basic profile information about the End-User in an interoperable and REST-like manner.  
+
+# OpenID Connect VS OpenID 2.0
+
+OpenID Connect performs many of the same tasks as OpenID 2.0, but does so in a way that is API-friendly, and usable by native and mobile applications. OpenID Connect defines optional mechanisms for robust signing and encryption. Whereas integration of OAuth 1.0a and OpenID 2.0 required an extension, in OpenID Connect, OAuth 2.0 capabilities are integrated with the protocol itself.   
+
+# IETF  
+国际互联网工程任务组（The Internet Engineering Task Force，简称 IETF） 成立于1985年底，是全球互联网最具权威的技术标准化组织，主要任务是负责互联网相关技术规范的研发和制定，当前绝大多数国际互联网技术标准出自IETF。  
+IETF是一个由为互联网技术工程及发展做出贡献的专家自发参与和管理的国际民间机构。它汇集了与互联网架构演化和互联网稳定运作等业务相关的网络设计者、运营者和研究人员，并向所有对该行业感兴趣的人士开放。任何人都可以注册参加IETF的会议。  
+IETF的主要任务是负责互联网相关技术标准的研发和制定，是国际互联网业界具有一定权威的网络相关技术研究团体。   
