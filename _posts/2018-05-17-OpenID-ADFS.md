@@ -83,3 +83,20 @@ OpenID Connect performs many of the same tasks as OpenID 2.0, but does so in a w
 国际互联网工程任务组（The Internet Engineering Task Force，简称 IETF） 成立于1985年底，是全球互联网最具权威的技术标准化组织，主要任务是负责互联网相关技术规范的研发和制定，当前绝大多数国际互联网技术标准出自IETF。  
 IETF是一个由为互联网技术工程及发展做出贡献的专家自发参与和管理的国际民间机构。它汇集了与互联网架构演化和互联网稳定运作等业务相关的网络设计者、运营者和研究人员，并向所有对该行业感兴趣的人士开放。任何人都可以注册参加IETF的会议。  
 IETF的主要任务是负责互联网相关技术标准的研发和制定，是国际互联网业界具有一定权威的网络相关技术研究团体。   
+
+
+# How to create a domain
+
+[Reference](https://win10faq.com/create-domain-windows-server/)
+
+[How to create a certficate](https://jingyan.baidu.com/article/20b68a88a0d96d796dec6245.html)
+
+[Cannot manage Active Directory Certificate Services](http://clintboessen.blogspot.in/2013/11/cannot-manage-active-directory.html)
+
+# Setup OpenId and ADFS
+
+[How to enable AD manager on Server 2016](https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/deployment/install-the-ad-fs-role-service)
+
+[Build a web application using OpenID Connect with AD FS 2016](https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/development/enabling-openid-connect-with-ad-fs)
+
+[ADFS3.0单点登录系列-总览](http://www.cnblogs.com/hudun/p/5912385.html)
