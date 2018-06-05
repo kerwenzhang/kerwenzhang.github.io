@@ -161,3 +161,6 @@ Client:
             Console.ReadKey();    
         }    
     }
+	
+[我的WCF之旅（3）：在WCF中实现双工通信](http://www.cnblogs.com/artech/archive/2007/03/02/661969.html)
+[WCF操作模式-双向操作(双工通信)示例演示](https://blog.csdn.net/wyqlxy/article/details/46997867)
