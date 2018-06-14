@@ -18,3 +18,4 @@ tags:
 
               
 [如何使用MSBuild Community Tasks](https://blog.csdn.net/missautumn/article/details/16870783)
+[MSBuild.Community.Tasks list](https://github.com/loresoft/msbuildtasks/blob/master/Documentation/TaskDocs.md)
