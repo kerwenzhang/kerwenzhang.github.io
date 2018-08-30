@@ -2,10 +2,10 @@
 layout: post                      
 title: "Html 基本标签"                      
 date:   2018-8-27 10:00:00                       
-categories: "Html"                      
+categories: "Web"                      
 catalog: true                      
 tags:                       
-    - Html                      
+    - Web                      
 ---            
     
 ## 常用标签    
