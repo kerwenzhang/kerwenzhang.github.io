@@ -25,8 +25,8 @@ Click on “Create New Task” on the right hand side of the screen and set the 
 a. Set the user account to SYSTEM    
 b. Choose "Run with highest privileges"    
 c. Choose the OS for Windows7    
-Click on “Triggers” tab and then click on “New…” Choose “At Startup” from the drop down menu, click Enabled and hit OK    
-Click on the “Actions tab” and then click on “New…” If you are running a .bat file use cmd full path as the program(c:\widnows\system32\cmd.exe). Then input "/c <your bat file path>" In the Add arguments field    
-Click on “OK” then on “OK” on the create task panel and it will now be scheduled.    
-Add the .bat script to the place specified in your task event.    
+Click on “Triggers” tab and then click on “New…” Choose “At Startup” from the drop down menu, click Enabled and hit OK     
+Click on the “Actions tab” and then click on “New…” If you are running a .bat file use cmd full path as the program(c:\widnows\system32\cmd.exe). Then input "/c your bat file path" In the Add arguments field.    
+Click on “OK” then on “OK” on the create task panel and it will now be scheduled.     
+Add the .bat script to the place specified in your task event.     
 Enjoy.
