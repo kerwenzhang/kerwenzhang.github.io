@@ -15,9 +15,7 @@ First, need to create a new workspace
 2. right click on "Updaer R1", select "New" -> "Repository WorkSpace"    
 3. In the wizard, change "WorkSpace name", click -> next    
 4. Keep "Private", select "Next"    
-5. Click "Finish" button    
-    
-Wait some while, popup "Load Repository Workspace" dialog    
+5. Click "Finish" button, Wait some while, popup "Load Repository Workspace" dialog    
 6. Change Sandbox location, and select "Load component as root folder", click Next    
 7. click "Finish" in next popup page.    
 8. After download code complete, open this project    
