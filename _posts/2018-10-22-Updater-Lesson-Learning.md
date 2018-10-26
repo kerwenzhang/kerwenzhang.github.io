@@ -15,4 +15,6 @@ tags:
 措施：  
 a. 关键节点加大提前量  
 b. 责任人pay more attention  
-c. 测试范围design，case 要更细致的review  
+c. 测试范围design，case 要更细致的review   
+5. IIS cover 不足   
+当IIS配置出现问题时，可以让tester收集IIS相关log，C:\WINDOWS\Logs\DISM\dism.log   
