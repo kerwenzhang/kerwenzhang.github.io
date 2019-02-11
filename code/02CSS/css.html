@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Html + CSS</title>
+    <link rel="stylesheet" href=".\style.css">
+</head>
+
+<body>
+    <ol>
+        <li>复合选择器</li>
+        <ul>
+            <li>后代选择器</li>
+            <p>用空格隔开</p>
+            <div>
+                <p>只选择div中的p标签</p>
+            </div>
+            <div class="complex">
+                <p>类名 + p标签</p>
+            </div>
+            <p>这个不选择</p>
+
+            <li>子代选择器</li>
+            <p>用>隔开</p>
+            <ul>
+                <li>
+                    <a href="#">只选择子代</a>
+                    <div>
+                        <a href="#">更深的后代</a>
+                    </div>
+                </li>
+            </ul>
+
+            <li>交集选择器</li>
+            <p>标签连写 div.ClassName</p>
+            <div class="red">交集选择器</div>
+            <p class="red">不会选择这个</p>
+
+            <li>并集选择器</li>
+            <p>用，隔开</p>
+            <p>div,p,span{<br>
+                color:red;<br>
+                }</p>
+
+
+            <li>伪类选择器</li>
+            :link 未访问链接<br>
+            :visited 已访问链接<br>
+            :hover 鼠标移动到链接上<br>
+            :active 选定的链接<br>
+            <a class="weilei" href="#">伪类选择</a>
+        </ul>
+
+        <li>快速生成标签</li>
+        <p>li>p>div>span</p>
+        <li>快捷键</li>
+        <ul>
+            <li>生成标签 输入标签名 按Tab键</li>
+            <li>一次生成多个标签 标签名*数字</li>
+            <li>父子级关系 用> ul>li</li>
+            <li>兄弟关系 用+ div+p</li>
+            <li>带有类名或id名字的， 标签.类名 或 标签#id</li>
+        </ul>
+        <li>标签显示模式</li>
+        <ul>
+            <li>块级元素</li>
+            独占一整行，可设置高宽,常用于网页布局和网页结构搭建<br>
+            h1~h6，p, div, ul, ol, li，其中div标签是最典型的块元素
+            <li>行内元素</li>
+            高宽无效<br>
+            a,strong,b,em,i,del,s,ins,u,span,其中span标签是最典型的行内元素
+            <li>行内块元素</li>
+            img,input,td， 可以设置宽高和对齐属性
+            <li>显示模式转换</li>
+            <div class="zhuanhuan">块转行内元素</div>
+            <div class="zhuanhuan">块转行内元素</div>
+            <div class="zhuanhuan">块转行内元素</div>
+            <span class="zhuan1">行转块</span>
+            <span class="zhuan1">行转块</span>
+            <span class="zhuan1">行转块</span>
+        </ul>
+        <li>导航栏示例</li>
+        <div class="Nav">
+            <a href="#">网站首页</a>
+            <a href="#">网站首页</a>
+            <a href="#">网站首页</a>
+            <a href="#">网站首页</a>
+            <a href="#">网站首页</a>
+            <a href="#">网站首页</a>
+        </div>
+
+        <li>CSS三大特性</li>
+        <ul>
+            <li>层叠性</li>
+            <li>继承性</li>
+            <li>优先级</li>
+            类选择器权重 高于 标签选择器<br>
+            id选择器权重 高于 类选择器<br>
+            行内样式权重 高于 id选择器<br>
+            !important 权重最高<br>
+            继承的权重为0<br>
+        </ul>
+        <li>背景</li>
+        <ul>
+            <li></li>
+            <div class="bkg"></div>
+            <li>背景图位置转换</li>
+            <a href="#" class="bkg2"></a>
+            <li>背景色透明</li>
+            <dir class="touming">我是文字内容</dir>
+        </ul>
+
+
+        <li>盒子模型</li>
+        <ul>
+            <li>盒子边框</li>
+            <div class="BoxBorder"></div>
+            <li>表格合并相邻边框</li>
+            <table class="collapse" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>天王盖地虎</td>
+                    <td>天王盖地虎</td>
+                    <td>天王盖地虎</td>
+                </tr>
+                <tr>
+                    <td>天王盖地虎</td>
+                    <td>天王盖地虎</td>
+                    <td>天王盖地虎</td>
+                </tr>
+                <tr>
+                    <td>天王盖地虎</td>
+                    <td>天王盖地虎</td>
+                    <td>天王盖地虎</td>
+                </tr>
+            </table>
+            <li>内边距</li>
+            <Div class="NeiBorder">文本信息</Div><br>
+            <a href="#" class="NeiBorder2">首页</a>
+            <a href="#" class="NeiBorder2">移动客户端</a><br><br>
+            <div class="SinaNav">
+                <a href="#">首页</a>
+                <a href="#">新闻客户端</a>
+                <a href="#">设为首页</a>
+                <a href="#">订阅</a>
+            </div>
+        </ul>
+        
+    </ol>
+
+
+
+</body>
+
+</html>

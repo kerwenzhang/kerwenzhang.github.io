@@ -1,0 +1,148 @@
+ol > li{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+ul > li{
+    font-weight: bold;
+    font-size: 15px;
+}
+
+div p{
+    color: red;
+}
+.complex p{
+    color: purple;
+}
+
+ul li > a{
+    color:red;
+}
+div.red{
+    color: red;
+}
+
+a.weilei:link{
+    color:blue;
+    font-size: 25px;
+    text-decoration: none;
+    font-weight: 700px;
+}
+a.weilei:visited{
+    color:orange;
+}
+a.weilei:hover{
+    color:red;
+
+}
+a.weilei:active{
+    color:green;
+}
+
+.zhuanhuan{
+    color: red;
+    display: inline;
+}
+.zhuan1{
+    color: red;
+    display: block;
+}
+
+.Nav>a{
+    width: 120px;
+    height: 50px;
+    display: inline-block;
+    background-image: url(images/bg.png);
+    text-align: center;
+    text-decoration: none;
+    line-height: 50px;
+}
+.Nav>a:hover{
+    background-image: url(images/bgc.png)
+}
+.Nav{
+    text-align: center;
+}
+.bkg{
+    width: 200px;
+    height: 200px;
+    background-color: blue;
+    background-image: url(images/bg.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    /* background-attachment: fixed; */
+}
+.bkg2{
+    width: 67px;
+    height: 32px;
+    background: url(images/110.png) no-repeat left top;
+    display: block;
+}
+.bkg2:hover{
+    background-position: bottom;
+}
+
+.touming{
+    width: 200px;
+    height: 200px;
+    background-color: #000;
+    color:#FFF;
+    background: rgba(0,0,0,0.5)
+}
+.BoxBorder{
+    width: 200px;
+    height: 200px;
+    border-width: 1px;
+    border-color: red;
+    border-style: solid;
+    border-top: 1px blue solid;
+    border-right: 1px green dashed;
+}
+.collapse{
+    width: 500px;
+    height: 300px;
+    border: 1px solid red;
+}
+.collapse td{
+    border: 1px solid red;
+    text-align: center;
+}
+.collapse, .collapse td{
+    border-collapse: collapse;
+}
+.NeiBorder{
+    width: 200px;
+    height: 200px;
+    border: 1px solid red;
+    padding: 20px;
+}
+.NeiBorder2{
+    height: 35px;
+    background-color: #ccc;
+    display: inline-block;
+    line-height: 35px;
+    color:red;
+    text-decoration: none;
+    /* padding: 10px; */
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.SinaNav{
+    height: 50px;
+    border-top: 3px solid #FF8500;
+    border-bottom: 1px solid #EDEEF0;
+    background-color: #FCFCFC;
+}
+.SinaNav a{
+    height: 50px;
+    display: inline-block;
+    line-height: 50px;
+    text-decoration: none;
+    color: #4c4c4c;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+.SinaNav a:hover{
+    background-color: #edeef0;
+    color: #ff8400;
+}
