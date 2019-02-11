@@ -52,7 +52,7 @@ Delphi版
   
 ## 三： 回调函数调用调用者  
 
-调用回调函数的函数我把他放到了DLL里，这是个很简单的VC生成的WIN32 DLL.并使用DEF文档输出其函数名 TestCallBack。实现如下：     
+调用回调函数的函数我把他放到了DLL里，这是个很简单的VC生成的WIN32 DLL.并使用DEF文档输出其函数名 TestCallBack。实现如下：       
 
 	PFCALLBACKgCallBack=0;  
 	void WINAPI TestCallBack(PFCALLBACK Func)  
