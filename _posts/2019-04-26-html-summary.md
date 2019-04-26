@@ -143,4 +143,8 @@ ref 5: [那些年我们一起清除过的浮动](http://www.iyunlu.com/view/css-
 
 margin是指从自身边框到另一个容器边框之间的距离，就是容器外距离。  
 padding是指自身边框到自身内部另一个容器边框之间的距离，就是容器内距离。
-![border](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/border.jpg)
+![border](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/border.jpg?raw=true)
+
+
+### position
+
