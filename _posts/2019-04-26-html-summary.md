@@ -173,3 +173,8 @@ padding是指自身边框到自身内部另一个容器边框之间的距离，�
 |各种伪元素|::first-letter,::first-line,::after,::before,::selection|1|
 
 ### 伪类 伪元素
+css引入伪类和伪元素概念是为了格式化文档树以外的信息。也就是说，伪类和伪元素是用来修饰不在文档树中的部分，比如，一句话中的第一个字母，或者是列表中的第一个元素。  
+CSS3规范中的要求使用双冒号(::)表示伪元素，以此来区分伪元素和伪类.
+![class](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/class.png?raw=true)
+
+![item](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/item.png?raw=true)
