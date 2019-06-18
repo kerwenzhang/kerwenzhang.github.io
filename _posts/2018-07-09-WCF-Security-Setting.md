@@ -1,6 +1,6 @@
 ---                
 layout: post                
-title: "WCF Security Setting"                
+title: "WCF 安全设置"                
 date:   2018-7-9 16:30:00                 
 categories: "WCF"                
 catalog: true                
@@ -8,12 +8,35 @@ tags:
     - WCF                
 ---      
   
-在NetTcpBinding中可以将安全模式设置成以下几种：
-None - 不设置任何安全模式
-Message - 使用 SOAP 消息安全提供安全性。 默认情况下，将对 SOAP 正文进行加密和签名。 Message模式不依赖于传输协议。服务端需要指定服务端证书，用来加密服务端和客户端相互传送的消息。
-Transport - 使用 TLS over TCP 或 SPNego 提供传输安全性。 此服务可能需要使用 SSL 证书进行配置。 可以通过此模式来控制保护级别。
-TransportWithMessageCredential - 传输安全性与消息安全性结合使用。 使用 TLS over TCP 或 SPNego 提供传输安全性，传输安全性可确保完整性、保密性和服务器身份验证。 SOAP 消息安全性提供客户端身份验证。 
+WCF服务的安全性包括两个主要要求： 传输安全和授权. 传输安全包括身份验证（验证服务和客户端的标识）、保密性（消息加密）和完整性（进行数字签名以检测是否存在篡改）。 授权是控制对资源的访问，例如仅允许特权用户读取文件。
 
-  
-[WCF安全系列 二 - netTCPBinding绑定之Transport安全模式](https://www.cnblogs.com/chnking/archive/2008/10/07/1305891.html)
+## 基本知识
+安全依赖于凭据 。 凭据用于证明实体是否属实。 例如，服务的客户端发出声明的标识，和凭据用于证明该声明以某种方式。 在典型方案中，会发生凭据交换。 首先，某服务将对其标识发出声明，并使用凭据向客户端证明该标识。 同样，客户端也将对某标识发出声明，并向该服务出具凭据。 如果双方都信任对方的凭据，则可以建立安全上下文 ，在此上下文中，将以保密方式对所有消息进行交换，并且所有消息都将进行签名以保护其完整性。
+
+如果客户端和服务计算机都位于需要二者登录到网络的 Windows 域中，则凭据将由 Windows 基础结构来提供。在 Windows 系统上，授权的工作方式是将每个计算机和用户分配到一个角色和组的集合中。  
+
+Internet 环境并没有一个控制器来管理随时登录的成百上千万的用户， 而是在其凭据中最常采用 X.509 证书（也称为安全套接字层 (SSL) 证书）的形式。 这些证书通常由证书颁发机构 颁发，证书颁发机构可以是担保证书以及将向其颁发证书的人员的真实性的第三方公司。 若要在 Internet 上公开服务，还必须提供这样一个受信任的证书来对服务进行身份验证。
+
+## 安全模式
+在WCF可以将安全模式设置成以下几种：  
+1. None - 不设置任何安全模式  
+2. Message - 使用 SOAP 消息安全提供安全性。  
+默认情况下，将对 SOAP 正文进行加密和签名。 Message模式不依赖于传输协议。服务端需要指定服务端证书，用来加密服务端和客户端相互传送的消息。  
+消息模式通过在每条消息中都包含安全数据来提供安全保障。 使用 XML 和 SOAP 安全标头时，每条消息中都包含确保消息的完整性和保密性所需要的凭据及其他数据。 每条消息都包含安全数据时，由于必须逐一处理每条消息，因此将导致性能下降。  
+消息安全相对于传输安全的一个优势就是：更为灵活。 即，安全要求不由传输协议确定。 您可以使用任何类型的客户端凭据来保证消息的安全 
+
+3. Transport - 使用 TLS over TCP 或 SPNego 提供传输安全性。   
+此服务可能需要使用 SSL 证书进行配置。 可以通过此模式来控制保护级别。  
+当选择传输模式来保证安全时，您要选择使用该协议所指示的机制。 例如，如果您选择 WSHttpBinding 类并将其安全模式设置为“传输”，则您要选择基于 HTTP 的 SSL (HTTPS) 作为安全机制。 传输模式的好处在于它比消息模式更为高效，原因是其安全是在相对较低的级别进行集成的。 使用传输模式时，必须根据传输规范实现安全机制，这样消息才能通过传输在各点之间安全流动。
+4. TransportWithMessageCredential - 传输安全性与消息安全性结合使用。传输安全用于有效确保每条消息的保密性和完整性。 同时，每条消息都包含其凭据数据，这使得可以对消息进行身份验证。   
+使用 TLS over TCP 或 SPNego 提供传输安全性，传输安全性可确保完整性、保密性和服务器身份验证。 SOAP 消息安全性提供客户端身份验证。 
+
+## ProtectionLevel 
+ProtectionLevel 属性出现在多个特性类（如 ServiceContractAttribute 和 OperationContractAttribute 类）中。 保护级别是一个值，它指定了支持服务的消息（或消息部分）是进行签名、签名并加密，还是未经签名或加密即发送。
+## 授权
+
+
+Reference:  
+[Microsoft doc](https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/securing-services)  
+[WCF安全系列 二 - netTCPBinding绑定之Transport安全模式](https://www.cnblogs.com/chnking/archive/2008/10/07/1305891.html)  
 [WCF安全系列 三 - netTCPBinding绑定之Message安全模式](http://www.cnblogs.com/chnking/archive/2008/10/15/1312120.html)
