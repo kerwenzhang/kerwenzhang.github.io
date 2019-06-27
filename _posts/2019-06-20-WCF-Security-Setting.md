@@ -69,7 +69,15 @@ Kerberos 协议是一种规范，用于创建一种安全机制来对 Windows �
 #### X.509 证书
 X.509 证书是安全应用程序中使用的主要凭据形式。 有关详细信息 X.509 证书请参阅X.509 公钥证书。 X.509 证书存储在证书存储区中。 运行 Windows 的计算机有多种证书存储区，每一种都针对不同的用途。 有关不同存储区的详细信息，请参阅证书存储区。
 
+## 传输安全方案
+使用 WCF 传输安全的常见方案包括：
+1. 使用 Windows 确保传输安全。 WCF 客户端和服务部署在 Windows 域 （或 Windows 林） 中。 消息包含个人数据，因此要求客户端和服务相互进行身份验证，要求实现消息完整性和消息保密性。 此外，还需要有已发生特定事务的证明，例如，消息的接收方应记录签名信息。
+2. 使用 UserName 和 HTTPS 确保传输安全。 WCF 客户端和服务需要一些开发，以便通过 Internet 工作。 客户端凭据根据数据库（其中的内容为用户名/密码对）进行身份验证。 服务是用受信任的安全套接字层 (SSL) 证书部署在一个 HTTPS 地址的。 由于消息是通过 Internet 传输的，因此，客户端和服务需要相互进行身份验证，并且必须在传输过程中保持消息的保密性和完整性。
+3. 使用证书确保传输安全。 WCF 客户端和服务需要一些开发，以便通过公共 internet 工作。 客户端和服务都具有可用于确保消息安全的证书。 客户端和服务通过 Internet 进行相互通信，执行要求消息完整性、保密性和相互身份验证的重要事务。
+
 Reference:  
 [Microsoft doc](https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/securing-services)  
 [WCF安全系列 二 - netTCPBinding绑定之Transport安全模式](https://www.cnblogs.com/chnking/archive/2008/10/07/1305891.html)  
 [WCF安全系列 三 - netTCPBinding绑定之Message安全模式](http://www.cnblogs.com/chnking/archive/2008/10/15/1312120.html)
+
+[WCF安全之X509证书](https://www.cnblogs.com/viter/archive/2009/07/02/x509.html)
