@@ -81,3 +81,5 @@ Reference:
 [WCF安全系列 三 - netTCPBinding绑定之Message安全模式](http://www.cnblogs.com/chnking/archive/2008/10/15/1312120.html)
 
 [WCF安全之X509证书](https://www.cnblogs.com/viter/archive/2009/07/02/x509.html)
+
+[常用安全方案](https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/feature-details/common-security-scenarios)
