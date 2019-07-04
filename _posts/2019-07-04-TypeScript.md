@@ -15,14 +15,17 @@ TypeScript 是 JavaScript 的一个超集，扩展了 JavaScript 的语法，是
 ## 安装
 
         npm install -g typescript
+
 安装完成后我们可以使用 tsc -v 来查看版本号
 
         $ tsc -v
         Version 3.2.2
+
 ## Hello world
 
         var message:string="Hello World“
         console.log(message)
+
 通常使用`.ts`作为TypeScript代码文件的扩展名.
 
 ## 转换成Jayavscript
@@ -42,24 +45,38 @@ TypeScript 是 JavaScript 的一个超集，扩展了 JavaScript 的语法，是
 ## 数据类型
 
 #### 任意类型 any
+
         let x:any =1;
         x='This is string'
+
 #### 数字类型 number
+
         let decLiteral: number = 6;
+
 #### 字符串类型 string
+
         let name: string = "Runoob";
         let years: number = 5;
         let words: string = `您好，今年是 ${ name } 发布 ${ years + 1} 周年`;
+
 #### 布尔类型 boolean
+
         let flag: boolean = true;
+
 #### 数组类型
+
         let arr: number[] = [1, 2];
+
 #### 枚举 enum
+
         enum color{red,green,blue}
         let c : Color = Color.blue;
         console.log(c)
+
 ## 变量声明
+
         var [变量名] : [类型] = 值;
+
 ## 语句
 ### 条件语句
 If 语句
@@ -72,6 +89,7 @@ If 语句
         } else { 
           console.log(num+" 不是正数也不是负数") 
         }
+
 Switch 语句
 
         var grade:string = "A"; 
@@ -85,6 +103,7 @@ Switch 语句
             break;              
           } 
         }
+
 ### 循环
 for 循环
 
@@ -95,6 +114,7 @@ for 循环
           factorial *= i;
         }
         console.log(factorial);
+
 for...in 循环
 
         var j:any; 
@@ -103,12 +123,14 @@ for...in 循环
         for(j in n) {
           console.log(n[j])  
         }
+
 while 循环
 ## 函数
         function add(x: number, y: number): number {
           return x + y;
         }
         console.log(add(1,2))
+
 可选参数
 
         function buildName(firstName: string, lastName?: string) {
@@ -119,6 +141,7 @@ while 循环
         }
         
         let result1 = buildName("Bob");  // 正确
+
 默认参数
 
         function calculate(price:number,rate:number = 0.50) { 
@@ -126,7 +149,9 @@ while 循环
           console.log("计算结果: ",discount); 
         } 
         calculate(1000) 
+
 ## 类
+
     class Car {     
       engine:string;  
       // 构造函数 
@@ -139,6 +164,7 @@ while 循环
       } 
     }
     var obj = new Car("Engine 1")
+
 ## 对象
 对象是包含一组键值对的实例。 值可以是标量、函数、数组、对象等.
 
@@ -148,6 +174,7 @@ while 循环
         }; 
         // 访问对象的值
         console.log(sites.site1) 
+
 类型模板
 
         var sites = {
@@ -159,3 +186,4 @@ while 循环
           console.log("hello " + sites.site1);
         };
         sites.sayHello();
+        
