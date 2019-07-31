@@ -2,10 +2,10 @@
 layout: post                
 title: "ping 返回IPV6地址"                
 date:   2019-7-31 14:30:00                 
-categories: "Other"                
+categories: "Others"                
 catalog: true                
 tags:                 
-    - Other                
+    - Others                
 ---      
 
 在ping一台局域网虚拟机时发现总是返回IPV6的地址  
