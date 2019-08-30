@@ -36,6 +36,7 @@ and turn it into this
       filter(x => x > 2)
     );
 
-
+## Observable
 
 [reference1](https://blog.angularindepth.com/reading-the-rxjs-6-sources-map-and-pipe-94d51fec71c2)  
+[Reference2](https://angular.cn/guide/observables)
