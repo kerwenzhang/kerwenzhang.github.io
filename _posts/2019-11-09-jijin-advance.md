@@ -164,3 +164,17 @@ QDII基金：是国内基金公司专门成立，用来投资海外股票、债�
 ![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Advance15.png?raw=true) 
 
 ## 可转债基金  
+
+全称是可转换公司债券，是上市公司发行的，在一定条件下可以被转换为公司股票的债券，它具有债性和股性的双重属性。  
+
+挑选：  
+1. 打开[晨星网](http://cn.morningstar.com/main/default.aspx),点击基金筛选器。  
+2. 点击更多筛选条件   
+3. 设置筛选条件   
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Advance16.png?raw=true)  
+可转债投资比例越高，持仓越集中，基金的投资风格越激进，在牛市中有望获得更高收益，但是熊市可能下跌也较多。  
+
+市面上所有可转债的平均价格低于100元，可以买入   
+市面上所有可转债的平均价格高于130元，可以卖出   
+
+[富投网](http://www.richvest.com/index.php?m=cb&c=idx) 上有一只转债指数
