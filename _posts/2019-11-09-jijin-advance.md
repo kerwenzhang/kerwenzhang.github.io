@@ -135,3 +135,32 @@ QDII基金：是国内基金公司专门成立，用来投资海外股票、债�
 
 ## 债券基金  
 
+债券的本质是机构公开向大家借钱并承诺还本付息的一种凭证。  
+分类：  
+政府债券： 国债、地方债  
+金融机构债券：  央行票据、政策性金融债券、其他金融债券  
+企业债券  
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Advance12.png?raw=true) 
+
+根据投资股票占比的不同，债券基金可以分为纯债基金和偏债基金两种。  
+
+纯债基金挑选：  
+1. 打开[晨星网](http://cn.morningstar.com/main/default.aspx),点击基金筛选器。  
+2. 点击更多筛选条件  
+3. 设置筛选条件  
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Advance13.png?raw=true) 
+4. 将星级条件缩小，选择大于等于双四星的纯债基金  
+5. 优先选择持有国债和金融机构债券的占比总和在20%以上的。  
+
+偏债基金挑选： 
+在晨星网基金筛选页面，勾选基金债券  
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Advance14.png?raw=true) 
+
+看基金经理，基金经理任职时间<5年的，剔除。  
+
+购买债券基金的时机：  
+在银行利率高的时候买入债券基金，再在市场利率低的时候卖出。  
+市场利率可以参考[10年期的国债利率](https://cn.investing.com/rates-bonds/china-10-year-bond-yield)。  
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Advance15.png?raw=true) 
+
+## 可转债基金  
