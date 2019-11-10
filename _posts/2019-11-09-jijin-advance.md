@@ -177,4 +177,20 @@ QDII基金：是国内基金公司专门成立，用来投资海外股票、债�
 市面上所有可转债的平均价格低于100元，可以买入   
 市面上所有可转债的平均价格高于130元，可以卖出   
 
-[富投网](http://www.richvest.com/index.php?m=cb&c=idx) 上有一只转债指数
+[富投网](http://www.richvest.com/index.php?m=cb&c=idx) 上有一只转债指数   
+
+## 股债平衡  
+
+50:50 股债平衡  
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Advance17.png?raw=true)  
+
+
+## 网格策略  
+
+网格策略就是在股市波动的情况下，将资金分成若干份，在交易之前设定好每份资金的买入卖出价，在严格执行， 以获取收益的策略。  
+以定投为主，网格为辅  
+在网格策略上分配的资金一定不要超过股权类资产总投资金额的10%。  
+ 一般来说，进入低估区域后的指数基金，再往下跌的最大幅度会在40%左右，可以根据自己的风险偏好来设定最后一格的买入价。  
+
+ 
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Advance18.png?raw=true)  
