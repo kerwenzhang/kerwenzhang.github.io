@@ -194,3 +194,8 @@ QDII基金：是国内基金公司专门成立，用来投资海外股票、债�
 
  
 ![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Advance18.png?raw=true)  
+
+
+## 北向资金
+
+可以在东方财富—数据中心查看[北向资金](http://data.eastmoney.com/hsgt/index.html)的动向：  
