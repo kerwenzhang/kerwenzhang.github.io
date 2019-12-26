@@ -24,3 +24,5 @@ tags:
 [DPAPI](https://docs.microsoft.com/en-us/previous-versions/ms995355(v=msdn.10)?redirectedfrom=MSDN)
 
 [ProtectedData Class](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.protecteddata?redirectedfrom=MSDN&view=netframework-4.8)
+
+[Key container save path](https://www.syncfusion.com/ebooks/cryptography_in_net_succinctly/cryptographic-key-containers)
