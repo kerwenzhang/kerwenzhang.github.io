@@ -30,3 +30,4 @@ tags:
 [Cng](https://docs.microsoft.com/en-us/windows/win32/seccng/cng-portal)
 [How to generate persisted key for AES](https://stackoverflow.com/questions/45227683/how-to-generate-persisted-key-for-aes)
 [using the ncipher CSP with the MSCAPI to do AES encryption](https://stackoverflow.com/questions/11266758/using-the-ncipher-csp-with-the-mscapi-to-do-aes-encryption)
+[AesCng & CngKey](https://social.msdn.microsoft.com/Forums/en-US/8d2d2b7c-6890-4f02-8ffc-ada6527c1a78/aescng-persisted-key-exportimport-import-fails-with-cryptographicexception-the-supplied-handle-is?forum=netfxbcl)
