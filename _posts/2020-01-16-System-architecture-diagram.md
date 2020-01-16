@@ -18,7 +18,7 @@ tags:
 
 ### 什么是架构图
 
-系统架构图是为了抽象地表示软件系统的<font color=red><strong>整体轮廓</font></strong>和各个组件之间的<font color=red><strong>相互关系和约束边界</font></strong>，以及软件系统的<font color=red><strong>物理部署</font></strong>和软件系统的演进方向的整体视图。  
+系统架构图是为了抽象地表示软件系统的<font color="red"><strong>整体轮廓</font></strong>和各个组件之间的<font color="red"><strong>相互关系和约束边界</font></strong>，以及软件系统的<font color="red"><strong>物理部署</font></strong>和软件系统的演进方向的整体视图。  
 
 
 ### 架构图的作用
