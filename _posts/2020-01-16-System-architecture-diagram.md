@@ -122,7 +122,7 @@ C4 模型使用容器（应用程序、数据存储、微服务等）、组件�
 
 
 
-[Reference1](http://www.sohu.com/a/323496403_468650)
-[可视化架构设计——C4介绍](https://www.jianshu.com/p/33c6a7ed126f)
-[c4model](https://c4model.com/)
-[用于软件架构的 C4 模型](https://www.infoq.cn/article/C4-architecture-model/)
+[Reference1](http://www.sohu.com/a/323496403_468650)   
+[可视化架构设计——C4介绍](https://www.jianshu.com/p/33c6a7ed126f)   
+[c4model](https://c4model.com/)   
+[用于软件架构的 C4 模型](https://www.infoq.cn/article/C4-architecture-model/)   
