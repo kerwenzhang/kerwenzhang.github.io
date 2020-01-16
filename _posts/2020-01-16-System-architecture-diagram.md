@@ -77,12 +77,13 @@ tags:
 
 C4 模型使用容器（应用程序、数据存储、微服务等）、组件和代码来描述一个软件系统的静态结构。这几种图比较容易画，也给出了画图要点，但最关键的是，我们认为，它明确指出了每种图可能的受众以及意义。  
 
-### 语境图(System Context Diagram)
+### 系统上下文图(System Context Diagram)
+
+系统上下文图显示了你正在构建的软件系统，以及系统与用户及其他软件系统之间的关系。以下是一个系统上下文图的示例，描述了一个互联网银行系统的系统上下文：  
 
 ![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/system6.jpg?raw=true)
 
 用途  
-
 这样一个简单的图，可以告诉我们，要构建的系统是什么；它的用户是谁，谁会用它，它要如何融入已有的IT环境。这个图的受众可以是开发团队的内部人员、外部的技术或非技术人员。  
 
 怎么画   
@@ -90,6 +91,8 @@ C4 模型使用容器（应用程序、数据存储、微服务等）、组件�
 中间是自己的系统，周围是用户和其它与之相互作用的系统。这个图的关键就是梳理清楚待建设系统的用户和高层次的依赖，梳理清楚了画下来只需要几分钟时间。  
 
 ### 容器图(Container Diagram)
+
+容器图将软件系统放大，显示组成该软件系统的容器（应用程序、数据存储、微服务等）。技术决策也是该图的关键部分。以下是互联网银行系统的容器图示例。它显示了互联网银行系统（虚线框）由五个容器组成：服务器端 Web 应用程序、客户端单页面应用程序、移动应用程序、服务器端 API 应用程序和数据库。  
 
 ![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/system7.jpg?raw=true)
 
@@ -108,6 +111,8 @@ C4 模型使用容器（应用程序、数据存储、微服务等）、组件�
 
 ### 组件图(Component Diagram)
 
+组件图将单个容器放大，以显示其中的组件。这些组件映射到代码库中的真实抽象（例如一组代码）。下面是一个虚拟的网上银行系统的组件图示例，显示了 API 应用程序中的一些组件（而不是全部）。   
+
 ![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/system8.jpg?raw=true)
 
 用途   
@@ -117,6 +122,8 @@ C4 模型使用容器（应用程序、数据存储、微服务等）、组件�
 
 
 ### 类图(Code/Class Diagram)
+
+最后，如果你确实想要，或者说有这个必要，可以放大个别组件，以显示该组件的实现方式。以下是一个虚拟的网上银行系统的 UML 类图示例（部分）  
 
 ![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/system9.jpg?raw=true)
 
