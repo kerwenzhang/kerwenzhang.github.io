@@ -19,7 +19,7 @@ Internet 环境并没有一个控制器来管理随时登录的成百上千万�
 
 ## 传输安全性
 
-传输安全性包含三项主要安全功能：完整性、保密性和身份验证。 完整性是检测消息是否被篡改的能力。 保密性是能够保留一条消息的预期接收者以外的任何人无法读取这通过加密技术来实现。 身份验证是能够验证已声明的标识。 将这三项功能结合在一起，有助于确保消息安全地从一个点到达另一个点。  
+传输安全性包含三项主要安全功能：完整性、保密性和身份验证。 完整性是检测消息是否被篡改的能力。 保密性是能够保留一条消息的预期接收者以外的任何人无法读取这通过加密技术来实现。 身份验证是能够验证已声明的标识。 将这三项功能结合在一起，有助于确保消息安全地从一个点到达另一个点。WCF采用两种不同的机制来解决这三个涉及到传输安全的问题，我们一般将它们称为不同的安全模式，即Transport安全模式和Message安全模式。    
 
 在WCF可以将传输安全模式设置成以下几种：  
 1. None - 不设置任何安全模式  
@@ -35,6 +35,59 @@ Internet 环境并没有一个控制器来管理随时登录的成百上千万�
 
 4. TransportWithMessageCredential - 传输安全性与消息安全性结合使用。传输安全用于有效确保每条消息的保密性和完整性。 同时，每条消息都包含其凭据数据，这使得可以对消息进行身份验证。   
 使用 TLS over TCP 或 SPNego 提供传输安全性，传输安全性可确保完整性、保密性和服务器身份验证。 SOAP 消息安全性提供客户端身份验证。 
+
+## Transport安全模式   
+
+### SSL, TLS和HTTPS
+
+SSL（Secure Sockets Layer）最初是由Netscape公司开发的一种安全协议，应用于Netscape浏览器以解决与Web服务器之间的安全传输问题。SSL先后经历了三个主要的版本，即1.0、2.0和3.0。之后SSL被IETF （Internet Engineering Task Force）接管，正是根名为TLS（Transport Layer Security）。可以这么说，SSL是TLS的前身，TLS 1.0相当于SSL 3.1。  
+TLS/SSL本身是和具体的网络传输协议无关的，既可以用于HTTP，也可以用于TCP。  
+
+HTTPS（Hypertext Transfer Protocol Secure）则是将HTTP和TLS/SSL两者结合起来。在一般情况下，HTTPS通常采用443端口进行通信。对于WCF来说，所以基于HTTP协议的绑定的Transport安全都是通过HTTPS来实现的。而NetTcpBinding和NetNamedPipeBinding也提供了对TLS/SSL的支持，一般我们将TLS/SSL在TCP上的应用称为SSL Over TCP。  
+
+TLS/SSL帮助我们解决两个问题：客户端对服务端的验证，以及通过对传输层传输的数据段（Segment）进行加密确保消息的机密性。  
+
+优点：  
+高性能。虽然TLS/SSL在正式进行消息交换之前需要通过协商建立一个安全的连接，但是这个协商过程完全通过传输层协议来完成。而且这种安全模式还可以充分利用网络适配器的硬件加速，这样就可以减少CPU时间，进而提供性能。  
+
+缺点：  
+1. Transport安全模式依赖于具体的传输协议；  
+2. 它只能提供基于点对点（Point-to-Point）的安全传输保障，即客户端之间连接服务的场景。如果在客户端的服务端之间的网络需要一些用于消息路由的中间结点，Transport安全模式则没有了用武之地。  
+3. 在Transport安全模式下，意味着我们不得不在传输层而不能在应用层解决对客户端的认证，这就决定了可供选择的认证方式不如Message模式多。   
+由于上述的这些局限（主要还是只能提供点对点的安全传输保障），决定了Intranet是Transport安全模式主要的应用环境。
+
+## Message安全模式
+
+Transport安全模式将安全传输策略应用到传输层的数据段，进而间接地实现基于消息的安全传输。而Message模式则直接将安全策略的目标对象对准消息本身，通过对消息进行签名、加密实现消息安全传输。所以Message安全模式不会因底层是HTTP或者TCP传输协议而采用不同的安全机制，并且能够提供从消息最初发送端到最终接收端之间的安全传输，即端到端（End-To-End）安全传输。Message模式下的安全协议是一种应用层协议，我们可以在应用层上实现对客户端的验证，因而具有更多的认证解决方案的选择。  
+
+优点： 
+1. 由于Message安全模式是通过在应用层通过对消息实施加密、签名等安全机制实现的，所以这是一种于具体传输协议无关的安全机制，不会因底层采用的是TCP或者HTTP而有所不同。较之Transport安全，这种基于应用层实现的安全机制在认证方式上具有更多的选择；  
+2. 由于Message安全模式下各种安全机制都是直接应用在消息（SOAP）级别的，无论消息路由的路径有多复杂，都能够保证消息的安全传输。所以，不同于Transport安全模式只能提供点对点（Point-to-Point）的安全，Message安全模式能够提供端到端（End-to-End）安全；  
+3. 由于Message安全模式是对WS-Security、WS-Trust、WS-SecureConversation和WS-SecurityPolicy这四个WS-*规范的实现，所有具有很好的互操作性，能够提供跨平台的支持。  
+
+缺点：
+性能  
+
+## 凭证
+认证是确定被认证方的真实身份和他或她申明（Claim）的身份是否相符的行为。认证方需要被认证方提供相应的身份证明材料，以鉴定本身的身份是否与声称的身份相符。在计算机的语言中，这里的身份证明有一个专有的名称，即“凭证（Credential）”，或者用户凭证（User Credential）、认证凭证（Authentication Credential）。  
+WCF支持一系列不同类型的用户凭证，以满足不同认证需求。  
+
+### 用户名/密码认证
+
+如果你选择了用户名/密码凭证，WCF为你提供了三种认证模式：  
+ 
+1. 将用户名映射为Windows帐号，采用Windows认证；  
+2. 采用ASP.NET的成员资格（Membership）模块  
+3. 通过继承UserNamePasswordValidator，实现自定义认证。  
+
+### Windows认证  
+集成Windows认证（IWA：Integrated Windows Authentication）是仅次于用户名/密码的认证方式。尤其是在基于Windows活动目录（AD：Active Directory）的Intranet应用来说，Windows认证更是成为首选。    
+Windows是实现单点登录（SSO：Single Sign-On）最理想的方式。无论是采用域（Domain）模式还是工作组（Workgroup）模式，只要你以Windows帐号和密码登录到某一台机器，你就会得到一个凭证。在当前会话超时之前，你就可以携带该Windows凭证，自动登录到集成了Windows认证方式的所有应用，而无须频繁地输入相同的Windows帐号和密码。如果登录帐号不具有操作目标应用的权限，在一般情况下，你好可以通过重新输入Windows帐号和相应的密码（如果当前用户具有多个Windows帐号）以另外一个身份（该身份具有对目标应用进行操作的访问权限）对目标应用进行操作。  
+
+Windows具有两种不同的认证协议，即NTLM（NT LAN Manager）和Kerberos。  
+
+### X.509证书  
+对于消息交换来说，通过非对称的方式对消息进行加密是能够确保消息的机密性。具体的做法是：消息的发送方采用接收方的公钥进行加密，接收方通过自己的私钥进行解密。由于私钥仅供接收方所有，所有其他人不能对密文进行解密。  
 
 ## ProtectionLevel 
 ProtectionLevel 属性出现在多个特性类（如 ServiceContractAttribute 和 OperationContractAttribute 类）中。 保护级别是一个值，它指定了支持服务的消息（或消息部分）是进行签名、签名并加密，还是未经签名或加密即发送。
@@ -76,10 +129,14 @@ X.509 证书是安全应用程序中使用的主要凭据形式。 有关详细�
 3. 使用证书确保传输安全。 WCF 客户端和服务需要一些开发，以便通过公共 internet 工作。 客户端和服务都具有可用于确保消息安全的证书。 客户端和服务通过 Internet 进行相互通信，执行要求消息完整性、保密性和相互身份验证的重要事务。
 
 Reference:  
-[Microsoft doc](https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/securing-services)  
-[WCF安全系列 二 - netTCPBinding绑定之Transport安全模式](https://www.cnblogs.com/chnking/archive/2008/10/07/1305891.html)  
-[WCF安全系列 三 - netTCPBinding绑定之Message安全模式](http://www.cnblogs.com/chnking/archive/2008/10/15/1312120.html)
+[Microsoft doc](https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/securing-services)     
+[WCF安全系列 二 - netTCPBinding绑定之Transport安全模式](https://www.cnblogs.com/chnking/archive/2008/10/07/1305891.html)    
+[WCF安全系列 三 - netTCPBinding绑定之Message安全模式](http://www.cnblogs.com/chnking/archive/2008/10/15/1312120.html)   
 
-[WCF安全之X509证书](https://www.cnblogs.com/viter/archive/2009/07/02/x509.html)
+[WCF安全之X509证书](https://www.cnblogs.com/viter/archive/2009/07/02/x509.html)   
 
-[常用安全方案](https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/feature-details/common-security-scenarios)
+[常用安全方案](https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/feature-details/common-security-scenarios)   
+
+[WCF安全系列 - 从两种安全模式谈起](https://www.cnblogs.com/artech/archive/2011/05/22/authentication_01.html)  
+[WCF安全系列认证与凭证：用户名/密码认证与Windows认证](https://www.cnblogs.com/artech/archive/2011/05/23/authentication_021.html)  
+[WCF安全系列认证与凭证：X.509证书](https://www.cnblogs.com/artech/archive/2011/05/23/authentication_022.html)  
