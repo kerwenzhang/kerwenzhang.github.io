@@ -14,4 +14,4 @@ tags:
 
 Folder 必须是个VOB名或者VOB下的子Folder
 
-[https://github.com/git-lfs/git-lfs/issues/911](https://github.com/git-lfs/git-lfs/issues/911)
+[https://adventuresinscm.wordpress.com/2017/08/01/clearcase-windows-quick-tip-find-all-symbolic-links/](https://adventuresinscm.wordpress.com/2017/08/01/clearcase-windows-quick-tip-find-all-symbolic-links/)
