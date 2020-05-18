@@ -12,7 +12,7 @@ tags:
 1. 开始菜单查找“secpol.msc”
 2. 在Local Policies -> Security Options里找到下面这两个配置项：
 
-    Interactive logon: Message text for users attempting to log on
+    Interactive logon: Message text for users attempting to log on  
     Interactive logon: Message title for users...
 
 将这两个配置项清空保存，重启就OK了。
