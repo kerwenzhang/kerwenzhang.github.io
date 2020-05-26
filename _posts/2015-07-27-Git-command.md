@@ -2,10 +2,10 @@
 layout: post
 title: "Git Command"
 date:   2015-07-27 17:26:00 
-categories: "Github"
+categories: "Git"
 catalog: true
 tags: 
-    - Github
+    - Git
 ---
 
 
