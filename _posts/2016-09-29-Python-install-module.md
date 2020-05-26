@@ -6,7 +6,6 @@ categories: "Python"
 catalog: true
 tags: 
     - Python
-    - Install
 ---
 
 

@@ -5,7 +5,7 @@ date:   2015-06-19 09:24:00
 categories: "C++"
 catalog: true
 tags: 
-    - Type
+    - C++
 ---
 
 

@@ -2,10 +2,9 @@
 layout: post
 title: Clear Case 常用操作
 date:   2016-04-01 08:30:03
-categories: "Others"
+categories: "Clear Case"
 catalog: true
 tags: 
-    - Others
     - Clear Case
 ---
 

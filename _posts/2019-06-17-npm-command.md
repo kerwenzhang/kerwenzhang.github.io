@@ -1,11 +1,11 @@
 ---                                  
 layout: post                                  
 title: "npm 命令行"                                  
-date:   2019-06-13 9:00:00                                   
-categories: "Nodejs"                                  
+date:   2019-06-17 9:00:00                                   
+categories: "Web"                                  
 catalog: true                                  
 tags:                                   
-    - Nodejs                                  
+    - Web                                  
 ---                        
     
 1. npm init可自动创建package.json文件

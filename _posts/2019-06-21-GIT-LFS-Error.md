@@ -2,10 +2,10 @@
 layout: post                
 title: "GIT error: Encountered 7 file(s) that should have been pointers, but weren't"                
 date:   2019-6-21 9:30:00                 
-categories: "Others"                
+categories: "Git"                
 catalog: true                
 tags:                 
-    - Others                
+    - Git                
 ---      
   
 最近公司开始转用GitLab做代码存储， 在使用的过程中遇到以下问题：
