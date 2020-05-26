@@ -2,10 +2,9 @@
 layout: post
 title: "Visual Studio + Vmware 远程调试"
 date:   2017-03-02 10:30:00 
-categories: "Others"
+categories: "VS"
 catalog: true
 tags: 
-    - Others
     - VS
 ---
 

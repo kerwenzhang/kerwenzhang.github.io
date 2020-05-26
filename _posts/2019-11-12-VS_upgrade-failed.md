@@ -3,10 +3,10 @@ layout: post
 title: "VisualStudio 升级过程中提示root node is not in the package collection.
 " 
 date:   2019-11-12 15:30:00                 
-categories: "Others"                
+categories: "VS"                
 catalog: true                
 tags:                 
-    - Others                
+    - VS                
 ---      
 
 升级Visual Studio 2017 到 15.9.16版本时，冒出以下提示：  

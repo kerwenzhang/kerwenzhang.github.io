@@ -2,10 +2,9 @@
 layout: post
 title: "Visual Studio 远程调试"
 date:   2016-03-23 11:30:00 
-categories: "Others"
+categories: "VS"
 catalog: true
 tags: 
-    - Others
     - VS
 ---
 

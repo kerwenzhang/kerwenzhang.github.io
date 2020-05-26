@@ -2,10 +2,10 @@
 layout: post
 title: "Visual Studio 统计代码行数"
 date:   2015-07-27 17:13:00 
-categories: "MFC"
+categories: "VS"
 catalog: true
 tags: 
-    - MFC
+    - VS
 ---
 
 
