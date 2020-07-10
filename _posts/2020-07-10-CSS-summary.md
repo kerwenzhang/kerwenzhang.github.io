@@ -175,3 +175,29 @@ text-align一般只用在两个地方：文本水平对齐和图片水平对齐�
 
 ### 定位布局
 浮动布局比较灵活，但是不容易控制。而定位布局的出现，使得用户精准定位页面中的任意元素成为可能，使得网页布局变得更加随心所欲。当然由于定位布局缺乏灵活性，也给空间大小和位置不确定的版面布局带来困惑。   
+定位的方法有很多种，它们分别是固定定位（fixed）、相对定位（relative）、绝对定位（absolute）和静态定位（static）。  
+#### 固定定位fixed
+当元素的position属性设置为fixed时，这个元素就被固定了，被固定的元素不会随着滚动条的拖动而改变位置。在视野中，固定定位的元素的位置是不会改变的。  
+
+    position:fixed;
+    top:像素值;
+    bottom;像素值;
+    left:像素值;
+    right:像素值;
+
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/css9.jpg?raw=true) 
+
+#### 相对定位relative
+采用相对定位的元素，其位置是相对于它的原始位置计算而来的。相对定位是通过将元素从原来的位置向上、向下、向左或者向右移动来定位的。采用相对定位的元素会获得相应的空间。  
+
+<font color="red">CSS相对定位元素的位置是相对于原始位置而言，而固定定位元素的位置是相对浏览器而言！ </font>   
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/css10.jpg?raw=true) 
+
+#### 绝对定位absolute
+绝对定位在几种定位方法中使用最广泛，这种方法能够很精确地把元素移动到任意你想要的位置。  
+一个元素变成了绝对定位元素，这个元素就完全脱离正常文档流了，绝对定位元素的前面或者后面的元素会认为这个元素并不存在，即这个元素浮于其他元素上面，它是独立出来的。  
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/css11.jpg?raw=true) 
+
+#### 静态定位static
+如果没有指定元素的position属性值，也就是默认情况下，元素是静态定位。  
+只要是支持position属性的html对象都是默认为static。static是position属性的默认值，它表示块保留在原本应该在的位置，不会重新定位。  
