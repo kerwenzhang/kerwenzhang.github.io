@@ -61,23 +61,24 @@ ul 标签定义无序列表。
 #### li
 <li> 标签定义列表项目。
 <li> 标签可用在有序列表（\<ol\>）、无序列表（\<ul\>）和菜单列表（\<menu\>）中。
-	
+
+
 #### article
 <article> 标签定义独立的内容。
 <article> 标签定义的内容本身必须是有意义的且必须是独立于文档的其余部分。
 
-#### figure
 
+#### figure
 <figure> 标签规定独立的流内容（图像、图表、照片、代码等等）。
 <figure> 元素的内容应该与主内容相关，同时元素的位置相对于主内容是独立的。如果被删除，则不应对文档流产生影响。
 
-#### figcaption
 
+#### figcaption
 <figcaption> 标签为 <figure> 元素定义标题。
 <figcaption> 元素应该被置于 <figure> 元素的第一个或最后一个子元素的位置。
 
-## 全局属性
 
+## 全局属性
 #### class
 
 	<element class="classname">
