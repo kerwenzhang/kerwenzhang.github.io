@@ -86,3 +86,28 @@ class名前面必须要加上前缀“.”（英文点号），否则该选择�
 群组选择器，就是同时对几个选择器进行相同的操作。  
 对于群组选择器，两个选择器之间必须用“,”（英文逗号）隔开，不然群组选择器无法生效。  
 ![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/css5.jpg?raw=true) 
+
+
+### 文本样式
+
+#### text-align
+在CSS中，使用text-align属性控制文本的水平方向的对齐方式：左对齐、居中对齐、右对齐。  
+
+    text-align: center      /* 文本居中对齐 */
+
+#### line-height
+line-height属性指的是行高，而不是行间距。  
+
+    height: 30px;
+    line-height: 30px;  /* line-height等于height, 实现垂直居中的效果 */
+
+### 边框样式
+
+要设置一个元素的边框必须要设置以下3个方面：  
+（1）边框的宽度；  
+（2）边框的外观（实线，或者虚线）；  
+（3）边框的颜色；   
+简洁的写法：  
+
+    border:1px solid gray;  
+
