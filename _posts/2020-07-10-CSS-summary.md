@@ -111,3 +111,60 @@ line-height属性指的是行高，而不是行间距。
 
     border:1px solid gray;  
 
+### 背景样式
+#### background-color
+
+    div{
+        background-color:red;
+    }
+
+color和background-color区别：   
+color为元素文本颜色，background-color为元素背景颜色   
+
+#### background-image
+
+    div {
+        background-image:url("../images/one piece.jpg") no-repeat;
+    }
+
+### 超链接样式
+
+去除超链接下划线:  
+
+    text-decoration:none;
+
+定义超链接伪类:  
+
+    a:link{CSS样式}     /* 定义a元素未访问时的样式 */
+    a:visited{CSS样式}
+    a:hover{CSS样式}
+    a:actived{CSS样式}
+
+### 图片
+#### 水平对齐text-align
+text-align一般只用在两个地方：文本水平对齐和图片水平对齐。也就是说，text-align只对文本和img标签有效，对其他标签无效。  
+
+### CSS 盒子模型
+在“CSS盒子模型”理论中，所有页面中的元素都可以看成一个盒子，并且占据着一定的页面空间。   
+每个盒子都是由content（内容）、padding（内边距）、margin（外边距）和border（边框）这四个属性组成的。此外，在盒子模型中，还有宽度width和高度height两大辅助性属性。  
+
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/css6.png?raw=true) 
+
+### 页面布局
+#### 正常文档流
+在学习浮动布局之前，我们先来认识一下什么叫“正常文档流”。  
+什么叫文档流？简单来说，就是元素在页面出现的先后顺序。  
+那什么叫“正常文档流”呢？我们先来看一下正常文档流的简单定义：正常文档流，将窗体自上而下分成一行一行，块元素独占一行，相邻行内元素在每行中按从左到右地依次排列元素。  
+
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/css7.jpg?raw=true) 
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/css8.jpg?raw=true) 
+
+因为div、p、hr都是块元素，因此独占一行。而span、i、img都是行内元素，因此如果两个行内元素相邻，就会会位于同一行，并且从左到右排列。  
+
+#### 脱离正常文档流
+所谓的脱离文档流就是指它所显示的位置和文档代码的顺序不一致了，比如可以用CSS控制div的显示位置，  
+在CSS布局中，我们可以使用浮动或者定位这两种技术来实现“脱离正常文档流”，从而随心所欲地控制着页面的布局。   
+
+#### 浮动float
+在传统的印刷布局中，文本可以按照实际需要来围绕图片。一般把这种方式称为“文本环绕”。在网页设计中，应用了CSS的float属性的页面元素就像在印刷布局里被文字包围的图片一样。   
+<p color="red">浮动元素会生成一个块级框，而不论它本身是何种元素。</p>   
