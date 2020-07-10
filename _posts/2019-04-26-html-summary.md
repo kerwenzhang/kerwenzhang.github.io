@@ -8,6 +8,14 @@ tags:
     - Web                                  
 ---                        
     
+[HTML](https://blog.csdn.net/wuyxinu/article/details/103515157)      
+[CSS](https://blog.csdn.net/wuyxinu/article/details/103583618)    
+[JS](https://blog.csdn.net/wuyxinu/article/details/103642800)    
+[JS-下](https://blog.csdn.net/wuyxinu/article/details/103646041)   
+[jQuery](https://blog.csdn.net/wuyxinu/article/details/103669718)   
+[Node.js + Gulp](https://blog.csdn.net/wuyxinu/article/details/103774211)  
+
+
 # 常用VSCode插件  
 
 1. Beautify
@@ -46,7 +54,7 @@ Markdown插件：
 4. 分隔线元素 hr
 
 ## 块元素
-div, nav, dl, ol,ul,table,p, form,hr, h1-h6  
+div, nav, dl, ol,ul,table,p, form,hr, h1-h6    
 特征：
 
 1. 能够识别宽高
@@ -55,7 +63,7 @@ div, nav, dl, ol,ul,table,p, form,hr, h1-h6
 4. 多个块状元素标签写在一起，默认排列方式为从上至下
 
 ## 行内元素
-只占据它对应标签的边框所包含的空间。只能容纳文本或者其他内联元素。
+只占据它对应标签的边框所包含的空间。只能容纳文本或者其他内联元素。  
 a,br,img,input,span...  
 特征：  
 
