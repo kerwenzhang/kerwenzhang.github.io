@@ -55,44 +55,44 @@ ypeof运算符用于返回它的操作数当前所容纳的数据的类型，这
 1. length属性  
 我们可以通过length属性来获取字符串的长度。  
 
-    字符串名.length
+        字符串名.length
 
 2. match()  
 使用match()方法可以从字符串内索引指定的值，或者找到一个或多个正则表达式的匹配。  
 
-    stringObject.match(字符串)    //匹配字符串;
-    stringObject.match(正则表达式)  //匹配正则表达式
+        stringObject.match(字符串)    //匹配字符串;
+        stringObject.match(正则表达式)  //匹配正则表达式
 
 3. indexOf()  
 使用indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置。   
 
-    stringObject.indexOf(字符串)
+        stringObject.indexOf(字符串)
 
 4. replace()  
 replace()方法常常用于在字符串中用一些字符替换另一些字符，或者替换一个与正则表达式匹配的子串。  
 
-    stringObject.replace(原字符,替换字符)   
-    stringObject.replace(正则表达式,替换字符)  //匹配正则表达式
+        stringObject.replace(原字符,替换字符)   
+        stringObject.replace(正则表达式,替换字符)  //匹配正则表达式
 
 5. charAt()  
 使用charAt()方法来获取字符串中的某一个字符  
 
-    stringObject.charAt(n)
+        stringObject.charAt(n)
 
 6. 连接字符串  
 使用concat()方法来连接2个或多个字符串。  
 
-    字符串1.concat(字符串2,字符串3,…,字符串n);
+        字符串1.concat(字符串2,字符串3,…,字符串n);
 
 7. split()  
 使用split()方法把一个字符串分割成字符串数组。  
 
-    字符串.split(分割符)
+        字符串.split(分割符)
 
 8. substring()  
 使用substring()方法来提取字符串中的某一部分字符串。  
 
-    字符串.substring(开始位置,结束位置)
+        字符串.substring(开始位置,结束位置)
 
 ### 日期对象
 创建日期对象必须使用“new语句”。  
