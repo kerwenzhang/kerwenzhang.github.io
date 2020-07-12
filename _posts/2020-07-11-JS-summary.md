@@ -153,7 +153,7 @@ replace()方法常常用于在字符串中用一些字符替换另一些字符�
 ### 窗口对象
 在JavaScript中，一个浏览器窗口就是一个window对象。window对象主要用来控制由窗口弹出的对话框、打开窗口或关闭窗口、控制窗口的大小和位置等等。  
 
-1. 打开窗口   
+#### 打开窗口   
 
         window.open(URL, 窗口名称, 参数);
 
@@ -172,10 +172,10 @@ URL：指的是打开窗口的地址，窗口名称：指的是window对象的�
     open()、close()	//打开窗口、关闭窗口
     resizeBy()、resizeTo()	//改变窗口大小
     moveBy()、moveTo()	//移动窗口
-    setTimeout()、clearTimeout()	//设置或取消“一次性”执行的定时器
+    setTimeout(code, time)、clearTimeout()	//设置或取消“一次性”执行的定时器
     setInterval()、clearInterval()	//设置或取消“重复性”执行的定时器
 
-2. 窗口历史   
+#### 窗口历史   
 history对象属性：  
 
         current	//当前窗口的URL
@@ -194,3 +194,53 @@ history对象方法:
     <a href="javascript:window.history.forward();">下一页</a>
     <a href="javascript:window.history.back();">上一页</a>
 
+### 对话框
+在JavaScript中，对话框共有3种，这3种对话框分别使用以下3种方法定义：
+
+    alert(message)； // 弹出一个提示框
+    confirm(message)；  // 用于确认信息，它只有一个参数，返回值为true或false
+    prompt(message)；  // 用于输入并返回用户输入的字符串
+
+### 文档对象
+document对象是window对象中的子对象。  
+1. document对象属性  
+
+        title	文档标题，即title标签内容
+        URL	文档地址
+        fileCreateDate	文档创建日期
+        fileModifiedDate	文档修改时间（精确到天）
+        lastModified	文档修改时间（精确到秒）
+        fileSize	文档大小
+        fgColor	定义文档的前景色
+        bgColor	定义文档的背景色
+        linkColor	定义“未访问”的超链接颜色
+        alinkColor	定义“被激活”的超链接颜色
+        vlinkColor	定义“访问过”的超链接颜色
+        
+2. document对象方法  
+
+        document.write()	输入文本到当前打开的文档
+        document.writeIn()	输入文本到当前打开的文档，并添加换行符“\n”
+        document.getElementById()	获取某个id值的元素
+        document.getElementsByName()	获取某个name值的元素，用于表单元素
+
+### DOM对象
+DOM，全称“Document Object Model（文档对象模型）”，它是由W3C组织定义的一个标准。  
+在前端开发时，我们往往需要在页面某个地方添加一个元素或者删除元素，这种添加元素、删除元素的操作就是通过DOM来实现的。说白了，DOM就是一个接口，我们可以通过DOM来操作页面中各种元素，例如添加元素、删除元素、替换元素等。    
+1. DOM节点属性  
+
+        parentNode	获取当前节点的父节点
+        childNodes	获取当前节点的子节点集合
+        firstChild	获取当前节点的第一个子节点
+        lastChild	获取当前节点的最后一个子节点
+        previousSibling	获取当前节点的前一个兄弟节点
+        nextSibling	获取当前节点的后一个兄弟节点
+        attributes	元素的属性列表
+        
+2. DOM节点操作  
+
+        var e = document.createElement("元素名");
+        obj.appendChild(new)
+        obj.insertBefore(new,ref)
+        obj.removeChild(oldChild);
+        obj.style.属性名;       // 操作CSS样式
