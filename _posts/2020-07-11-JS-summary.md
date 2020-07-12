@@ -115,3 +115,82 @@ replace()方法常常用于在字符串中用一些字符替换另一些字符�
     toUTCString()	//将日期时间转换为世界时间（UTC）格式的字符串
     toLocaleString()	//将日期时间转换为本地时间格式的字符串
 
+### 数组对象
+#### 创建数组
+在JavaScript中，创建数组共有3种方法：  
+
+    var myArr = new Array();
+
+    var myArr = new Array(3);
+    myArr[0]="HTML";
+    myArr[1]="CSS";
+    myArr[2]="JavaScript";
+
+    var myArr = new Array(1,2,3,4);
+
+#### 常用方法
+
+    slice()	//获取数组中的某段数组元素
+    push()	//在数组末尾添加元素
+    pop()	//删除数组最后一个元素
+    toString()	//将数组转换为字符串
+    join()	//将数组元素连接成字符串
+    concat()	//多个数组连接为字符串
+    sort()	//数组元素正向排序
+    reverse()	//数组元素反向排序
+    
+### 数值对象
+
+    max(x,y)	//返回x和y中的最大值
+    min(x,y)	//返回x和y中的最小值
+    pow(x,y)	//返回x的y次幂
+    abs(x)	//返回数的绝对值
+    round(x)	//把数四舍五入为最接近的整数
+    random()	//返回0~1之间的随机数
+    ceil(x)	//对一个数进行上舍入
+    floor(x)	//对一个数进行下舍入
+
+### 窗口对象
+在JavaScript中，一个浏览器窗口就是一个window对象。window对象主要用来控制由窗口弹出的对话框、打开窗口或关闭窗口、控制窗口的大小和位置等等。  
+
+1. 打开窗口   
+
+        window.open(URL, 窗口名称, 参数);
+
+URL：指的是打开窗口的地址，窗口名称：指的是window对象的名称，可以是a标签或form标签中target属性值。如果指定的名称是一个已经存在的窗口名称，则返回对该窗口的引用，而不会再新打开一个窗口。    
+参数：对打开的窗口进行属性设置。  
+
+    // 打开一个指定位置的窗口：
+    window.open("www.google.com","","top=200,left=200"); 
+    // 打开一个指定大小的窗口：
+    window.open("www.google.com","","width=200,height=200");
+    // 打开一个固定大小的窗口：    	
+    window.open("www.google.com","","width=200,height=200,resizable");
+
+其他常用方法：  
+
+    open()、close()	//打开窗口、关闭窗口
+    resizeBy()、resizeTo()	//改变窗口大小
+    moveBy()、moveTo()	//移动窗口
+    setTimeout()、clearTimeout()	//设置或取消“一次性”执行的定时器
+    setInterval()、clearInterval()	//设置或取消“重复性”执行的定时器
+
+2. 窗口历史   
+history对象属性：  
+
+        current	//当前窗口的URL
+        next	//历史列表中的下一个URL
+        previous	//历史列表中的前一个URL
+        length	//历史列表的长度，用于判断列表中的入口数目
+
+history对象方法:  
+
+    go()	//进入指定的网页
+    back()	//返回上一页
+    forward()	//进入下一页
+
+常见的“上一页”与“下一页”实现代码如下：  
+
+    <a href="javascript:window.history.forward();">下一页</a>
+    <a href="javascript:window.history.back();">上一页</a>
+
