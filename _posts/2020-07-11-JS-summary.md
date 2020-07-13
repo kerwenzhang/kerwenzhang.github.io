@@ -245,6 +245,15 @@ DOM，全称“Document Object Model（文档对象模型）”，它是由W3C�
         obj.removeChild(oldChild);
         obj.style.属性名;       // 操作CSS样式
 
+    操作实例：
+
+        var ccontent = document.createElement("div");
+        ccontent.className = "box";
+        ccontent.style.position = "absolute";
+        ccontent.style.top = "10px";
+        ccontent.style.left = "10px";
+        cparent.appendChild(ccontent);
+
 ### 事件
 在JavaScript中，事件往往是页面的一些动作引起的，例如当用户按下鼠标或者提交表单，甚至在页面移动鼠标时，事件都会出现。  
 在JavaScript中，调用事件的方式共有2种：  
