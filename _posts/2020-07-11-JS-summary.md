@@ -244,3 +244,49 @@ DOM，全称“Document Object Model（文档对象模型）”，它是由W3C�
         obj.insertBefore(new,ref)
         obj.removeChild(oldChild);
         obj.style.属性名;       // 操作CSS样式
+
+### 事件
+在JavaScript中，事件往往是页面的一些动作引起的，例如当用户按下鼠标或者提交表单，甚至在页面移动鼠标时，事件都会出现。  
+在JavaScript中，调用事件的方式共有2种：  
+1. 在script标签中调用；  
+
+        var e = document.getElementById("btn");
+        e.onclick = function () {
+                    alert("button clicked");
+        }
+
+        document.getElementById("btn1").addEventListener("mouseover", showType);
+        function showType(event){
+            alert(event.type);
+            alert(event.target);
+        }
+
+2. 在元素中调用；  
+
+        <body>
+                <input type="button" onclick="alert('button clicked')" value="按钮"/>
+        <body>
+
+#### 鼠标事件
+
+        onclick	鼠标单击事件
+        ondbclick	鼠标双击事件
+        onmouseover	鼠标移入事件
+        onmouseout	鼠标移出事件
+        onmousemove	鼠标移动事件
+        onmousedown	鼠标按下事件
+        onmouseup	鼠标松开事件
+
+#### 键盘事件
+
+        onkeydown	按下键事件（包括数字键、功能键）
+        onkeypress	按下键事件（只包含数字键）
+        onkeyup	放开键事件（包括数字键、功能键）
+
+#### 页面相关事件
+
+        onload	页面加载事件
+        onresize	页面大小事件
+        onerror	页面或图片加载出错事件
+
+        
