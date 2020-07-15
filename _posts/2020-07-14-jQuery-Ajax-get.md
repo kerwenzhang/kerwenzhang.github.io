@@ -66,11 +66,21 @@ server.js:
     });
 
 打开浏览器，输入 `http://localhost:8080/index.html`  
-输入名字，点击“Send”，会返回结果.  
+输入名字，点击“Send”，会返回结果.    
 
-'Access-Control-Allow-Origin' error  
-Unexpected end of input jquery using ajax  
+这地方有个坑，运行html的时候必须保证html的地址和NodeJs的server地址一致。如果直接双击html运行，浏览器打开的html地址应该是类似`c:\..\index.html`，此时发送get请求会抛出一下异常：  
 
+        'Access-Control-Allow-Origin' error  
+
+根据jQuery的api文档描述：  
+
+        Due to browser security restrictions, most "Ajax" requests are subject to the same origin policy; the request can not successfully retrieve data from a different domain, subdomain, port, or protocol.
+
+我尝试将发送格式从`JSON`改成`JSONP`, 结果浏览器在解析返回结果时会抛出另外的异常：  
+
+        Unexpected end of input jquery using ajax  
+
+综上，get请求只能适用于同一domain。  
 
 [https://api.jquery.com/jQuery.get/](https://api.jquery.com/jQuery.get/)  
 [https://stackoverflow.com/questions/47523265/jquery-ajax-no-access-control-allow-origin-header-is-present-on-the-requested/47525511](https://stackoverflow.com/questions/47523265/jquery-ajax-no-access-control-allow-origin-header-is-present-on-the-requested/47525511)  
