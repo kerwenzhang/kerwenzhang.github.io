@@ -327,8 +327,8 @@ replace()方法常常用于在字符串中用一些字符替换另一些字符�
     myArr[1]="CSS";
     myArr[2]="JavaScript";
 
-    var myArr = new Array(1,2,3,4);
-    var arr = ['a', 'b', 'c'];
+    var myArr = new Array(1,2,3,4);     // bad
+    var arr = ['a', 'b', 'c'];          // good
 
 本质上，数组属于一种特殊的对象。typeof运算符会返回数组的类型是object。  
 
@@ -347,8 +347,41 @@ replace()方法常常用于在字符串中用一些字符替换另一些字符�
     join()	//将数组元素连接成字符串
     concat()	//多个数组连接为字符串
     sort()	//数组元素正向排序
-    reverse()	//数组元素反向排序
+    reverse()	//数组元素反转
     
+slice()方法的一个重要应用，是将类似数组的对象转为真正的数组。  
+
+    Array.prototype.slice.call(document.querySelectorAll("div"));
+    Array.prototype.slice.call(arguments);
+
+map()  
+map方法将数组的所有成员依次传入参数函数，然后把每一次的执行结果组成一个新数组返回。  
+
+    var numbers = [1, 2, 3];
+    numbers.map(function (n) {
+        return n + 1;
+    });
+    // [2, 3, 4]
+
+filter()  
+filter方法用于过滤数组成员，满足条件的成员组成一个新数组返回。  
+
+    [1, 2, 3, 4, 5].filter(function (elem) {
+        return (elem > 3);
+    })
+    // [4, 5]
+
+some()，every()  
+some方法是只要一个成员的返回值是true，则整个some方法的返回值就是true，否则返回false。  
+
+        var arr = [1, 2, 3, 4, 5];
+        arr.some(function (elem, index, arr) {
+            return elem >= 3;
+        });
+        // true
+
+every方法是所有成员的返回值都是true，整个every方法才返回true，否则返回false。  
+
 ### 数值对象
 
     max(x,y)	//返回x和y中的最大值
