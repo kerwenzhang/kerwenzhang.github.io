@@ -5,7 +5,6 @@ date:   2015-05-31 00:18:23
 categories: "C++"
 catalog: true
 tags: 
-    - Callback
 	- C++
 ---
 

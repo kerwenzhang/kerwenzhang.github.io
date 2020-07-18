@@ -6,8 +6,6 @@ categories:	"MFC"
 catalog: true
 tags:	
     - MFC
-	- CString
-	- Format
 ---
 
 
