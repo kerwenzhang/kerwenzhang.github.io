@@ -315,6 +315,42 @@ replace()方法常常用于在字符串中用一些字符替换另一些字符�
     toString()	//将日期时间转换为普通字符串
     toUTCString()	//将日期时间转换为世界时间（UTC）格式的字符串
     toLocaleString()	//将日期时间转换为本地时间格式的字符串
+    toJSON()            //方法返回一个符合 JSON 格式的 ISO 日期字符串
+
+### RegExp对象
+新建正则表达式有两种方法。一种是使用字面量，以斜杠表示开始和结束。   
+
+    var regex = /xyz/;
+
+另一种是使用RegExp构造函数。  
+
+    var regex = new RegExp('xyz');
+
+第一种方法在引擎编译代码时，就会新建正则表达式，第二种方法在运行时新建正则表达式，所以前者的效率较高。而且，前者比较便利和直观  
+
+常用方法：  
+1. test()  
+正则实例对象的test方法返回一个布尔值，表示当前模式是否能匹配参数字符串。  
+
+        /cat/.test('cats and dogs') // true
+
+2. exec()  
+用来返回匹配结果。如果发现匹配，就返回一个数组，成员是匹配成功的子字符串，否则返回null。  
+
+        var s = '_x_x';
+        var r1 = /x/;
+        r1.exec(s) // ["x"]
+
+3. String.match()  
+字符串实例对象的match方法对字符串进行正则匹配，返回匹配结果。  
+
+        var s = '_x_x';
+        var r1 = /x/;
+        s.match(r1) // ["x"]
+
+#### 匹配规则
+
+[https://wangdoc.com/javascript/stdlib/regexp.html](https://wangdoc.com/javascript/stdlib/regexp.html)  
 
 ### 数组对象
 #### 创建数组
@@ -382,16 +418,133 @@ some方法是只要一个成员的返回值是true，则整个some方法的返�
 
 every方法是所有成员的返回值都是true，整个every方法才返回true，否则返回false。  
 
-### 数值对象
+### Math对象
 
     max(x,y)	//返回x和y中的最大值
     min(x,y)	//返回x和y中的最小值
     pow(x,y)	//返回x的y次幂
     abs(x)	//返回数的绝对值
-    round(x)	//把数四舍五入为最接近的整数
     random()	//返回0~1之间的随机数
+    round(x)	//把数四舍五入为最接近的整数
     ceil(x)	//对一个数进行上舍入
     floor(x)	//对一个数进行下舍入
+
+### JSON 对象
+JSON 格式（JavaScript Object Notation 的缩写）是一种用于数据交换的文本格式，2001年由 Douglas Crockford 提出，目的是取代繁琐笨重的 XML 格式。  
+字符串必须使用双引号表示，不能使用单引号。  
+对象的键名必须放在双引号里面。  
+数组或对象最后一个成员的后面，不能加逗号。  
+
+以下都是合法的 JSON。  
+
+        ["one", "two", "three"]
+        { "one": 1, "two": 2, "three": 3 }
+        { name: "张三", "age": 32 }
+        {"names": ["张三", "李四"] }
+        [ { "name": "张三"}, {"name": "李四"} ]
+
+JSON.stringify()  
+将一个值转为 JSON 字符串。该字符串符合 JSON 格式，并且可以被JSON.parse方法还原。  
+
+        JSON.stringify([1, "false", false])  // '[1,"false",false]'
+        JSON.stringify({ name: "张三" })   // '{"name":"张三"}'
+
+JSON.parse()  
+JSON.parse方法用于将 JSON 字符串转换成对应的值。  
+
+        var o = JSON.parse('{"name": "张三"}');
+        o.name // 张三
+
+### 面向对象
+JavaScript 语言的对象体系，不是基于“类”的，而是基于构造函数（constructor）和原型链（prototype）。  
+构造函数就是一个普通的函数，但是有自己的特征和用法。  
+
+        var Vehicle = function () {
+            this.price = 1000;
+        };
+        var v = new Vehicle();
+        v.price // 1000
+
+#### 原型对象 rototype
+
+#### 原型链
+
+### 异步操作
+异步操作的几种模式：  
+1. 回调函数  
+
+        function f1(callback) {
+            // ...
+            callback();
+        }
+        function f2() {
+            // ...
+        }
+        f1(f2);
+
+ 回调函数的优点是简单、容易理解和实现，缺点是不利于代码的阅读和维护，各个部分之间高度耦合（coupling），使得程序结构混乱、流程难以追踪（尤其是多个回调函数嵌套的情况），而且每个任务只能指定一个回调函数。       
+
+ 2. 事件监听  
+ 另一种思路是采用事件驱动模式。异步任务的执行不取决于代码的顺序，而取决于某个事件是否发生。   
+
+        f1.on('done', f2);
+        function f1() {
+            setTimeout(function () {
+                // ...
+                f1.trigger('done');
+            }, 1000);
+        }
+
+这种方法的优点是比较容易理解，可以绑定多个事件，每个事件可以指定多个回调函数，而且可以“去耦合”（decoupling），有利于实现模块化。缺点是整个程序都要变成事件驱动型，运行流程会变得很不清晰。阅读代码的时候，很难看出主流程。  
+3. 发布/订阅  
+下面采用的是 Ben Alman 的 Tiny Pub/Sub，这是 jQuery 的一个插件。  
+
+        // f2向信号中心jQuery订阅done信号
+        jQuery.subscribe('done', f2);
+
+        function f1() {
+            setTimeout(function () {
+                // ...
+                jQuery.publish('done');
+            }, 1000);
+        }
+
+        // f2完成执行后，可以取消订阅（unsubscribe）。
+        jQuery.unsubscribe('done', f2);
+
+#### 定时器
+1. setTimeout()  
+setTimeout函数用来指定某个函数或某段代码，在多少毫秒之后执行。  
+
+        var timerId = setTimeout(func|code, delay);
+
+2. setInterval()  
+setInterval函数的用法与setTimeout完全一致，区别仅仅在于setInterval指定某个任务每隔一段时间就执行一次，也就是无限次的定时执行。  
+
+3. clearTimeout()，clearInterval()  
+
+        var id1 = setTimeout(f, 1000);
+        var id2 = setInterval(f, 1000);
+        clearTimeout(id1);
+        clearInterval(id2);
+
+#### Promis
+Promise 对象是 JavaScript 的异步操作解决方案，为异步操作提供统一接口。它起到代理作用（proxy），充当异步操作与回调函数之间的中介，使得异步操作具备同步操作的接口。  
+
+        function f1(resolve, reject) {
+            // 异步代码...
+        }
+        var p1 = new Promise(f1);
+        p1.then(f2); 
+
+Promise 对象通过自身的状态，来控制异步操作。Promise 实例具有三种状态。  
+
+        异步操作未完成（pending）
+        异步操作成功（fulfilled）
+        异步操作失败（rejected）        
+
+Promise 实例的then方法，用来添加回调函数。  
+then方法可以接受两个回调函数，第一个是异步操作成功时（变为fulfilled状态）的回调函数，第二个是异步操作失败（变为rejected）时的回调函数（该参数可以省略）。一旦状态改变，就调用相应的回调函数。  
 
 ### 窗口对象
 在JavaScript中，一个浏览器窗口就是一个window对象。window对象主要用来控制由窗口弹出的对话框、打开窗口或关闭窗口、控制窗口的大小和位置等等。  
