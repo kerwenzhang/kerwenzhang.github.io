@@ -9,15 +9,15 @@ This is Kerwen's blog. Please <a href="mailto:kzhang6@ra.rockwell.com">contact</
 
 
 {% if site.disqus_username %}
-<!-- disqus ??? start -->
+<!-- disqus 评论框 start -->
 <div class="comment">
     <div id="disqus_thread" class="disqus-thread">
 
     </div>
 </div>
-<!-- disqus ??? end -->
+<!-- disqus 评论框 end -->
 
-<!-- disqus ??JS?? start (??????????) -->
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "{{site.disqus_username}}";
@@ -30,5 +30,5 @@ This is Kerwen's blog. Please <a href="mailto:kzhang6@ra.rockwell.com">contact</
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
-<!-- disqus ??JS?? end -->
+<!-- disqus 公共JS代码 end -->
 {% endif %}
