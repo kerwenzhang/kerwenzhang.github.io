@@ -7,16 +7,17 @@ description: "Hey, this is Kerwen's blog."
 Hey,    
 This is Kerwen's blog. Please <a href="mailto:kzhang6@ra.rockwell.com">contact</a> me if you have any questions.  
 
+
 {% if site.disqus_username %}
-<!-- disqus 评论框 start -->
+<!-- disqus ??? start -->
 <div class="comment">
     <div id="disqus_thread" class="disqus-thread">
 
     </div>
 </div>
-<!-- disqus 评论框 end -->
+<!-- disqus ??? end -->
 
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<!-- disqus ??JS?? start (??????????) -->
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "{{site.disqus_username}}";
@@ -29,5 +30,5 @@ This is Kerwen's blog. Please <a href="mailto:kzhang6@ra.rockwell.com">contact</
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
-<!-- disqus 公共JS代码 end -->
+<!-- disqus ??JS?? end -->
 {% endif %}
