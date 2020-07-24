@@ -50,7 +50,7 @@ TypeScript 是 JavaScript 的一个超集，主要提供了类型系统和对 ES
         let myFavoriteNumber: any = 'seven';
         myFavoriteNumber = 7;
 
-变量如果在声明的时候，未指定其类型，那么它会被识别为任意值类型：  
+    变量如果在声明的时候，未指定其类型，那么它会被识别为任意值类型：  
 
 4. 数组  
 
@@ -65,7 +65,7 @@ TypeScript 是 JavaScript 的一个超集，主要提供了类型系统和对 ES
             return x + y;
         }
 
-用`?`表示可选参数：  
+    用`?`表示可选参数：  
 
         function buildName(firstName: string, lastName?: string) {
             if (lastName) {
@@ -76,8 +76,8 @@ TypeScript 是 JavaScript 的一个超集，主要提供了类型系统和对 ES
         }
         let tom = buildName('Tom');
 
-需要注意的是，可选参数必须接在必需参数后面。换句话说，可选参数后面不允许再出现必需参数.  
-参数默认值:  
+    需要注意的是，可选参数必须接在必需参数后面。换句话说，可选参数后面不允许再出现必需参数.  
+    参数默认值:  
 
         function buildName(firstName: string, lastName: string = 'Cat') {
             return firstName + ' ' + lastName;
