@@ -546,6 +546,24 @@ Promise 对象通过自身的状态，来控制异步操作。Promise 实例具�
 Promise 实例的then方法，用来添加回调函数。  
 then方法可以接受两个回调函数，第一个是异步操作成功时（变为fulfilled状态）的回调函数，第二个是异步操作失败（变为rejected）时的回调函数（该参数可以省略）。一旦状态改变，就调用相应的回调函数。  
 
+微任务  
+Promise 的回调函数属于异步任务，会在同步任务之后执行。  
+但是，Promise 的回调函数不是正常的异步任务，而是微任务（microtask）。它们的区别在于，正常任务追加到下一轮事件循环，微任务追加到本轮事件循环。这意味着，微任务的执行时间一定早于正常任务。  
+
+        setTimeout(function() {
+            console.log(1);
+        }, 0);
+
+        new Promise(function (resolve, reject) {
+            resolve(2);
+        }).then(console.log);
+
+        console.log(3);
+        // 3
+        // 2
+        // 1
+
+
 ### 窗口对象
 在JavaScript中，一个浏览器窗口就是一个window对象。window对象主要用来控制由窗口弹出的对话框、打开窗口或关闭窗口、控制窗口的大小和位置等等。  
 
