@@ -8,21 +8,21 @@ Hey,
 This is Kerwen's blog. Please <a href="mailto:kzhang6@ra.rockwell.com">contact</a> me if you have any questions.  
 
 
+<div id="gitalk-container"></div>
 
 
-<div id="container"></div>
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-  id: 'about_page', // 可选。默认为 location.href
-  owner: 'kerwenzhang',
-  repo: 'BlogComments',
-  oauth: {
-    client_id: 'd90588d029d865d2d8b7',
-    client_secret: '1bdb9c8fb8f16d4de2f22897cdcbe02152c70f0c',
-  },
-})
-document.body.appendChild(gitment.render())
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: 'd90588d029d865d2d8b7',
+        clientSecret: '1bdb9c8fb8f16d4de2f22897cdcbe02152c70f0c',
+        repo: 'BlogComments',
+        owner: 'kerwenzhang',
+        admin: ['kerwenzhang'],
+        id: location.pathname,
+        distractionFreeMode: true
+      });
+      gitalk.render('gitalk-container');
 </script>
-
