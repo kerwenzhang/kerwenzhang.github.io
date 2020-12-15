@@ -10,6 +10,6 @@ tags:
 
 
 
-[Bottle API](http://www.bottlepy.org/docs/dev/stpl.html#template-functions)
-[Python利用bottle来动态生成本地html页面](https://www.jianshu.com/p/d8a52e854675)
-[https://www.cnblogs.com/fhkankan/p/12978622.html](https://www.cnblogs.com/fhkankan/p/12978622.html)
+[Bottle API](http://www.bottlepy.org/docs/dev/stpl.html#template-functions)  
+[Python利用bottle来动态生成本地html页面](https://www.jianshu.com/p/d8a52e854675)  
+[https://www.cnblogs.com/fhkankan/p/12978622.html](https://www.cnblogs.com/fhkankan/p/12978622.html)  
