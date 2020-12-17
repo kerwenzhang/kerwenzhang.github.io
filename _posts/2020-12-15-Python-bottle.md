@@ -15,7 +15,7 @@ tags:
         template_demo="""
         <html>
             <body>
-                Hi \{\{Author\}\}
+                Hi { {Author} }
             </body>
         </html>
         """
