@@ -29,7 +29,7 @@ tags:
     <html>
         <body>
             % for file in commit.CommitFiles:
-                {{file}}</br>
+                { {file} }</br>
             %end
         </body>
     </html>    
@@ -43,7 +43,7 @@ tags:
     template_demo="""
     <html>
         <body>
-            <font color={{"green" if BuildResult=="SUCCESS" else "red"}}> {{BuildResult}}</font>
+            <font color={ {"green" if BuildResult=="SUCCESS" else "red"} }> { {BuildResult} }</font>
         </body>
     </html>    
     """
