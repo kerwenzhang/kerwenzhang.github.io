@@ -14,13 +14,15 @@ tags:
 用VM workstations安装  
 
 ## 安装squid  
-运行Ubuntu 命令行工具， 执行以下命令  
+运行Ubuntu 命令行工具`Terminal`， 执行以下命令  
 
     sudo apt-get install squid3
 
 之后使用以下命令检查安装好的squid  
 
     squid3 -v
+
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Proxy0.png?raw=true)  
 
 ## squid配置
 squid默认配置文件为 `/etc/squid/squid.conf ` 默认为 `readonly`  
@@ -55,7 +57,11 @@ Setting -> Network & Internet -> Proxy
 
 ## 验证
 在客户机上打开浏览器，`F12` 切换到`Network` Tab, 输入任意网址， 检查`Remote Address`  
+在未使用Proxy之前  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Proxy3.png?raw=true)
+
+使用全局Proxy之后  
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Proxy4.png?raw=true)
 
 ## 如何查看应用程序的网络访问
 
