@@ -13,10 +13,10 @@ tags:
 一、要打包的数据和需要定义的变量  
 
 	_variant_t vValue[4];
-	vValue[0] = _bstr_t("CSDN");
-	vValue[1] = _bstr_t("心中有道");
-	vValue[2] = _bstr_t("博客");
-	vValue[3] = _bstr_t("SAFEARRAY");
+	vValue[0] = _bstr_t("字符串1");
+	vValue[1] = _bstr_t("字符串2");
+	vValue[2] = _bstr_t("字符串3");
+	vValue[3] = _bstr_t("字符串4");
  
 	SAFEARRAY *psaValue;
 	SAFEARRAYBOUND rgsaBound[1];
@@ -31,13 +31,13 @@ tags:
 	{
 		ULONG cElements;
 		LONG lLbound;
-	} 	SAFEARRAYBOUND;
+	} SAFEARRAYBOUND;
  
 	typedef struct tagSAFEARRAYBOUND *LPSAFEARRAYBOUND;
 
 `SAFEARRAYBOUND`是一个结构体，里面有两个变量   
 `ULONG cElements`表示的是元素的数目（更准确的说是在本维中的数目）    
-`LONG lLbound`表示的是一个逻辑起点序号，实际访问内存的时候，安全数组会将程序指定的序号减去`lLbound`，比如你将其设置为`10000`, `a[10000]`这相当于`A[0]`，`a[999]`数组越界，所以在没有特殊要求的情况下，`lLbound`一般为`0`。  
+`LONG lLbound`表示的是一个逻辑起点序号，实际访问内存的时候，安全数组会将程序指定的序号减去`lLbound`，比如你将其设置为`10000`, `a[10000]`这相当于`A[0]`，`a[999]`就越界了，所以在没有特殊要求的情况下，`lLbound`一般为`0`。  
 还有一点，定义的时候是`SAFEARRAYBOUND rgsaBound[1]`  
 `rgsaBound[1]`表示的是一位数组，二维数组要定义为`rgsaBound[2]`  
 
@@ -45,6 +45,7 @@ tags:
 
 ## 实现代码及函数、参数意义
 
+	SAFEARRAY *psaValue;
 	psaValue = SafeArrayCreate(VT_VARIANT, 1, rgsaBound); 
 	for (long i = 0; i < 4; i++)
 	{
@@ -63,14 +64,12 @@ tags:
 
 ### 放置元素到数组中
 
-    long demen[1];
-	for (int i = 0; i < 4; i++)
+    for (long i = 0; i < 4; i++)
 	{
-		demen[i] = i;
-		SafeArrayPutElement(psaValue, demen, &vValue[i]);
+		SafeArrayPutElement(psaValue, &i, &vValue[i]);
 	}
 
-第一个参数是指向`SAFEARRAY`的指针；第二个参数是`long`型数组指针，表示`SAFEARRAY`元素的下标，即唯一确定一个`SAFEARRAY`元素；第三个参数就是要放置的那个值的指针了。   
+第一个参数是指向`SAFEARRAY`的指针；第二个参数是`long`型指针，表示`SAFEARRAY`元素的下标，即唯一确定一个`SAFEARRAY`元素；第三个参数就是要放置的那个值的指针了。   
 
 ### 指明vsaValue存放值得类型  
 
