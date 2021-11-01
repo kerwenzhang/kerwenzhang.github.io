@@ -8,8 +8,12 @@ tags:
     - WCF                
 ---      
 
-最近遇到一个客户问题，我们的程序没法连接WCF服务。  
-一番研究之后发现问题出在客户端机器security policy setting。用户删掉了`Users`用户组，导致出了问题。  
+最近遇到一个客户问题，我们的程序没法连接WCF服务。我们的WCF服务采用了windows认证，已经确定服务端口没有占用，server可以ping通。但连接的时候还是会提示  
+
+    The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+  
+一番研究之后发现问题出在客户端机器`security policy setting`。用户删掉了`Users`用户组，导致出了问题。  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/network.png?raw=true)   
 
 The Access this computer from the network policy setting determines which users can connect to the device from the network.   
