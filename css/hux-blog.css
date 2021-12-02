@@ -59,6 +59,27 @@
   width: 250px;
   height: 600px;
 }
+/*修改滚动条样式*/
+.side-catalog::-webkit-scrollbar{
+  width:10px;
+  height:10px;
+  /**/
+}
+.side-catalog::-webkit-scrollbar-track{
+  opacity:0;/*完全透明*/
+  border-radius:2px;
+}
+.side-catalog::-webkit-scrollbar-thumb{
+  background: #bfbfbf;
+  border-radius:10px;
+}
+.side-catalog::-webkit-scrollbar-thumb:hover{
+  background: #bfbfbf;
+}
+.side-catalog::-webkit-scrollbar-corner{
+  background: #179a16;
+}
+
 .side-catalog.fixed {
   position: fixed;
   top: -21px;
