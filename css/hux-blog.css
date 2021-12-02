@@ -99,11 +99,14 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.side-catalog .catalog-body .h1_nav,
-.side-catalog .catalog-body .h2_nav {
+.side-catalog .catalog-body .h1_nav{
   margin-left: 0;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: bold;
+}
+.side-catalog .catalog-body .h2_nav {
+  margin-left: 3px;
+  font-size: 13px;
 }
 .side-catalog .catalog-body .h3_nav {
   margin-left: 6px;
