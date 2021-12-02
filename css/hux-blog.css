@@ -60,7 +60,7 @@
 }
 /*修改滚动条样式*/
 .side-catalog::-webkit-scrollbar{
-  width:10px;
+  width:5px;
   height:10px;
   /**/
 }
