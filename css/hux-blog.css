@@ -54,10 +54,9 @@
 .side-catalog {
   display: block;
   overflow: auto;
-  height: 100%;
+  height: 80%;
   padding-bottom: 40px;
   width: 250px;
-  height: 600px;
 }
 /*修改滚动条样式*/
 .side-catalog::-webkit-scrollbar{
