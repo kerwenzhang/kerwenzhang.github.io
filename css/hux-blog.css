@@ -124,11 +124,14 @@
   margin-left: 24px;
   font-size: 12px;
 }
+.side-catalog .catalog-body .h5_nav a {
+  max-width: 170px;
+}
 .side-catalog .catalog-body .h6_nav {
   margin-left: 30px;
   font-size: 12px;
 }
-.side-catalog .catalog-body .h5_nav .h6_nav a {
+.side-catalog .catalog-body .h6_nav a {
   max-width: 170px;
 }
 .side-catalog .catalog-body .active {
