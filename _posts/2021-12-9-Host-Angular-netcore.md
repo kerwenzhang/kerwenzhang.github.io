@@ -16,7 +16,7 @@ Angular客户端请求资源的时候发送的url是`./api/weatherforecast`，�
 # 解决方案  
 ## VS默认模板  
 其实微软已经提供了解决方案。 打开VS2019，创建一个新工程，模板搜索`Asp.net core with Angular`。创建一个示例工程。  
-创建完成之后，在`ClientApp` 文件夹下是Angular客户端代码。直接F5，Visual studio会打开浏览器，web页面是Angular的，后端服务是`.NET Core Web Api`提供的。  
+创建完成之后，在`ClientApp` 文件夹下是Angular客户端代码。直接F5，Visual studio会打开浏览器，web页面是`Angular`的，后端服务是`.NET Core Web Api`提供的。  
 打开`Startup.cs`，跟默认的`Web api`代码比较一下，发现有些不一样：  
 
     public void ConfigureServices(IServiceCollection services)
@@ -54,7 +54,7 @@ Angular客户端请求资源的时候发送的url是`./api/weatherforecast`，�
 
 ## 修改工程
 修改我们的JWT工程  
-1. 打开Nugit package， 添加新的引用 `Microsoft.AspNetCore.SpaServices.Extensions`  
+1. 打开Nuget package， 添加新的引用 `Microsoft.AspNetCore.SpaServices.Extensions`  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/spa.png?raw=true)
 
 2. 修改`Startup`
