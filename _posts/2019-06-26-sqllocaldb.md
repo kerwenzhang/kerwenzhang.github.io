@@ -2,10 +2,10 @@
 layout: post                
 title: "SQLLocalDB 命令行"                
 date:   2019-6-26 10:30:00                 
-categories: "Asp.Net"                
+categories: ".Net Core"                
 catalog: true                
 tags:                 
-    - Asp.Net                
+    - .Net Core                
 ---      
 
 SqlLocalDB i                        //列出所有LocalDB实例  

@@ -2,10 +2,10 @@
 layout: post             
 title: ".Net core学习笔记"                
 date:   2021-11-2 10:30:00                 
-categories: ".net core"                
+categories: ".Net Core"                
 catalog: true                
 tags:                 
-    - .net core                
+    - .Net Core                
 ---      
 
 ## 基础知识  
