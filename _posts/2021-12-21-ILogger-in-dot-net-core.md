@@ -1,7 +1,7 @@
 ---                
 layout: post            
-title: "RESTful vs GraphQL"                
-date:   2021-12-20 17:30:00                 
+title: ".net Core ILogger使用"                
+date:   2021-12-21 17:30:00                 
 categories: "web"                
 catalog: true                
 tags:                 
