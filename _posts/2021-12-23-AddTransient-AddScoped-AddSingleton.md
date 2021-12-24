@@ -1,7 +1,7 @@
 ---                
 layout: post            
 title: "AddTransient AddScoped AddSingleton"                
-date:   2021-12-22 17:30:00                 
+date:   2021-12-23 17:30:00                 
 categories: ".Net Core"                
 catalog: true                
 tags:                 
