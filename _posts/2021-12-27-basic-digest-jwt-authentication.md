@@ -63,4 +63,6 @@ The Bearer authentication scheme is dedicated to the authentication using a toke
 
 [DotNetDigestAuth](https://github.com/flakey-bit/DotNetDigestAuth)  
 [ Most Used REST API Authentication Methods](https://blog.restcase.com/4-most-used-rest-api-authentication-methods/)  
-[What is digest authentication?](https://stackoverflow.com/a/2384280/7352168)
+[What is digest authentication?](https://stackoverflow.com/a/2384280/7352168)  
+[Authentication schemes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes)  
+[Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry](https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml)  
