@@ -165,7 +165,7 @@ module1.module.ts
         ]
     })
 
-ng g c modules/module1/module1生成component  
+`ng g c modules/module1/module1`生成component  
 module1.component.html:  
 
     <div>
@@ -209,12 +209,99 @@ app.component.html:
 
 ### Pipe
 也可以用Pipe的方式，将Pipe封装成一个module，在其他懒加载的module里引用。  
+生成新的service，将translate封装一下：  
 
+ng g service language
 
+    export class LanguageService {
+        defaultLanguage: string = 'en';
 
+        instant(key:any) {
+            return this.translate.instant(key);
+        }
+        constructor(private translate: TranslateService) {
+            let browserlan = translate.getBrowserCultureLang();
+            if(browserlan.startsWith('zh-CN')) {
+            this.translate.use('zh-CN');
+            } else {
+            this.translate.use(this.defaultLanguage);
+            }
+        }
+    }
+
+ng g m modules/module2 --routing
+
+ng g c modules/module2
+
+加上路由
+app-routing.module.ts:  
+
+    {
+        path:'module2',
+        loadChildren: ()=> import('./modules/module2/module2.module').then(m => m.Module2Module)
+    }
+
+module2-routing.module.ts:
+
+    const routes: Routes = [
+        {
+            path:'',
+            component:Module2Component
+        }
+    ];
+
+app.component.html: 
+
+    <ul>
+        <li><a href="" routerLink="module1">Module 1</a></li>
+        <li><a href="" routerLink="module2">Module2</a></li>
+    </ul>
+    ...
+
+module2.component.html：
+
+    Module 2:
+    <div>
+        <h2>{{ 'Module2.TITLE' | translate }}</h2>    
+    </div>
+
+这时候就会报错了，找不到`translate`
+生成新的module Language：  
+ng g m modules/language
+生成新的pipe:  
+ng g pipe modules/language/language  
+
+    @Pipe({
+    name: 'translate'
+    })
+    export class LanguagePipe implements PipeTransform {
+
+    constructor( private languageService:LanguageService){}
+
+    transform(value: string): Observable<string> {
+        return this.languageService.instant(value);
+    }
+    }
+
+修改language.module.ts，将pipe export
+
+    @NgModule({
+        declarations: [
+            LanguagePipe
+        ],
+        imports: [
+            CommonModule
+        ],
+        exports:[
+            LanguagePipe
+        ],
+        providers:[
+            LanguagePipe
+        ]
+    })
 # 比较
 
-ngx-translate的开发者 Olivier Combe 对这两种方式做了比较，原文：  
+`ngx-translate`的开发者 `Olivier Combe` 对这两种方式做了比较，原文：  
 
 The idea behind this lib has always been to provide support for i18n until Angular catches up, after that this lib will probably be deprecated. For now, there are still a few differences between Angular i18n and this library:  
 
