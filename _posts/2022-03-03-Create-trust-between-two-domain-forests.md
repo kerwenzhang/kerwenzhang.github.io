@@ -13,7 +13,7 @@ tags:
 # Prepare two domains
 
 1. Prepare two domain servers, for example: the first one Windows Server 2016, the second one Windows Server 2019.   
-Note: if you are using vm, please make sure they are cloned from different template. Two vms which clone from same template will share same SID even after you rename the computer. This will lead to error when create trust. Use the PSTool to get the SIDs of two servers, make sure they are different.   
+Note: if you are using vm, please make sure <font color=red>they are cloned from different template</font>. Two vms which clone from same template will share same SID even after you rename the computer. This will lead to error when create trust. Use the PSTool to get the SIDs of two servers, make sure they are different.   
 2. Rename them:  
 Windows Server 2016 -> DomainServer1  
 Windows Server 2019 -> DomainServer2  
