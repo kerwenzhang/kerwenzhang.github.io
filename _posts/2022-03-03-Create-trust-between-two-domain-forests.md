@@ -13,126 +13,133 @@ tags:
 # Prepare two domains
 
 1. Prepare two domain servers, for example: the first one Windows Server 2016, the second one Windows Server 2019.   
-Note: if you are using vm, please make sure they are cloned from different template. Two vms which clone from same template will share same SID even after you rename the computer. This will lead to error when create trust. Use the PSTool to get the SIDs of two servers[3], make sure they are different.   
+Note: if you are using vm, please make sure they are cloned from different template. Two vms which clone from same template will share same SID even after you rename the computer. This will lead to error when create trust. Use the PSTool to get the SIDs of two servers, make sure they are different.   
 2. Rename them:  
-Windows Server 2016 -> DomainServer1 
+Windows Server 2016 -> DomainServer1  
 Windows Server 2019 -> DomainServer2  
 3. Upgrade DomainServer1 to domain server  
-a. Go to Server Manager, select “Manage” -> “Add Roles and Features”  
+   - Go to Server Manager, select “Manage” -> “Add Roles and Features”  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/1.png?raw=true)
 
-b. Use default option “Role-based or feature-based installation”.  
+   - Use default option “Role-based or feature-based installation”.  
  ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/2.png?raw=true)
 
-c. Use default option “Select a server from the server pool”.  
+   - Use default option “Select a server from the server pool”.  
  ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/3.png?raw=true)
 
-d.	Select checkbox “Active Directory Domain Services”  
+   - Select checkbox “Active Directory Domain Services”  
  ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/4.png?raw=true)
 
-e.	Popup a confirm dialog, click “Add Features”  
+   - Popup a confirm dialog, click “Add Features”  
  ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/5.png?raw=true)
 
-f.	It will take few minutes to complete installation.  
+   - It will take few minutes to complete installation.  
  ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/6.png?raw=true)
 
-g.	After install complete, click “Promote this server to a domain controller”.  
+   - After install complete, click “Promote this server to a domain controller”.  
  ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/7.png?raw=true)
 
-h.	Select option “Add a new forest”, change domain name to “Updater1.domain”.  
+   - Select option “Add a new forest”, change domain name to “Updater1.domain”.  
  ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/8.png?raw=true)
 
-i.	Input password and confirm  
+   - Input password and confirm  
  ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/9.png?raw=true)
 
-j.	Will generate NetBIOS domain name automatically, keep default.  
+   - Will generate NetBIOS domain name automatically, keep default.  
  ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/10.png?raw=true)
 
-k.	Keep default setting, Next  
+   - Keep default setting, Next  
  ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/11.png?raw=true)
 
-l.	Will run prerequisites check, if all passed, click “Install”.  
+   - Will run prerequisites check, if all passed, click “Install”.  
  ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/12.png?raw=true)
 
-m.	After reboot, check the full computer name and domain name.  
- ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/13.png?raw=true)
+   - After reboot, check the full computer name and domain name.  
+ ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/13.png?raw=true)  
+
 4. Similar steps to upgrade DomainServer2 to domain server.  
-After complete:  
-DomainServer1.Updater1.domain(10.224.106.208)  
-DomainServer2.Updater2.domain(10.224.110.245)  
+    After complete:  
+    DomainServer1.Updater1.domain(10.224.106.208)  
+    DomainServer2.Updater2.domain(10.224.110.245)  
 
 # Create trust between domains
 
 1. Ping each other, make sure the two servers can ping each other successfully.  
  ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/14.png?raw=true)
 2. Add second DNS Server  
-On DomainServer1:  
-a.	Go to Control Panel -> Network and Sharing Center  
-b.	Select your Ethernet connections, select property and config IPV4  
-c.	Input the second DNS ip address  
+    On DomainServer1:  
+   - Go to Control Panel -> Network and Sharing Center  
+   - Select your Ethernet connections, select property and config IPV4  
+   - Input the second DNS ip address  
  ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/15.png?raw=true)
-On DomainServer2, similar steps to config second DNS.  
+    On DomainServer2, similar steps to config second DNS.  
  ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/16.png?raw=true)
 3. Create stub zone in DNS  
-On DomainServer1:  
-a.	Open Server Manager, Tools -> DNS  
+    On DomainServer1:  
+   - Open Server Manager, Tools -> DNS  
  ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/17.png?raw=true)
-b.	Right click on “Forward Lookup Zones”, select “New Zone…”  
+   - Right click on “Forward Lookup Zones”, select “New Zone…”  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/18.png?raw=true)
-c.	Select “Stub zone” and Next  
+   - Select “Stub zone” and Next  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/19.png?raw=true)
-d.	Select “To all DNS … forest”, Next  
+   - Select “To all DNS … forest”, Next  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/20.png?raw=true)
-e.	Input domain name “Updater2.domain”.  
+   - Input domain name “Updater2.domain”.  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/21.png?raw=true)
-f.	Input the ip address of Updater2.domain  
+   - Input the ip address of Updater2.domain  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/22.png?raw=true)
-g.	Display below success dialog.  
+   - Display below success dialog.  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/23.png?raw=true)
-h.	You should be able to successful ping Updater2.domain now.  
+   - You should be able to successful ping Updater2.domain now.  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/24.png?raw=true)
   
-On DomainServer2, similar steps to config DNS.  
+    On DomainServer2, similar steps to config DNS.  
+
 4. Create trust  
-On DomainServer1:  
-a.	Open “Server Manager”, select “Tools” -> “Active Directory Domains and Trusts”  
+    On DomainServer1:  
+   - Open “Server Manager”, select “Tools” -> “Active Directory Domains and Trusts”  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/25.png?raw=true)
-b.	Right click on “Updater1.domain”, select “Properties”  
+   - Right click on “Updater1.domain”, select “Properties”  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/26.png?raw=true)
-c.	Go to “Trusts” tab, click “New Trust”.  
+   - Go to “Trusts” tab, click “New Trust”.  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/27.png?raw=true)
-d.	Input domain name: “Updater2.domain”, Next  
+   - Input domain name: “Updater2.domain”, Next  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/28.png?raw=true)
-e.	Select “Forest trust”, Next  
+   - Select “Forest trust”, Next  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/29.png?raw=true)
-f.	Select “Two-way”, Next  
+   - Select “Two-way”, Next  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/30.png?raw=true)
-g.	Select “Both this domain and the specified domain”, Next  
+   - Select “Both this domain and the specified domain”, Next  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/31.png?raw=true)
-h.	Input the user name and password of Updater2.domain  
+   - Input the user name and password of Updater2.domain  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/32.png?raw=true)
-i.	Select “Forest-wide authentication”  
+   - Select “Forest-wide authentication”  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/33.png?raw=true)
-j.	Select “Forest-wide authentication”  
+   - Select “Forest-wide authentication”  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/34.png?raw=true)
-k.	Next  
+   - Next  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/35.png?raw=true)
-l.	Select “Yes, confirm the outgoing trust”  
+   - Select “Yes, confirm the outgoing trust”  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/36.png?raw=true)
-m.	Select “Yes, confirm the incoming trust”  
+   - Select “Yes, confirm the incoming trust”  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/37.png?raw=true)
-n.	Should display below success dialog.  
+   - Should display below success dialog.  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/38.png?raw=true)
-o.	Could see the trusts have been created in outgoing and incoming.  
+   - Could see the trusts have been created in outgoing and incoming.  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/39.png?raw=true)
-p.	Go to DomainServer2, could see the trusts have been created automatically.  
+   - Go to DomainServer2, could see the trusts have been created automatically.  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Domain/40.png?raw=true)
    
+# Verify
+
+1. Prepare two windows client machines: Test1 and Test2  
+2. Test1 join Updater1.domain, Test2 join Updater2.domain  
+3. On Test1 machine, sign out and use domain2 account to logon  
+
+If could logon, we have created trust between two domain forests.  
+
 # Reference  
   
 [Trust Relationship Between Two Forest](https://www.youtube.com/watch?v=F7DgXAXNnC8&ab_channel=TechiJack)  
 [Cannot create Trust Relationship](https://social.technet.microsoft.com/Forums/lync/en-US/cc46715e-b36c-4473-a1bf-3367d1344f62/cannot-create-trust-relationship?forum=winserverDS)  
 [How to get SID by PSTool](https://docs.microsoft.com/en-us/sysinternals/downloads/psgetsid#:~:text=If%20you%20want%20to%20see,and%20an%20optional%20computer%20name)   
-  
-  
-  
