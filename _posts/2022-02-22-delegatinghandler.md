@@ -37,8 +37,7 @@ Middleware is software that's assembled into an app pipeline to handle requests 
 2. Can perform work before and after the next component in the pipeline.  
 
 这篇[微软的文章](https://docs.microsoft.com/en-us/aspnet/core/migration/http-modules?view=aspnetcore-5.0)介绍了如何将handler转为.net core 中间件  
-
-    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/delegate2.png?raw=true)  
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/delegate2.png?raw=true)  
 
 # Reference  
 
