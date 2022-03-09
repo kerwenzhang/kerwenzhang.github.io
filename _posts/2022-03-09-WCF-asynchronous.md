@@ -8,7 +8,6 @@ tags:
     - WCF                
 ---      
 
-C#虽然已经用了好多年了，但是从来没有系统的学习过，有很多新的语言特性也没有用过。找到官方的文档，从头到尾过一遍。。。   
 
 # 疑问
 
@@ -18,3 +17,5 @@ C#虽然已经用了好多年了，但是从来没有系统的学习过，有很
 
 
 # Reference：  
+[同步和异步操作](https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/synchronous-and-asynchronous-operations)  
+[c#中为什么async方法里必须还要有await？](https://www.zhihu.com/question/58922017)  
