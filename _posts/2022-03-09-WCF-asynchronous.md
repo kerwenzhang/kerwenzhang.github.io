@@ -16,14 +16,13 @@ tags:
 3. 异步 vs 双工callback？
 
 # Cretae Demo Project
-## Create a new WCF Project
+## WCF Service
 
-1. Open Visual Studio 2022 with Admin priviledage   
-2. File -> New -> Project   
-3. In “Visual C#” -> “WCF”, select “WCF Service Library”    
+1. 以Admin权限打开Visual Studio 2022, 创建新的project   
+2. In “Visual C#” -> “WCF”, 选 “WCF Service Library”    
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async1.png?raw=true)
-4. Visual Sutdio会自动创建两个cs：`IService1.cs` 和 `Server1.cs`, App.config里已经有默认`basicHttpBinding`,直接按F5，会弹出WCF TEST Client  
-5. 新建接口 ICalculator.cs  
+3. Visual Sutdio会自动创建两个cs：`IService1.cs` 和 `Server1.cs`, App.config里已经有默认`basicHttpBinding`,直接按F5，会弹出WCF TEST Client  
+4. 新建接口 ICalculator.cs  
    
         using System.ServiceModel;
         namespace Server
@@ -45,7 +44,7 @@ tags:
             }
         }
 
-6. 新建服务实现 CalculatorService.cs  
+5. 新建服务实现 CalculatorService.cs  
 
         namespace Server
         {
@@ -73,7 +72,7 @@ tags:
             }
         }
 
-7. 修改App.config，将service1改成CalculatorService  
+6. 修改App.config，将service1改成CalculatorService  
 
         <services>
             <service name="Server.CalculatorService">
@@ -91,7 +90,7 @@ tags:
             </service>
         </services>
 
-8. 按F5，弹出WCF TEST Client， 尝试Add 方法  
+7. 按F5，弹出WCF TEST Client， 尝试Add 方法  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async2.png?raw=true)  
 
 ## Host 
