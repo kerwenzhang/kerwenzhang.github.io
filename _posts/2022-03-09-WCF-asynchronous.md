@@ -155,6 +155,35 @@ tags:
             Console.ReadKey();
         }
 
+# 会话Sessions 、实例化Instancing和并发Concurrency
+
+WCF的会话具有以下特性：  
+1. 它们由调用它的客户端显式启动和终止。  
+2. 在会话期间 Service是按照消息接收的顺序进行处理。  
+   
+WCF Service的实例化行为由 ServiceBehaviorAttribute.InstanceContextMode 属性进行设置， 用来控制如何创建 InstanceContext 以响应传入的消息。  
+实例化模式有三种：
+
+1. `PerCall`：为每个客户端请求创建一个新的 InstanceContext （以及相应的服务对象）。  
+2. `PerSession`：为每个新的客户端会话创建一个新的 InstanceContext （以及相应的服务对象），并在该会话的生存期内对其进行维护（这需要使用支持会话的绑定）。  
+3. `Single`：单个 InstanceContext （以及相应的服务对象）处理服务器生存期内的所有客户端请求。  
+   
+如果不设置，默认是`PerSession`
+
+        [ServiceBehavior(InstanceContextMode=InstanceContextMode.PerSession)]
+        public class CalculatorService : ICalculatorInstance
+        {
+            ...  
+        }
+
+并发是对 InstanceContext 中在任一时刻处于活动状态的线程数量的控制.  通过`ServiceBehaviorAttribute.ConcurrencyMode`来控制.  
+有以下三种可用的并发模式：  
+
+1. `Single`：最多允许每个实例上下文同时拥有一个对该实例上下文中的消息进行处理的线程。 其他希望使用同一个实例上下文的线程必须一直阻塞，直到原始线程退出该实例上下文为止。  
+2. `Multiple`：每个服务实例都可以拥有多个同时处理消息的线程。 若要使用此并发模式，服务实现必须是线程安全的。  
+3. `Reentrant`：每个服务实例一次只能处理一个消息，但可以接受可重入的操作调用。 服务仅在通过 WCF 客户端对象调用 时接受这些调用。  
+
+
 # 异步
 
 # Reference：  
@@ -163,3 +192,5 @@ tags:
 [WCF技术剖析之十一：异步操作在WCF中的应用（上篇）](https://www.cnblogs.com/artech/archive/2009/07/08/1519423.html)  
 [WCF技术剖析之十一：异步操作在WCF中的应用（下篇）](https://www.cnblogs.com/artech/archive/2009/07/08/1519499.html)  
 [我的WCF之旅（1）：创建一个简单的WCF程序](https://www.cnblogs.com/artech/archive/2007/02/26/656901.html)  
+[如何：控制服务实例化](https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/feature-details/how-to-control-service-instancing)  
+[WCF Service which creates a new thread for every new request](https://stackoverflow.com/questions/1431180/wcf-service-which-creates-a-new-thread-for-every-new-request)  
