@@ -136,6 +136,7 @@ tags:
     </configuration>
 
 3. 编译之后以Admin权限运行Host.exe, 当服务启动之后，打开浏览器，输入`http://127.0.0.1:9999/calculatorservice/metadata`，可以拿到WCF 服务的metadata  
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async4.png?raw=true)  
 
 ## Client
 1. 新建console app， 名称 Client
