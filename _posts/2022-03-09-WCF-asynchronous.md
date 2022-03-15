@@ -185,6 +185,45 @@ WCF Service的实例化行为由 ServiceBehaviorAttribute.InstanceContextMode �
 
 
 # 异步
+可以通过使用下列三种方法之一实现异步操作：  
+1. 基于任务的异步模式  
+2. 基于事件的异步模式  
+3. IAsyncResult 异步模式  
+
+## 基于任务的异步模式
+基于任务的异步模式是实现异步操作的首选方法，因为它最简单且最直接。  
+客户端只需使用 await 关键字调用操作。  
+
+服务器端：  
+
+        public class SampleService:ISampleService
+        {
+        // ...  
+        public async Task<string> SampleMethodTaskAsync(string msg)
+        {
+            return Task<string>.Factory.StartNew(() =>
+            {
+                return msg;
+            });
+        }  
+        // ...  
+        }
+
+客户端：  
+
+        await simpleServiceClient.SampleMethodTaskAsync("hello, world");
+
+
+## 基于事件的异步模式
+支持基于事件的异步模式的服务将有一个或多个名为 MethodNameAsync 的操作。 这些方法可能会创建同步版本的镜像，这些同步版本会在当前线程上执行相同的操作。 该类还可能具有 MethodNameCompleted 事件，并且可能会具有 MethodNameAsyncCancel（或只是 CancelAsync）方法。 希望调用操作的客户端将定义操作完成时要调用的事件处理程序.  
+基于事件的异步模型仅在 .NET Framework 3.5 中提供。 此外，如果使用创建 WCF 客户端通道，则不支持此方法，即使在 .NET Framework 3.5 中也是如此 System.ServiceModel.ChannelFactory<TChannel> 。 使用 WCF 客户端通道对象时，必须使用 System.IAsyncResult 对象异步调用操作。  
+
+## IAsyncResult 异步模式
+服务操作可以使用 .NET Framework 异步编程模式，并标记 `<Begin>` 属性设置为的方法，以异步方式实现 AsyncPattern true 。  
+定义一个异步执行（而不考虑它在客户端应用程序中的调用方式）的协定操作 X：  
+使用 BeginOperation 和 EndOperation 模式定义两个方法。  
+BeginOperation 方法包括该操作的 in 和 ref 参数，并返回一个 IAsyncResult 类型。  
+EndOperation 方法包括一个 IAsyncResult 参数以及 out 和 ref 参数，并返回操作的返回类型。  
 
 # Reference：  
 [同步和异步操作](https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/synchronous-and-asynchronous-operations)  
