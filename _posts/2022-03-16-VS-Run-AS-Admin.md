@@ -9,7 +9,7 @@ tags:
 ---      
 
 平时用Visual Studio打开工程，默认是以普通用户权限运行的。在有些情况下可能需要以Admin权限打开，比如需要attach到IIS的process的时候，普通用户权限就不够用了。  
-方法一： 右键Visual Studio，以Admin权限运行然后再打开工程，这样偶尔用也还可以。如果天天这样操作就很麻烦，所以希望找另外一个方法，打开所有Visual Studio工程时都以Admin权限打开。  
+方法一： 右键Visual Studio，以Admin权限运行然后再打开工程，这样偶尔用也还可以。如果天天这样操作就很麻烦，所以希望找另外一个方法，打开所有Visual Studio工程时默认以Admin权限打开。  
 方法二： 
 1. 定位到Visual Studio exe所在位置   
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/vs1.png?raw=true)
