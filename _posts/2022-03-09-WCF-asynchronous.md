@@ -225,6 +225,18 @@ WCF Service的实例化行为由 ServiceBehaviorAttribute.InstanceContextMode �
 BeginOperation 方法包括该操作的 in 和 ref 参数，并返回一个 IAsyncResult 类型。  
 EndOperation 方法包括一个 IAsyncResult 参数以及 out 和 ref 参数，并返回操作的返回类型。  
 
+## 异步服务代理
+
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async5.png?raw=true)  
+
+        public double Add(double x, double y) {
+            return base.Channel.Add(x, y);
+        }
+        
+        public System.Threading.Tasks.Task<double> AddAsync(double x, double y) {
+            return base.Channel.AddAsync(x, y);
+        }
+
 # Reference：  
 [同步和异步操作](https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/synchronous-and-asynchronous-operations)  
 [c#中为什么async方法里必须还要有await？](https://www.zhihu.com/question/58922017)  
@@ -233,3 +245,5 @@ EndOperation 方法包括一个 IAsyncResult 参数以及 out 和 ref 参数，�
 [我的WCF之旅（1）：创建一个简单的WCF程序](https://www.cnblogs.com/artech/archive/2007/02/26/656901.html)  
 [如何：控制服务实例化](https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/feature-details/how-to-control-service-instancing)  
 [WCF Service which creates a new thread for every new request](https://stackoverflow.com/questions/1431180/wcf-service-which-creates-a-new-thread-for-every-new-request)  
+[Task-based Asynchronous Operation in WCF](https://www.codeproject.com/Articles/613678/Task-based-Asynchronous-Operation-in-WCF)  
+[Asynchronous Operations in WCF](https://social.technet.microsoft.com/wiki/contents/articles/16346.asynchronous-operations-in-wcf.aspx)  
