@@ -133,7 +133,7 @@ WCF Service的实例化行为由 ServiceBehaviorAttribute.InstanceContextMode �
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async6.png?raw=true) 
 
 这样会自动生成 基于事件的函数和IAsyncResult 异步函数
-![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async6.png?raw=true) 
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async7.png?raw=true) 
 
 5. 修改Client端代码
 
