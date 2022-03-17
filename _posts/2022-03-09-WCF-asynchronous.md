@@ -309,7 +309,7 @@ EndOperation 方法包括一个 IAsyncResult 参数以及 out 和 ref 参数，�
 最后的输出：  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async10.png?raw=true) 
 
-# Reference：  
+# Reference  
 [同步和异步操作](https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/synchronous-and-asynchronous-operations)  
 [c#中为什么async方法里必须还要有await？](https://www.zhihu.com/question/58922017)  
 [WCF技术剖析之十一：异步操作在WCF中的应用（上篇）](https://www.cnblogs.com/artech/archive/2009/07/08/1519423.html)  
