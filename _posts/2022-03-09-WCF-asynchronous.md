@@ -19,140 +19,53 @@ tags:
 ## WCF Service
 
 1. 以Admin权限打开Visual Studio 2022, 创建新的project   
-2. In “Visual C#” -> “WCF”, 选 “WCF Service Library”    
+2. In “Visual C#” -> “WCF”, 选 “WCF Service", solution名字WCF_Async, project名字WCFService    
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async1.png?raw=true)
-3. Visual Sutdio会自动创建两个cs：`IService1.cs` 和 `Server1.cs`, App.config里已经有默认`basicHttpBinding`,直接按F5，会弹出WCF TEST Client  
-4. 新建接口 ICalculator.cs  
+1. Visual Sutdio会自动创建两个cs：`IService.cs` 和 `Server.cs`,直接按F5，会弹出WCF TEST Client  
+2. 修改接口 IService.cs  
    
-        using System.ServiceModel;
-        namespace Server
+        [ServiceContract]
+        public interface IService
         {
-            [ServiceContract(Name = "CalculatorService")]
-            public interface ICalculator
+
+            [OperationContract]
+            string GetData(string value);
+        }
+
+3. 修改服务实现 Service.cs  
+
+        public class Service : IService
+        {
+            public string GetData(string value)
             {
-                [OperationContract]
-                double Add(double x, double y);
-
-                [OperationContract]
-                double Subtract(double x, double y);
-
-                [OperationContract]
-                double Multiply(double x, double y);
-
-                [OperationContract]
-                double Divide(double x, double y);
+                Thread.Sleep(5000);
+                return string.Format("Server return: {0}", value);
             }
         }
 
-5. 新建服务实现 CalculatorService.cs  
-
-        namespace Server
-        {
-            public class CalculatorService : ICalculator
-            {
-                public double Add(double x, double y)
-                {
-                    return x + y;
-                }
-
-                public double Subtract(double x, double y)
-                {
-                    return x - y;
-                }
-
-                public double Multiply(double x, double y)
-                {
-                    return x * y;
-                }
-
-                public double Divide(double x, double y)
-                {
-                    return x / y;
-                }
-            }
-        }
-
-6. 修改App.config，将service1改成CalculatorService  
-
-        <services>
-            <service name="Server.CalculatorService">
-                <host>
-                <baseAddresses>
-                    <add baseAddress = "http://localhost:8733/Design_Time_Addresses/Server/CalculatorService/" />
-                </baseAddresses>
-                </host>
-                <endpoint address="" binding="basicHttpBinding" contract="Server.ICalculator">
-                <identity>
-                    <dns value="localhost"/>
-                </identity>
-                </endpoint>
-                <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange"/>
-            </service>
-        </services>
-
-7. 按F5，弹出WCF TEST Client， 尝试Add 方法  
+4. 按F5，弹出WCF TEST Client， 尝试调用GetData 方法  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async2.png?raw=true)  
-
-## Host 
-我们将WCF 服务托管到self host exe上，也可以托管到IIS上。  
-1. 新建一个console app，修改Main函数
-
-        static void Main(string[] args)
-        {
-            using (ServiceHost host = new ServiceHost(typeof(CalculatorService)))
-            {
-                host.Opened += delegate
-                {
-                    Console.WriteLine("CalculaorService has started, press any key to stop");
-                };
-
-                host.Open();
-                Console.ReadKey();
-            }
-        }
-
-2. 修改App.config
-
-    <configuration>
-        <startup>
-            <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8" />
-        </startup>
-        <system.serviceModel>
-            <behaviors>
-            <serviceBehaviors>
-                <behavior name="metadataBehavior">
-                <serviceMetadata httpGetEnabled="true" httpGetUrl="http://127.0.0.1:9999/calculatorservice/metadata" />
-                </behavior>
-            </serviceBehaviors>
-            </behaviors>
-            <services>
-            <service behaviorConfiguration="metadataBehavior" name="Server.CalculatorService">
-                <endpoint address="http://127.0.0.1:9999/calculatorservice" binding="wsHttpBinding"
-                        contract="Server.ICalculator" />
-            </service>
-            </services>
-        </system.serviceModel>
-    </configuration>
-
-3. 编译之后以Admin权限运行Host.exe, 当服务启动之后，打开浏览器，输入`http://127.0.0.1:9999/calculatorservice/metadata`，可以拿到WCF 服务的metadata  
-![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async4.png?raw=true)  
 
 ## Client
 1. 新建console app， 名称 Client
-2. 保持Host.exe 运行情况下，右键Reference，添加Service Reference  
+2. 保持系统托盘里IIS Express -> WCF Service是否运行，右键Client Reference，添加Service Reference  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async3.png?raw=true)  
 3. 修改main函数  
 
-        static void Main(string[] args)
+        internal class Program
         {
-            using (CalculatorServiceClient proxy = new CalculatorServiceClient())
+            static ServiceClient client = new ServiceClient();
+            static void Main(string[] args)
             {
-                Console.WriteLine("x + y = {2} when x = {0} and y = {1}", 1, 2, proxy.Add(1, 2));
-                Console.WriteLine("x - y = {2} when x = {0} and y = {1}", 1, 2, proxy.Subtract(1, 2));
-                Console.WriteLine("x * y = {2} when x = {0} and y = {1}", 1, 2, proxy.Multiply(1, 2));
-                Console.WriteLine("x / y = {2} when x = {0} and y = {1}", 1, 2, proxy.Divide(1, 2));
+                CallSynMethod();
+                Console.Read();
             }
-            Console.ReadKey();
+
+            private static void CallSynMethod()
+            {
+                Console.WriteLine(client.GetData("Call Server Synchronize Method."));
+                Console.WriteLine("Waiting for Synchronize operation...");
+            }
         }
 
 # 会话Sessions 、实例化Instancing和并发Concurrency
@@ -190,33 +103,60 @@ WCF Service的实例化行为由 ServiceBehaviorAttribute.InstanceContextMode �
 2. 基于事件的异步模式  
 3. IAsyncResult 异步模式  
 
-## 基于任务的异步模式
-基于任务的异步模式是实现异步操作的首选方法，因为它最简单且最直接。  
-客户端只需使用 await 关键字调用操作。  
-
-服务器端：  
-
-        public class SampleService:ISampleService
-        {
-        // ...  
-        public async Task<string> SampleMethodTaskAsync(string msg)
-        {
-            return Task<string>.Factory.StartNew(() =>
-            {
-                return msg;
-            });
-        }  
-        // ...  
-        }
-
-客户端：  
-
-        await simpleServiceClient.SampleMethodTaskAsync("hello, world");
-
 
 ## 基于事件的异步模式
 支持基于事件的异步模式的服务将有一个或多个名为 MethodNameAsync 的操作。 这些方法可能会创建同步版本的镜像，这些同步版本会在当前线程上执行相同的操作。 该类还可能具有 MethodNameCompleted 事件，并且可能会具有 MethodNameAsyncCancel（或只是 CancelAsync）方法。 希望调用操作的客户端将定义操作完成时要调用的事件处理程序.  
 基于事件的异步模型仅在 .NET Framework 3.5 中提供。 此外，如果使用创建 WCF 客户端通道，则不支持此方法，即使在 .NET Framework 3.5 中也是如此 System.ServiceModel.ChannelFactory<TChannel> 。 使用 WCF 客户端通道对象时，必须使用 System.IAsyncResult 对象异步调用操作。  
+1. 新建一个WCF service `Service1.svc`  
+2. 修改`IService1.cs`  
+
+        [ServiceContract]
+        public interface IService1
+        {
+            [OperationContract]
+            string GetData(string message);
+        }
+
+3. 修改`Service1.cs`  
+
+        public class Service1 : IService1
+        {
+            public string GetData(string message)
+            {
+                Thread.Sleep(5000);
+                return string.Format("Server return: {0}", message);
+            }
+        }
+
+服务端代码和同步调用的代码一模一样。    
+4. Client端添加新的service引用, 勾选异步操作，
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async6.png?raw=true) 
+
+这样会自动生成 基于事件的函数和IAsyncResult 异步函数
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async6.png?raw=true) 
+
+5. 修改Client端代码
+
+        internal class Program
+        {
+            static Service1Client client1 = new Service1Client();
+            static void Main(string[] args)
+            {
+                CallEventBasedAsync();
+                Console.Read();
+            }
+
+            private static void CallEventBasedAsync()
+            {
+                client1.GetDataCompleted += client_GetDataCompleted;
+                client1.GetDataAsync("event-based asynchronous pattern");
+                Console.WriteLine("Waiting for async operation...");
+            }
+            static void client_GetDataCompleted(object sender, ServiceReference1.GetDataCompletedEventArgs e)
+            {
+                Console.WriteLine(e.Result.ToString());
+            }
+        }
 
 ## IAsyncResult 异步模式
 服务操作可以使用 .NET Framework 异步编程模式，并标记 `<Begin>` 属性设置为的方法，以异步方式实现 AsyncPattern true 。  
@@ -224,18 +164,150 @@ WCF Service的实例化行为由 ServiceBehaviorAttribute.InstanceContextMode �
 使用 BeginOperation 和 EndOperation 模式定义两个方法。  
 BeginOperation 方法包括该操作的 in 和 ref 参数，并返回一个 IAsyncResult 类型。  
 EndOperation 方法包括一个 IAsyncResult 参数以及 out 和 ref 参数，并返回操作的返回类型。  
+可以将IAsyncResult异步模式分为两种：  
+### 客户端异步模式  
+客户端异步模式可以直接使用事件异步模式的例子。修改Client端代码：  
 
-## 异步服务代理
+        internal class Program
+        {
+            static Service1Client client1 = new Service1Client();
+            static void Main(string[] args)
+            {
+                CallIAsyncResultClientSide();
+                Console.Read();
+            }
 
-![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async5.png?raw=true)  
-
-        public double Add(double x, double y) {
-            return base.Channel.Add(x, y);
+            private static void CallIAsyncResultClientSide()
+            {
+                client1.BeginGetData("IAsyncResult asynchronous pattern (Client-Side)", new AsyncCallback(GetDataCallBackClient), null);
+                Console.WriteLine("Waiting for async operation...");
+            }
+            static void GetDataCallBackClient(IAsyncResult result)
+            {
+                Console.WriteLine(client1.EndGetData(result).ToString());
+            }
         }
-        
-        public System.Threading.Tasks.Task<double> AddAsync(double x, double y) {
-            return base.Channel.AddAsync(x, y);
+
+### 服务 & 客户端异步模式  
+1. 新建服务Service2.svc
+2. 修改接口,添加属性`AsyncPattern`
+   
+        [ServiceContract]
+        public interface IService2
+        {
+            [OperationContractAttribute(AsyncPattern = true)]
+            IAsyncResult BeginGetData(string message, AsyncCallback callback, object asyncState);
+
+            string EndGetData(IAsyncResult result);
         }
+
+3. 实现接口
+
+        public class Service2 : IService2
+        {
+            public IAsyncResult BeginGetData(string message, AsyncCallback callback, object asyncState)
+            {
+                var task = Task<string>.Factory.StartNew((res) => GetData(asyncState, message), asyncState);
+                return task.ContinueWith(res => callback(task));
+            }
+
+            public string EndGetData(IAsyncResult result)
+            {
+                return ((Task<string>)result).Result;
+            }
+
+            private string GetData(object asyncState, string message)
+            {
+                Thread.Sleep(5000);
+                return string.Format("Server return: {0}", message);
+            }
+        }
+
+4. 客户端引用新的服务
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async8.png?raw=true) 
+
+5. 修改client端实现  
+
+        internal class Program
+        {
+            static Service2Client client2 = new Service2Client();
+            static void Main(string[] args)
+            {
+                CallIAsyncResultServerSide();
+                Console.Read();
+            }
+
+            private static void CallIAsyncResultServerSide()
+            {
+                client2.BeginGetData("IAsyncResult asynchronous pattern (Server-Side)", new AsyncCallback(GetDataCallBackServer), null);
+                Console.WriteLine("Waiting for async operation...");
+            }
+            static void GetDataCallBackServer(IAsyncResult result)
+            {
+                Console.WriteLine(client2.EndGetData(result).ToString());
+            }
+        }
+
+## 基于任务的异步模式
+基于任务的异步模式是实现异步操作的首选方法，因为它最简单且最直接。  
+客户端只需使用 await 关键字调用操作。  
+
+服务器端：  
+1. 新建服务Service3.svc
+2. 修改接口
+   
+        [ServiceContract]
+        public interface IService3
+        {
+            //task-based asynchronous pattern
+            [OperationContract]
+            Task<string> GetDataAsync(string message);
+        }
+
+3. 实现接口
+
+        public class Service3 : IService3
+        {
+            public async Task<string> GetDataAsync(string message)
+            {
+                return await Task.Factory.StartNew(() => GetData(message));
+            }
+
+            private string GetData(string message)
+            {
+                Thread.Sleep(5000);
+                return string.Format("Server return: {0}", message);
+            }
+        }
+
+客户端：  
+1. 添加服务引用
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async9.png?raw=true) 
+   
+2. 修改代码
+
+        internal class Program
+        {
+            static Service3Client client3 = new Service3Client();
+            static void Main(string[] args)
+            {
+                CallTaskBasedAsync();
+                Console.Read();
+            }
+
+            private static void CallTaskBasedAsync()
+            {
+                InvokeAsyncMethod("task-based asynchronous pattern");
+                Console.WriteLine("Waiting for async operation...");
+            }
+            static async void InvokeAsyncMethod(string message)
+            {
+                Console.WriteLine(await client3.GetDataAsync(message));
+            }
+        }
+
+最后的输出：  
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async10.png?raw=true) 
 
 # Reference：  
 [同步和异步操作](https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/synchronous-and-asynchronous-operations)  
