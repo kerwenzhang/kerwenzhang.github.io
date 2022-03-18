@@ -351,7 +351,7 @@ Service端保持不动，新创建一个console，命名Client2。
         }
 
 ### 基于事件的异步模式 
-基于事件的异步模型仅在 .NET Framework 3.5 中提供。如果不适用ServiceClient，我们没法实现事件异步模式。  
+基于事件的异步模型仅在 .NET Framework 3.5 中提供。不适用ServiceClient，我们没法实现事件异步模式。  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async11.png?raw=true)  
 
 GetDataComplete事件是放在ServiceClient里的，如果我们不使用ServiceClient，那就没法实现事件异步了。  
@@ -375,9 +375,7 @@ IAsyncResult 客户端和服务器模式都可以实现，但是我们需要自�
             {
                 CreateChannel();
                 channel1.BeginGetData("IAsyncResult asynchronous pattern (Client-Side)", new AsyncCallback(GetDataCallBackClient), null);
-                Console.WriteLine("Waiting for async operation...");
-
-                
+                Console.WriteLine("Waiting for async operation...");                
             }
 
             static ChannelFactory<IService1> factory1 = null;
@@ -459,7 +457,7 @@ IAsyncResult 客户端和服务器模式都可以实现，但是我们需要自�
             }
         }
 
-## 基于任务的异步模式
+### 基于任务的异步模式
 
     using Client2.ServiceReference3;
     internal class Program
@@ -504,7 +502,7 @@ IAsyncResult 客户端和服务器模式都可以实现，但是我们需要自�
         }
     }
 
-我们再Client端甚至可以添加WCF service的引用。我们在Client2里实际上只是在初始化`ChannelFactory`的时候引用了下接口的定义，可以将IService都抽到一个单独的library里，让Service和Client都可以reference，这样就可以在Client端直接写代码去连接服务。  
+我们在Client端甚至可以不添加WCF service的引用。我们在Client2里实际上只是在初始化`ChannelFactory`的时候引用了下接口的定义，可以将IService都抽到一个单独的library里，让Service和Client都可以reference，这样就可以在Client端直接写代码去连接服务。  
 
 
 # Reference  
