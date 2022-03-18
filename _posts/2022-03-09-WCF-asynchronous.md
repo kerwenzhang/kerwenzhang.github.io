@@ -310,6 +310,203 @@ EndOperation 方法包括一个 IAsyncResult 参数以及 out 和 ref 参数，�
 最后的输出：  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async10.png?raw=true) 
 
+## Client Create channel
+上述例子中我们Client端是直接添加了WCF的服务引用，通过调用ServiceClient的方式实现的。ServiceClient是svcutil.exe根据WCF服务生成的客户端。
+如果我们不想用这个客户端，而是想自己创建channel连接wcf服务该怎么做呢？  
+Service端保持不动，新创建一个console，命名Client2。  
+同样添加service，service1-3的引用，这里我们只是为了引入service接口。  
+
+### 同步调用
+
+        using Client2.ServiceReference;
+        internal class Program
+        {
+            static void Main(string[] args)
+            {
+                CallSynMethod();
+                Console.Read();
+            }
+
+            private static void CallSynMethod()
+            {
+                ChannelFactory<IService> factory = null;
+                try
+                {
+                    factory = new ChannelFactory<IService>(new BasicHttpBinding(), new EndpointAddress("http://localhost:62355/Service.svc"));
+                    var channel = factory.CreateChannel();
+                    var s = channel.GetData("Call Server Synchronize Method.");
+                    Console.WriteLine(s);
+                    Console.WriteLine("Waiting for Synchronize operation...");
+                    factory.Close();
+                    throw new Exception();
+                }
+                catch (Exception e)
+                {
+                    if (factory != null)
+                    {
+                        factory.Abort();
+                    }
+                }
+            }
+        }
+
+### 基于事件的异步模式 
+基于事件的异步模型仅在 .NET Framework 3.5 中提供。如果不适用ServiceClient，我们没法实现事件异步模式。  
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async11.png?raw=true)  
+
+GetDataComplete事件是放在ServiceClient里的，如果我们不使用ServiceClient，那就没法实现事件异步了。  
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/async12.png?raw=true) 
+
+### IAsyncResult
+IAsyncResult 客户端和服务器模式都可以实现，但是我们需要自己处理channel的开启和关闭。  
+
+        using Client2.ServiceReference1;
+        using Client2.ServiceReference2;
+        internal class Program
+        {
+            static void Main(string[] args)
+            {
+                CallIAsyncResultClientSide();
+                CallIAsyncResultServerSide();
+                Console.Read();
+            }
+
+            private static void CallIAsyncResultClientSide()
+            {
+                CreateChannel();
+                channel1.BeginGetData("IAsyncResult asynchronous pattern (Client-Side)", new AsyncCallback(GetDataCallBackClient), null);
+                Console.WriteLine("Waiting for async operation...");
+
+                
+            }
+
+            static ChannelFactory<IService1> factory1 = null;
+            static IService1 channel1 = null;
+            private static void CreateChannel()
+            {
+                try
+                {
+                    factory1 = new ChannelFactory<IService1>(new BasicHttpBinding(), new EndpointAddress("http://localhost:62355/Service1.svc"));
+                    channel1 = factory1.CreateChannel();
+                }
+                catch (Exception e)
+                {
+                    if (factory1 != null)
+                    {
+                        factory1.Abort();
+                    }
+                }
+            }
+
+            static void GetDataCallBackClient(IAsyncResult result)
+            {
+                
+                try
+                {
+                    Console.WriteLine(channel1.EndGetData(result).ToString());
+                    factory1.Close();
+                    throw new Exception();
+                }
+                catch (Exception e)
+                {
+                    if (factory1 != null)
+                    {
+                        factory1.Abort();
+                    }
+                }
+            }
+
+            private static void CallIAsyncResultServerSide()
+            {
+                CreateChannel2();
+                channel2.BeginGetData("IAsyncResult asynchronous pattern (Server-Side)", new AsyncCallback(GetDataCallBackServer), null);
+                Console.WriteLine("Waiting for async operation...");
+            }
+
+            static ChannelFactory<IService2> factory2 = null;
+            static IService2 channel2 = null;
+            private static void CreateChannel2()
+            {
+                try
+                {
+                    factory2 = new ChannelFactory<IService2>(new BasicHttpBinding(), new EndpointAddress("http://localhost:62355/Service2.svc"));
+                    channel2 = factory2.CreateChannel();
+                }
+                catch (Exception e)
+                {
+                    if (factory2 != null)
+                    {
+                        factory2.Abort();
+                    }
+                }
+            }
+
+            static void GetDataCallBackServer(IAsyncResult result)
+            {
+                try
+                {
+                    Console.WriteLine(channel2.EndGetData(result).ToString());
+                    factory2.Close();
+                    throw new Exception();
+                }
+                catch (Exception e)
+                {
+                    if (factory2 != null)
+                    {
+                        factory2.Abort();
+                    }
+                }
+            }
+        }
+
+## 基于任务的异步模式
+
+    using Client2.ServiceReference3;
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            CallTaskBasedAsync();
+            Console.Read();
+        }
+
+        private static void CallTaskBasedAsync()
+        {
+            InvokeAsyncMethod("task-based asynchronous pattern");
+            Console.WriteLine("Waiting for async operation...");
+        }
+        static async void InvokeAsyncMethod(string message)
+        {
+            Console.WriteLine(await CallMethod(message));
+        }
+
+        static async Task<string> CallMethod(string message)
+        {
+            string s = null;
+            ChannelFactory<IService3> factory = null;
+            try
+            {
+                factory = new ChannelFactory<IService3>(new BasicHttpBinding(), new EndpointAddress("http://localhost:62355/Service3.svc"));
+                var channel = factory.CreateChannel();
+                s = await channel.GetDataAsync("task-based asynchronous pattern");
+               
+                factory.Close();
+                throw new Exception();
+            }
+            catch (Exception e)
+            {
+                if (factory != null)
+                {
+                    factory.Abort();
+                }
+            }
+            return s;
+        }
+    }
+
+我们再Client端甚至可以添加WCF service的引用。我们在Client2里实际上只是在初始化`ChannelFactory`的时候引用了下接口的定义，可以将IService都抽到一个单独的library里，让Service和Client都可以reference，这样就可以在Client端直接写代码去连接服务。  
+
+
 # Reference  
 [同步和异步操作](https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/synchronous-and-asynchronous-operations)  
 [c#中为什么async方法里必须还要有await？](https://www.zhihu.com/question/58922017)  
