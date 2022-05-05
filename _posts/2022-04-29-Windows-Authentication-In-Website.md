@@ -130,6 +130,7 @@ NTLM 和 Kerberos 之间的主要区别在于这两种协议如何管理身份�
 8. 重新run Server端，刷新Client，能获取到数据了。
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Auth2.png?raw=true)
 
+至此一个简单的.net core web api + Angular client就搭建完成了，api没有集成任何认证，任何人的请求都会被响应。  
 # 集成windows认证
 
 
