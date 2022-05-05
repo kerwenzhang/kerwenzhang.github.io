@@ -57,9 +57,9 @@ NTLM 和 Kerberos 之间的主要区别在于这两种协议如何管理身份�
 1. Visual Studio 2022 新建 .net core web api 工程，Framework选.net 5.0
 2. 直接运行工程F5，在swagger测试页面可以获取天气信息
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Auth1.png?raw=true)
-3. 新建Angular工程
+3. 新建Angular工程  
    
-    ng new Client  
+        ng new Client  
 
 4. 添加request代码  
    app.module.ts里添加HttpClientModule引用  
@@ -93,19 +93,19 @@ NTLM 和 Kerberos 之间的主要区别在于这两种协议如何管理身份�
         Get weather information from server!
 
         <div *ngFor="let value of values | async">
-            {{value.date}}
+            { {value.date} }
             <br>
-            {{value.temperatureC}}
+            { {value.temperatureC} }
             <br>
-            {{value.temperatureF}}
+            { {value.temperatureF} }
             <br>
-            {{value.summary}}
+            { {value.summary} }
         </div>
 
 
 5. 运行Client端
    
-    npm run start
+        npm run start
 
     如果遇到端口4200被占用，修改package.json中的默认端口
 
@@ -113,7 +113,7 @@ NTLM 和 Kerberos 之间的主要区别在于这两种协议如何管理身份�
 
 6. 打开浏览器之后没有天气数据返回，F12 console里会有如下输出：
 
-    Access to XMLHttpRequest at 'https://localhost:44371/WeatherForecast' from origin 'http://localhost:4201' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+        Access to XMLHttpRequest at 'https://localhost:44371/WeatherForecast' from origin 'http://localhost:4201' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
 
 7. 在Server端添加CORS
    
