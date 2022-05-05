@@ -20,6 +20,7 @@ HSTS可以用来抵御SSL剥离攻击。SSL剥离攻击是中间人攻击的一�
 
 In TLS, the client proposes and the server chooses. HSTS allows a server to force clients to use HTTPS for a particular domain.
 
+## Reference
 [SSL，HTTPS，TLS三者的区别](https://zhuanlan.zhihu.com/p/158711125)  
 [HTTP Strict Transport Security](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security)  
 [Is there a HSTS equivalent for specifying TLS version?](https://security.stackexchange.com/questions/100093/is-there-a-hsts-equivalent-for-specifying-tls-version)
