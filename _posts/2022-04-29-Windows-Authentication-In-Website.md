@@ -53,11 +53,87 @@ NTLM 和 Kerberos 之间的主要区别在于这两种协议如何管理身份�
 3. 过时的密码学。NTLM 没有利用算法思维或加密的最新进展来使密码更安全。    
 
 # 创建一个网站
+首先用.net core web api + Angular生成一个简单的网站。
+1. Visual Studio 2022 新建 .net core web api 工程，Framework选.net 5.0
+2. 直接运行工程F5，在swagger测试页面可以获取天气信息
+   ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Auth1.png?raw=true)
+3. 新建Angular工程
+   
+    ng new Client  
+
+4. 添加request代码  
+   app.module.ts里添加HttpClientModule引用  
+
+        import { HttpClientModule } from '@angular/common/http';
+        imports: [
+            HttpClientModule,
+            BrowserModule
+        ],
+
+    app.component.ts里调用http get请求数据  
+
+        export class AppComponent {
+            public values: Observable<any>|undefined; 
+            title = 'Client';
+            constructor(private httpClient:HttpClient){    
+            }
+
+            ngOnInit(): void {
+                this.getData();    
+            }
+
+            getData()
+            {
+                this.values = this.httpClient.get<string>("https://localhost:44371/WeatherForecast");
+            }
+        }
+    
+    app.component.html中显示天气  
+
+        Get weather information from server!
+
+        <div *ngFor="let value of values | async">
+            {{value.date}}
+            <br>
+            {{value.temperatureC}}
+            <br>
+            {{value.temperatureF}}
+            <br>
+            {{value.summary}}
+        </div>
+
+
+5. 运行Client端
+   
+    npm run start
+
+    如果遇到端口4200被占用，修改package.json中的默认端口
+
+        "start": "ng serve -o --port 4201",
+
+6. 打开浏览器之后没有天气数据返回，F12 console里会有如下输出：
+
+    Access to XMLHttpRequest at 'https://localhost:44371/WeatherForecast' from origin 'http://localhost:4201' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+
+7. 在Server端添加CORS
+   
+        private readonly string MyAllowSpecificOrigins = "_MyOriginPolicy";
+        services.AddCors(options =>
+        {
+            options.AddPolicy(MyAllowSpecificOrigins, builder =>
+            {
+                builder.WithOrigins("http://localhost:4201").AllowCredentials();
+            });
+        });
+        app.UseCors(MyAllowSpecificOrigins);
+
+8. 重新run Server端，刷新Client，能获取到数据了。
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Auth2.png?raw=true)
 
 # 集成windows认证
 
 
-[NTLM EXPLAINED](https://www.crowdstrike.com/cybersecurity-101/ntlm-windows-new-technology-lan-manager/#:~:text=Windows%20New%20Technology%20LAN%20Manager,and%20confidentiality%20of%20their%20activity.)
+[NTLM EXPLAINED](https://www.crowdstrike.com/cybersecurity-101/ntlm-windows-new-technology-lan-manager/#:~:text=Windows%20New%20Technology%20LAN%20Manager,and%20confidentiality%20of%20their%20activity.)  
 [Windows Authentication](https://docs.microsoft.com/en-us/iis/configuration/system.webserver/security/authentication/windowsauthentication/)   
 [Enable Windows Authentication In Web API And Angular App](https://www.c-sharpcorner.com/article/enable-windows-authentication-in-web-api-and-angular-app/)  
 [Authentication with Angular](https://newspark.nl/authentication-with-angular/)  
