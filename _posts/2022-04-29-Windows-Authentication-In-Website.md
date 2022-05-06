@@ -198,3 +198,4 @@ Server端的配置到这就结束了。
 [Authentication with Angular](https://newspark.nl/authentication-with-angular/)  
 [Windows Authentication with .NET Core API and Angular on IIS](https://lukelindner.medium.com/windows-authentication-with-net-core-api-and-angular-project-on-iis-ae16a573902e)  
 [Angular 使用 Windows 验证](https://blog.kevinyang.net/2019/04/11/ng-windows-auth/)  
+[在 ASP.NET Core 中配置 Windows 身份验证](https://docs.microsoft.com/zh-cn/aspnet/core/security/authentication/windowsauth?view=aspnetcore-6.0&tabs=netcore-cli)  
