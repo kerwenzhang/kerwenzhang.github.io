@@ -133,7 +133,8 @@ NTLM 和 Kerberos 之间的主要区别在于这两种协议如何管理身份�
 至此一个简单的.net core web api + Angular client就搭建完成了，api没有集成任何认证，任何人的请求都会被响应。  
 
 # 集成windows认证
-1. 新建web.config，配置windows认证  
+## Server端
+1. 新建web.config，添加`forwardWindowsAuthToken="true"`配置windows认证  
    
         <system.webServer>
             <handlers>
@@ -141,7 +142,7 @@ NTLM 和 Kerberos 之间的主要区别在于这两种协议如何管理身份�
                 <add name="aspNetCore" path="*" verb="*" modules="AspNetCoreModuleV2" resourceType="Unspecified" />
             </handlers>
             <aspNetCore processPath="%LAUNCHER_PATH%" arguments="%LAUNCHER_ARGS%" stdoutLogEnabled="false" stdoutLogFile=".\logs\stdout" forwardWindowsAuthToken="true" hostingModel="InProcess" />
-    </system.webServer>
+        </system.webServer>
    
 2. 在`WeatherForecastController`中添加`Authorize`头  
    
@@ -157,7 +158,7 @@ NTLM 和 Kerberos 之间的主要区别在于这两种协议如何管理身份�
    
         services.AddAuthentication(IISDefaults.AuthenticationScheme);
     
-5. 工程属性-debug里将匿名登录去掉，勾选windows认证。  
+5. 工程属性-debug里将匿名登录去掉，勾选windows认证。如果将server托管到IIS上，则需要配置IIS。  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Auth7.png?raw=true)
 6. F5 重新起服务，通过swagger测试，发现还是可以拿到天气数据，是我们的windows配置没有生效？  
 7. 我们可以将request的用户名打印出来    
@@ -182,8 +183,17 @@ NTLM 和 Kerberos 之间的主要区别在于这两种协议如何管理身份�
 
 Server端的配置到这就结束了。  
 
+## Client端
+1. 修改`app.component.ts`，在请求里夹带windows账户信息  
+   
+        getData()
+        {
+            this.values = this.httpClient.get<string>("https://localhost:44371/WeatherForecast",{withCredentials:true});
+        }
+    
+2. 重新启动client端，能获取到天气数据，server console里打印出当前登录用户名  
+   
 [NTLM EXPLAINED](https://www.crowdstrike.com/cybersecurity-101/ntlm-windows-new-technology-lan-manager/#:~:text=Windows%20New%20Technology%20LAN%20Manager,and%20confidentiality%20of%20their%20activity.)  
 [Windows Authentication](https://docs.microsoft.com/en-us/iis/configuration/system.webserver/security/authentication/windowsauthentication/)   
-[Enable Windows Authentication In Web API And Angular App](https://www.c-sharpcorner.com/article/enable-windows-authentication-in-web-api-and-angular-app/)  
 [Authentication with Angular](https://newspark.nl/authentication-with-angular/)  
 [Windows Authentication with .NET Core API and Angular on IIS](https://lukelindner.medium.com/windows-authentication-with-net-core-api-and-angular-project-on-iis-ae16a573902e)  
