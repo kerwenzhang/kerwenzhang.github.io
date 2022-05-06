@@ -193,6 +193,10 @@ Server端的配置到这就结束了。
     
 2. 重新启动client端，能获取到天气数据，server console里打印出当前登录用户名  
    
+实验到这里就结束了，但我还是有个疑问。 Client端其实是自动把当前登录的账户信息发给Server端了，整个认证的过程用户是感觉不到的。那有没有可能像在Postman里做的那样，输入另外一个windows的账号和密码呢？
+有没有可能让浏览器自动弹出这样的登录窗口呢？留着以后再研究吧。。。  
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Auth8.png?raw=true)
+   
 [NTLM EXPLAINED](https://www.crowdstrike.com/cybersecurity-101/ntlm-windows-new-technology-lan-manager/#:~:text=Windows%20New%20Technology%20LAN%20Manager,and%20confidentiality%20of%20their%20activity.)  
 [Windows Authentication](https://docs.microsoft.com/en-us/iis/configuration/system.webserver/security/authentication/windowsauthentication/)   
 [Authentication with Angular](https://newspark.nl/authentication-with-angular/)  
