@@ -131,8 +131,56 @@ NTLM 和 Kerberos 之间的主要区别在于这两种协议如何管理身份�
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Auth2.png?raw=true)
 
 至此一个简单的.net core web api + Angular client就搭建完成了，api没有集成任何认证，任何人的请求都会被响应。  
-# 集成windows认证
 
+# 集成windows认证
+1. 新建web.config，配置windows认证  
+   
+        <system.webServer>
+            <handlers>
+                <remove name="aspNetCore" />
+                <add name="aspNetCore" path="*" verb="*" modules="AspNetCoreModuleV2" resourceType="Unspecified" />
+            </handlers>
+            <aspNetCore processPath="%LAUNCHER_PATH%" arguments="%LAUNCHER_ARGS%" stdoutLogEnabled="false" stdoutLogFile=".\logs\stdout" forwardWindowsAuthToken="true" hostingModel="InProcess" />
+    </system.webServer>
+   
+2. 在`WeatherForecastController`中添加`Authorize`头  
+   
+        [Authorize]
+        [ApiController]
+        [Route("[controller]")]
+        public class WeatherForecastController : ControllerBase
+3. 安装新的nuget package：  
+   
+        Microsoft.AspNetCore.Server.IISIntegration
+
+4. 配置startup  
+   
+        services.AddAuthentication(IISDefaults.AuthenticationScheme);
+    
+5. 工程属性-debug里将匿名登录去掉，勾选windows认证。  
+   ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Auth7.png?raw=true)
+6. F5 重新起服务，通过swagger测试，发现还是可以拿到天气数据，是我们的windows配置没有生效？  
+7. 我们可以将request的用户名打印出来    
+   WeatherForecastController.cs 中  
+
+        [HttpGet]
+        public IEnumerable<WeatherForecast> Get()
+        {
+            Console.WriteLine("----------------" + HttpContext.User.Identity.Name);
+            ...
+        }
+
+8. 重新请求数据，在console里能打印出我们当前window的用户名  
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Auth3.png?raw=true)
+猜测是swagger在请求数据的时候已经把Authentication加进去了。  
+8. 我们换成Postman再次请求数据,请求失败了返回401未授权。   
+   ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Auth4.png?raw=true)
+9. 我们修改一下Postman请求的头，添加Authentication，输入一个本地的用户名和密码，这里我没有用当前登录的用户。发现可以返回数据。  
+     ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Auth6.png?raw=true)
+10. 查看server console，打印出来的就是我们输入的用户名。  
+    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Auth5.png?raw=true)
+
+Server端的配置到这就结束了。  
 
 [NTLM EXPLAINED](https://www.crowdstrike.com/cybersecurity-101/ntlm-windows-new-technology-lan-manager/#:~:text=Windows%20New%20Technology%20LAN%20Manager,and%20confidentiality%20of%20their%20activity.)  
 [Windows Authentication](https://docs.microsoft.com/en-us/iis/configuration/system.webserver/security/authentication/windowsauthentication/)   
