@@ -197,3 +197,4 @@ Server端的配置到这就结束了。
 [Windows Authentication](https://docs.microsoft.com/en-us/iis/configuration/system.webserver/security/authentication/windowsauthentication/)   
 [Authentication with Angular](https://newspark.nl/authentication-with-angular/)  
 [Windows Authentication with .NET Core API and Angular on IIS](https://lukelindner.medium.com/windows-authentication-with-net-core-api-and-angular-project-on-iis-ae16a573902e)  
+[Angular 使用 Windows 验证](https://blog.kevinyang.net/2019/04/11/ng-windows-auth/)  
