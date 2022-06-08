@@ -1,15 +1,15 @@
 ---                
 layout: post            
 title: "Dell笔记本插3.5mm耳机后耳麦不好用"                
-date:   2022-5-6 16:30:00                 
+date:   2022-5-7 16:30:00                 
 categories: "Other"                
 catalog: true                
 tags:                 
     - Other                
 ---      
 
-最近发现自己的Dell笔记本插3.5mm耳机之后耳麦不工作，默认使用的是笔记本的耳麦。一番查找之后找到了解决方案：  
-1. 开始菜单，找到`MaxxAudioPro`，如果是Dell笔记本且没有装，可以试着装一下这个软件    
+最近发现Dell笔记本插3.5mm耳机之后耳麦不工作了，默认使用的是笔记本的耳麦。但笔记本的耳麦杂音太多了，一番查找之后找到了解决方案：  
+1. 开始菜单，找到`MaxxAudioPro`，如果是Dell笔记本且没有装，可以试着装一下这个软件，其他品牌的笔记本可能需要试一下RealTek    
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/mic1.png?raw=true)
 2. 打开这个软件之后，如果你没有插耳机，第一个图标是音响的模样，意思是用的笔记本自带的外放。  
    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/mic2.png?raw=true)
