@@ -31,7 +31,7 @@ design视图里是用来构建整个区域模型，并且显示当前level的布
 
 # Phase Class
 阶段类(Phase class) 是一个可重用的面向过程的功能模块，比如加热，搅拌，添加。把一个阶段类添加到设计视图里，就生成了一个阶段实例(Phase instance).  
-一个phase class描述的是配方里都做了什么，但不具体描述怎么做。比如冰激凌配方里有个phase class 是加牛奶(ADD_MILK)，ADD_MILK只是描述加牛奶这个动作，但没有加牛奶这个过程的具体描述。   
+一个phase class描述的是配方里都做了什么，但不具体描述怎么做。比如冰激凌配方里有个phase class 是加牛奶(ADD_MILK)，ADD_MILK只是描述加牛奶这个动作，但没有怎么加的具体描述。   
 
 右键ADD_MILK，弹出编辑窗口，在General页里可以编辑名字  
 Parameters页里包含跟这个phase class相关的参数，通过这些参数，Batch可以向PCD发送数据<font color="red">这个是跟设备挂钩的吗？</font>      
