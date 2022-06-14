@@ -9,13 +9,13 @@ tags:
 ---      
 
 # Equipment Editor 简介
-FactoryTalk Batch Equipment Editor 是用于配置设备和相关功能以生成设施区域模型的组件。 FactoryTalk Batch Equipment Editor 中定义的组件与设施中的过程连接设备 (PCD) 交互。
-如 ISA S88.01标准中所述，工厂的区域模型分为以下物理组件：
-• 处理单元 Process Cell
-• 单元 Unit
-• 阶段 Phase
-• 控制模块 Control Module
-要构建区域模型，需要先建立这些组件。 除了区域模型之外，FactoryTalk Batch Equipment Editor 还允许指定通信功能、枚举集enumeration sets、数据服务器、FactoryTalk Event Archiver 功能以及配置 FactoryTalk Batch Server 选项
+FactoryTalk Batch Equipment Editor 是用于配置设备和相关功能以生成设施区域模型的组件。 FactoryTalk Batch Equipment Editor 中定义的组件与设施中的过程连接设备 (PCD) 交互。  
+如 ISA S88.01标准中所述，工厂的区域模型分为以下物理组件：  
+• 处理单元 Process Cell  
+• 单元 Unit  
+• 阶段 Phase  
+• 控制模块 Control Module  
+要构建区域模型，需要先建立这些组件。 除了区域模型之外，FactoryTalk Batch Equipment Editor 还允许指定通信功能、枚举集enumeration sets、数据服务器、FactoryTalk Event Archiver 功能以及配置 FactoryTalk Batch Server 选项  
 
 # 操作
 1. 打开Equipment Editor：点击开始菜单 > Rockwell Software > Equipment Editor. 默认打开空白的页面。在主窗体左侧是类视图 Classes View，右侧是设计视图 Design View。  
