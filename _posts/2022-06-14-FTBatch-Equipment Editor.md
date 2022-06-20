@@ -109,4 +109,10 @@ Batch 使用Phase tag来连接PCD中的phase logic。 Phase logic是指挥工厂
 5. 点File -> Save 保存，弹出Comments窗口，无视     
 
 ## 在配方里使用签名模板
-在 Edit 菜单里选 `Recipe Approvals Configuration` 
+1. 在 Edit 菜单里选 `Recipe Approvals Configuration`打开编辑窗口   
+2. 点击省略号，添加签名模板  
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/equip10.png?raw=true)  
+
+# 配方Version control
+配方的版本控制是在 Options > Server Options里  
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/equip11.png?raw=true)  
