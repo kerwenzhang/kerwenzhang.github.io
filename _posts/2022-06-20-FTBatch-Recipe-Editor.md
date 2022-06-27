@@ -8,9 +8,6 @@ tags:
     - FTBatch                
 ---      
 
-The FactoryTalk Batch Recipe Editor is used to create and configure master recipes. The FactoryTalk Batch Recipe Editor lets you use tables, sequential function charts, or both, to graphically organize procedural information into unit procedures, operations, and phases. This FactoryTalk Batch component is used primarily by recipe formulators to create or edit recipes (sequences of steps) and formula values (parameters, set point values, etc.).  
-All recipes are configured and displayed using the ISA S88.01 Batch Control Standards, which define the Procedure, Unit Procedure, and Operation (Phase) layers for the procedural model.  
-
 FactoryTalk Batch 配方编辑器(Batch Recipe Editor)用于创建和配置主配方。 FactoryTalk Batch 配方编辑器可以使用表格`tables`、顺序功能图`sequential function charts` 或两者，以图形方式将程序信息组织到单元程序`unit procedures`、操作`operations`和阶段`phases`中。 配方的制定者可以使用编辑器用来创建或编辑配方（步骤序列）和公式值（参数、设定点值等）。  
 所有配方均使用 `ISA S88.01` 标准进行配置和显示。
 
