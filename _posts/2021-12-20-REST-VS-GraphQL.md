@@ -2,10 +2,10 @@
 layout: post            
 title: "RESTful vs GraphQL"                
 date:   2021-12-20 17:30:00                 
-categories: "web"                
+categories: "Web"                
 catalog: true                
 tags:                 
-    - web                
+    - Web                
 ---      
 
 # RESTful

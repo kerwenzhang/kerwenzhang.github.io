@@ -2,10 +2,10 @@
 layout: post            
 title: ".net Core ILogger使用"                
 date:   2021-12-21 17:30:00                 
-categories: "web"                
+categories: "Web"                
 catalog: true                
 tags:                 
-    - web                
+    - Web                
 ---      
 
 

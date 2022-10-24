@@ -2,10 +2,10 @@
 layout: post            
 title: "Angular本地化"                
 date:   2021-12-22 17:30:00                 
-categories: "web"                
+categories: "Web"                
 catalog: true                
 tags:                 
-    - web                
+    - Web                
 ---      
 
 Angular本地化有两种方式，一种是Angular官网推荐的`i18n`标记，另外一种是`ngx-translate`  

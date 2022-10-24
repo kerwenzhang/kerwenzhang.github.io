@@ -2,10 +2,10 @@
 layout: post            
 title: "Basic, Digest and JWT Authentication"                
 date:   2021-12-27 17:30:00                 
-categories: "web"                
+categories: "Web"                
 catalog: true                
 tags:                 
-    - web                
+    - Web                
 ---      
 
 Authentication is knowing the identity of the user. For example, Alice logs in with her username and password, and the server uses the password to authenticate Alice.

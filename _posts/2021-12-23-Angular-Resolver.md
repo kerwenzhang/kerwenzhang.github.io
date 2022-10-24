@@ -1,11 +1,11 @@
 ---                
 layout: post            
 title: "Angular Resolver"                
-date:   2021-12-24 17:30:00                 
-categories: "web"                
+date:   2021-12-23 17:30:00                 
+categories: "Web"                
 catalog: true                
 tags:                 
-    - web                
+    - Web                
 ---      
 
 [Angular-Resolve](https://angular.io/api/router/Resolve)  

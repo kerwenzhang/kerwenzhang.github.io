@@ -2,10 +2,10 @@
 layout: post            
 title: "如何在一个IIS端口里同时host Angular和.NET Core Web Api"                
 date:   2021-12-9 17:30:00                 
-categories: "web"                
+categories: "Web"                
 catalog: true                
 tags:                 
-    - web                
+    - Web                
 ---      
 
 # 前言
