@@ -8,7 +8,6 @@ tags:
     - Web                
 ---      
 
-[https://ts.xcatliu.com/](https://ts.xcatliu.com/)
 
 TypeScript 是 JavaScript 的一个超集，主要提供了类型系统和对 ES6 的支持，它由 Microsoft 开发，代码开源于 GitHub 上。  
 
@@ -35,7 +34,7 @@ TypeScript 是 JavaScript 的一个超集，主要提供了类型系统和对 ES
         let decLiteral: number = 6;     //数值
         let myName: string = 'Tom';     //字符串
         // 模板字符串
-        let sentence: string = `Hello, my name is ${myName}.`;
+        let sentence: string = `Hello, my name is ${myName}.`;  //反引号
 
 2. 空值  
     JavaScript 没有空值（Void）的概念，在 TypeScript 中，可以用 void 表示没有任何返回值的函数：  
@@ -44,7 +43,28 @@ TypeScript 是 JavaScript 的一个超集，主要提供了类型系统和对 ES
             alert('My name is Tom');
         }
 
-3. 任意值  
+3. Null 和 Undefined
+在 TypeScript 中，可以使用 `null` 和 `undefined` 来定义这两个原始数据类型：
+
+        let u: undefined = undefined;
+        let n: null = null;
+
+与 `void` 的区别是，`undefined` 和 `null` 是所有类型的子类型。也就是说 `undefined` 类型的变量，可以赋值给 `number` 类型的变量：
+
+        // 这样不会报错
+        let num: number = undefined;
+        // 这样也不会报错
+        let u: undefined;
+        let num: number = u;
+
+而 `void` 类型的变量不能赋值给 `number` 类型的变量：
+
+        let u: void;
+        let num: number = u;
+
+        // Type 'void' is not assignable to type 'number'.
+
+4. 任意值  
 如果是一个普通类型，在赋值过程中改变类型是不被允许的, 但如果是 any 类型，则允许被赋值为任意类型。    
 
         let myFavoriteNumber: any = 'seven';
@@ -52,13 +72,13 @@ TypeScript 是 JavaScript 的一个超集，主要提供了类型系统和对 ES
 
     变量如果在声明的时候，未指定其类型，那么它会被识别为任意值类型：  
 
-4. 数组  
+5. 数组  
 
         let fibonacci: number[] = [1, 1, 2, 3, 5];
         // 用 any 表示数组中允许出现任意类型：
         let list: any[] = ['xcatliu', 25, { website: 'http://xcatliu.com' }];
 
-5. 函数  
+6. 函数  
 一个函数有输入和输出，要在 TypeScript 中对其进行约束，需要把输入和输出都考虑到，其中函数声明的类型定义较简单：  
 
         function sum(x: number, y: number): number {
@@ -100,3 +120,6 @@ TypeScript 是 JavaScript 的一个超集，主要提供了类型系统和对 ES
     console.log(Days["Tue"] === 2); // true
     console.log(Days["Sat"] === 6); // true
 
+## Reference
+
+[TypeScript 入门教程](https://ts.xcatliu.com/)  
