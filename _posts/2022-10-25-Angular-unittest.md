@@ -107,7 +107,9 @@ Angular 使用了Jasmine测试框架，打开`app.component.spec.ts`, 已经创�
 
 
 `describe` 用于对测试进行分组，通常每个测试文件在顶层都有一个。字符串参数`'AppComponent'`用于命名测试集合。这有助于在大型套件中查找测试。  
+
 `it` 单元测试函数，就像 describe 一样，它需要一个字符串和一个函数。字符串是标题，函数是具体的测试。一个单元测试可以包含一个或多个`expect`。   
+
 `expect`是对或错的断言。它接受一个值，称为实际值，与预期值进行比较。  
 
 ## beforeEach
