@@ -41,11 +41,11 @@ Chrome会被调起：
 
 ## 调式单元测试代码
 如果测试没能如预期般工作，可以在浏览器中查看和调试它们。在浏览器中调试这些测试规约的方式与调试应用时相同。  
-打开 Karma 的浏览器窗口，单击 `DEBUG` 按钮；它会打开一个新的浏览器选项卡并重新运行测试。  
-打开浏览器的 “Developer Tools”（Ctrl-Shift-I 或 F12）选择 “sources” 页。  
-Ctrl+P, 打开 app.component.spec.ts 测试文件  
-在测试中设置一个断点。  
-刷新浏览器，它会在这个断点处停下来。  
+1. 打开 Karma 的浏览器窗口，单击 `DEBUG` 按钮；它会打开一个新的浏览器选项卡并重新运行测试。  
+2. 打开浏览器的 “Developer Tools”（Ctrl-Shift-I 或 F12）选择 “sources” 页。  
+3. Ctrl+P, 打开 `app.component.spec.ts` 测试文件  
+4. 在测试中设置一个断点。  
+5. 刷新浏览器，它会在这个断点处停下来。  
 
 ## Coverage
 
@@ -53,7 +53,7 @@ Ctrl+P, 打开 app.component.spec.ts 测试文件
 
     ng test --no-watch --code-coverage
 
-测试完成后，该命令会在项目中创建一个 /coverage 目录。打开 index.html 文件，可以查看带有源代码和代码覆盖率值的报表。  
+测试完成后，该命令会在项目根目录下创建一个 `coverage` 文件夹。打开 index.html 文件，可以查看带有源代码和代码覆盖率值的报表。  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/unittest3.png?raw=true)
 如果要在每次测试时都创建代码覆盖率报告，可以在 CLI 配置文件 angular.json 中设置以下选项：  
 
@@ -74,7 +74,7 @@ Ctrl+P, 打开 app.component.spec.ts 测试文件
     }
 
 # Jasmine
-Angular 使用了Jasmine测试框架，打开app.component.spec.ts  
+Angular 使用了Jasmine测试框架，打开`app.component.spec.ts`, 已经创建好了三个测试用例    
 
     describe('AppComponent', () => {
         beforeEach(async () => {
@@ -106,8 +106,8 @@ Angular 使用了Jasmine测试框架，打开app.component.spec.ts
     });
 
 
-describe 用于对测试进行分组，通常每个测试文件在顶层都有一个。字符串参数`'AppComponent'`用于命名测试集合。这有助于在大型套件中查找测试。  
-`it` 单元测试函数，就像 describe 一样，它需要一个字符串和一个函数。字符串是标题，函数是具体的测试。一个单元测试包含一个或多个`expect`。   
+`describe` 用于对测试进行分组，通常每个测试文件在顶层都有一个。字符串参数`'AppComponent'`用于命名测试集合。这有助于在大型套件中查找测试。  
+`it` 单元测试函数，就像 describe 一样，它需要一个字符串和一个函数。字符串是标题，函数是具体的测试。一个单元测试可以包含一个或多个`expect`。   
 `expect`是对或错的断言。它接受一个值，称为实际值，与预期值进行比较。  
 
 ## beforeEach
@@ -117,59 +117,95 @@ describe 用于对测试进行分组，通常每个测试文件在顶层都有�
 在 describe 中的所有测试运行之前， beforeAll 函数仅被调用一次  
 并且在所有规范完成后调用 afterAll 函数  
 
-# Angular TestBed
-`TestBed` 是 Angular 测试实用工具中最重要的。TestBed 创建了一个动态构造的 Angular 测试模块，用来模拟一个 Angular 的 @NgModule。  
-`TestBed.configureTestingModule()` 方法接受一个元数据对象，它可以拥有@NgModule的大部分属性。  
-要测试某个服务，你可以在元数据属性 providers 中设置一个要测试或模拟的服务数组。  
-
-    let service: ValueService;
-
-    beforeEach(() => {
-        TestBed.configureTestingModule({ providers: [ValueService] });
-    });
-
-将服务类作为参数调用 TestBed.inject()，将它注入到测试中。  
-
-    beforeEach(() => {
-        TestBed.configureTestingModule({ providers: [ValueService] });
-        service = TestBed.inject(ValueService);
-    });
-
-
 
 # 测试一个服务
+使用以下命令生成一个新的service
 
-# 测试一个组件
-组件不仅仅是它的类。组件还会与 DOM 以及其他组件进行交互。只对类的测试可以告诉你类的行为。但它们无法告诉你这个组件是否能正确渲染、响应用户输入和手势，或是集成到它的父组件和子组件中。  
+    ng g service services/MsgService
 
-## ComponentFixture
-ComponentFixture 是一个测试挽具，用于与所创建的组件及其对应的元素进行交互。  
-可以通过测试夹具（fixture）访问组件实例，并用 Jasmine 的期望断言来确认它是否存在.  
+打开自动创建的单元测试文件`msg-service.service.spec.ts`:  
 
+    import { TestBed } from '@angular/core/testing';
+    import { MsgServiceService } from './msg-service.service';
 
-    describe('BannerComponent (with beforeEach)', () => {
-        let component: BannerComponent;
-        let fixture: ComponentFixture<BannerComponent>;
+    describe('MsgServiceService', () => {
+        let service: MsgServiceService;
 
         beforeEach(() => {
-            TestBed.configureTestingModule({declarations: [BannerComponent]});
-            fixture = TestBed.createComponent(BannerComponent);
+            TestBed.configureTestingModule({});
+            service = TestBed.inject(MsgServiceService);
+        });
+
+        it('should be created', () => {
+            expect(service).toBeTruthy();
+        });
+    });
+
+
+`TestBed` 是 Angular 测试中最重要的工具。TestBed 创建了一个动态构造的 Angular 测试模块，用来模拟一个 Angular 的 @NgModule。  
+`TestBed.configureTestingModule()` 方法接受一个元数据对象，它可以拥有@NgModule的大部分属性。  
+要测试某个服务，你可以在元数据属性 providers 中设置一个要测试或模拟的服务数组。然后将服务类作为参数调用 TestBed.inject()，将它注入到测试中。  
+
+    let service: MsgServiceService;
+    beforeEach(() => {
+        TestBed.configureTestingModule({ providers: [MsgServiceService] });
+        service = TestBed.inject(MsgServiceService);
+    });
+
+我们在`msg-service.service.ts`里添加一个新的函数  
+
+    public GetMessage():string{
+        return 'This is message from services';
+    }
+
+针对这个新函数写一个新的测试：  
+
+    it('call GetMessage', () => {
+        expect(service.GetMessage()).toContain('message from services');
+    });
+
+# 测试一个组件
+我们回到`app.component.spec.ts`，根组件就是一个最基本的组件，它不仅仅是个类，还会与 DOM 以及其他组件进行交互。我们可以像写服务的测试一样写一些针对function的测试，但它们无法告诉你这个组件是否能正确渲染、响应用户输入和手势，或是集成到它的父组件和子组件中。  
+生成一个新的component：  
+
+    ng g c components/news
+
+打开自动生成的测试文件：  
+
+    import { ComponentFixture, TestBed } from '@angular/core/testing';
+    import { NewsComponent } from './news.component';
+
+    describe('NewsComponent', () => {
+        let component: NewsComponent;
+        let fixture: ComponentFixture<NewsComponent>;
+
+        beforeEach(async () => {
+            await TestBed.configureTestingModule({
+            declarations: [ NewsComponent ]
+            })
+            .compileComponents();
+
+            fixture = TestBed.createComponent(NewsComponent);
             component = fixture.componentInstance;
+            fixture.detectChanges();
         });
 
         it('should create', () => {
-            expect(component).toBeDefined();
+            expect(component).toBeTruthy();
         });
-        it('should contain "banner works!"', () => {
-                const bannerElement: HTMLElement = fixture.nativeElement;
-                expect(bannerElement.textContent).toContain('banner works!');
-            });
     });
 
-## 组件绑定
-createComponent() 不绑定数据   
-在生产环境中，当 Angular 创建一个组件，或者用户输入按键，或者异步活动（比如 AJAX）完成时，就会自动进行变更检测。 该 TestBed.createComponent 不会触发变化检测  
-必须通过调用 fixture.detectChanges() 来告诉 TestBed 执行数据绑定。只有这样，`<h1>` 才能拥有预期的标题。  
+相比于service的测试，会发现写法不一样了，多了一个`ComponentFixture`  
+## ComponentFixture
+ComponentFixture 是一个测试夹具，用于与所创建的组件及其对应的元素进行交互。  
+可以通过测试夹具（fixture）访问组件实例，并用 `expect` 断言来确认它是否存在.  
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+## detectChanges
+在生产环境中，当 Angular 创建一个组件，或者用户输入按键，或者异步活动（比如 AJAX）完成时，就会自动进行变更检测。 但是 `TestBed.createComponent` 不会触发变化检测。必须通过调用 `fixture.detectChanges()` 来告诉 TestBed 执行数据绑定。  
 
     let component: BannerComponent;
     let fixture: ComponentFixture<BannerComponent>;
