@@ -172,7 +172,23 @@ Angular 使用了Jasmine测试框架，打开`app.component.spec.ts`, 已经创�
 
     ng g c components/news
 
-打开自动生成的测试文件：  
+修改`app.component.html`，清空默认的demo html，添加news组件。 清空`app.component.sepc.ts`里的单元测试。  
+如果在此时重新跑单元测试，你可能会注意到出现以下提示：  
+
+    ERROR: 'NG0304: 'app-news' is not a known element (used in the 'AppComponent' component template):
+
+当我们往`app.component.html`里添加News组件的时候，对应的单元测试`app.component.spec.ts`里没有更新，添加NewsComponent之后提示消失  
+
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+        declarations: [
+            AppComponent,
+            NewsComponent
+        ],
+        }).compileComponents();
+    });
+
+打开news自动生成的测试文件：  
 
     import { ComponentFixture, TestBed } from '@angular/core/testing';
     import { NewsComponent } from './news.component';
@@ -206,112 +222,330 @@ ComponentFixture 是一个测试夹具，用于与所创建的组件及其对应
         expect(component).toBeTruthy();
     });
 
+
+ComponnetFixture.nativeElement能获取到页面DOM元素.  
+在html中新加 h1 title  
+
+    <h1>{{title}}</h1>
+
+ts文件：  
+
+    public title:string='original title';
+
+测试文件中可以通过nativeElement来获取h1  
+
+    let component: NewsComponent;
+    let fixture: ComponentFixture<NewsComponent>;
+    let h1:HTMLElement;
+
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+        declarations: [ NewsComponent ]
+        })
+        .compileComponents();
+
+        fixture = TestBed.createComponent(NewsComponent);
+        component = fixture.componentInstance;
+        h1 = fixture.nativeElement.querySelector('h1');
+        fixture.detectChanges();
+    });
+
+    it('Should display title', ()=>{
+        expect(h1.textContent).toContain(component.title);
+    })
+
 ## detectChanges
 在生产环境中，当 Angular 创建一个组件，或者用户输入按键，或者异步活动（比如 AJAX）完成时，就会自动进行变更检测。 但是 `TestBed.createComponent` 不会触发变化检测。必须通过调用 `fixture.detectChanges()` 来告诉 TestBed 执行数据绑定。  
 
-    let component: BannerComponent;
-    let fixture: ComponentFixture<BannerComponent>;
-    let h1: HTMLElement;
+    it('Should still display original title', ()=>{
+        let originTitle =component.title;
+        component.title='Changed title';
+        expect(h1.textContent).toContain(originTitle);
+    })
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            declarations: [ BannerComponent ],
-        });
-        fixture = TestBed.createComponent(BannerComponent);
-        component = fixture.componentInstance; // BannerComponent test instance
-        h1 = fixture.nativeElement.querySelector('h1');
-    });
-    it('should display original title after detectChanges()', () => {
+    it('Should display new title after detectChanges', ()=>{
+        component.title='Changed title';
         fixture.detectChanges();
-        expect(h1.textContent).toContain(component.title);
-    });
+        expect(h1.textContent).toContain('Changed title');
+    })
 
 ### 自动变更检测
 可以通过配置带有 ComponentFixtureAutoDetect 提供者的 TestBed 来让 Angular 测试环境自动运行变更检测。  
 
     import { ComponentFixtureAutoDetect } from '@angular/core/testing';
-    TestBed.configureTestingModule({
-        declarations: [ BannerComponent ],
-        providers: [
-            { provide: ComponentFixtureAutoDetect, useValue: true }
-        ]
-    });
+    await TestBed.configureTestingModule({
+      declarations: [ NewsComponent ],
+      providers: [
+        { provide: ComponentFixtureAutoDetect, useValue: true }
+      ]
+    })
+    .compileComponents();
 
 ComponentFixtureAutoDetect 服务会响应异步活动，比如 Promise、定时器和 DOM 事件。但却看不见对组件属性的直接同步更新。该测试必须用 fixture.detectChanges() 来触发另一个变更检测周期。  
 
-    it('should display original title', () => {
-        // Hooray! No `fixture.detectChanges()` needed
-        expect(h1.textContent).toContain(comp.title);
-    });
-
-    it('should still see original title after comp.title change', () => {
-        const oldTitle = comp.title;
-        comp.title = 'Test Title';
-        // Displayed title is old because Angular didn't hear the change :(
-        expect(h1.textContent).toContain(oldTitle);
-    });
-
-    it('should display updated title after detectChanges', () => {
-        comp.title = 'Test Title';
-        fixture.detectChanges(); // detect changes explicitly
-        expect(h1.textContent).toContain(comp.title);
-    });
+    it('Should display new title after detectChanges', ()=>{
+        component.title='Changed title';
+        fixture.detectChanges();
+        expect(h1.textContent).toContain('Changed title');
+    })
 
 ## 具有依赖的组件
 组件通常都有服务依赖。  
+在News html中新加一个h2
 
-    import { Component, OnInit } from '@angular/core';
-    import { UserService } from '../model/user.service';
+    <h2>{{msg}}</h2>
 
-    @Component({
-        selector: 'app-welcome',
-        template: '<h3 class="welcome"><i>{{welcome}}</i></h3>'
-    })
-    export class WelcomeComponent implements OnInit {
-        welcome = '';
-        constructor(private userService: UserService) { }
+ts文件中新加一个服务引用：  
 
-        ngOnInit(): void {
-            this.welcome = this.userService.isLoggedIn ?
-            'Welcome, ' + this.userService.user.name : 'Please log in.';
+    import { MsgServiceService } from 'src/app/services/msg-service.service';
+
+    public msg:string='';
+    constructor(private msgService:MsgServiceService) { }
+    ngOnInit(): void {
+        this.msg = this.msgService.GetMessage();
+    }
+
+修改一下Msgservice:  
+
+    export class MsgServiceService {
+
+        public msg:string='This is message from services'
+        constructor() { }
+
+        public GetMessage():string{
+            return this.msg;
         }
     }
 
-待测组件不必注入真正的服务。事实上，如果它们是测试替身（stubs，fakes，spies 或 mocks），通常会更好。该测试规约的目的是测试组件，而不是服务，使用真正的服务可能会遇到麻烦。  
+在写单元测试时，我们不必注入真正的服务。而是使用服务的替身（stubs，fakes，spies 或 mocks）。News组件的单元测试是为了测试组件，而不是服务。  
 
+
+    let msgService:MsgServiceService;
     let userServiceStub: Partial<UserService>;
 
-    beforeEach(() => {
-        // stub UserService for test purposes
-        userServiceStub = {
-            isLoggedIn: true,
-            user: { name: 'Test User' },
-        };
+    beforeEach(async () => {
+        msgServiceStub = {
+            msg:'This is test message',
+            GetMessage():string {
+                return this.msg!;  
+            },
+        }
 
-        TestBed.configureTestingModule({
-            declarations: [ WelcomeComponent ],
-            providers: [ { provide: UserService, useValue: userServiceStub } ],
+        await TestBed.configureTestingModule({
+        declarations: [ NewsComponent ],
+
+        providers: [{provide: MsgServiceService, useValue: msgServiceStub}]
+        
+        })
+        .compileComponents();
+
+        fixture = TestBed.createComponent(NewsComponent);
+        component = fixture.componentInstance;
+        msgService = TestBed.inject(MsgServiceService);
+        h2 = fixture.nativeElement.querySelector('h2');
+        fixture.detectChanges();
+    });
+    it('Should show test message from stub service',()=>{
+        expect(h2.textContent).toContain(msgServiceStub.msg);
+    })
+    it('Should show test message from stub service 2',()=>{
+        msgServiceStub.msg = 'abc';
+        component.ngOnInit();
+        fixture.detectChanges();
+        expect(h2.textContent).toContain('abc');
+    })
+
+也可以写一个大的Mock Service  
+
+    class MockMsgService{
+        msg ='This is test message';
+        GetMessage():string {
+            return this.msg;  
+        }
+    }
+
+    describe('NewsComponent Mock msgService', () => {
+        let component: NewsComponent;
+        let msgService:MsgServiceService;
+        beforeEach(async () => {
+            await TestBed.configureTestingModule({
+                providers: [
+                    NewsComponent,
+                    {provide: MsgServiceService, useClass: MockMsgService}
+                ]            
+            }).compileComponents();
+
+            component = TestBed.inject(NewsComponent);
+            msgService = TestBed.inject(MsgServiceService);
         });
 
-        fixture = TestBed.createComponent(WelcomeComponent);
-        comp    = fixture.componentInstance;
+        it('Use mock msgService in ngOnnit()', () => {
+            component.ngOnInit();
+            expect(component.msg).toContain(msgService.msg);
+        });
 
-        // UserService from the root injector
-        userService = TestBed.inject(UserService);
-
-        //  get the "welcome" element by CSS selector (e.g., by class name)
-        el = fixture.nativeElement.querySelector('.welcome');
-    });
-
-    it('should welcome "Bubba"', () => {
-        userService.user.name = 'Bubba'; // welcome message hasn't been shown yet
-        fixture.detectChanges();
-        expect(el.textContent).toContain('Bubba');
-    });
+        it('Change mock msgService value', () => {
+            msgService.msg='abc';
+            component.ngOnInit();
+            expect(component.msg).toContain('abc');
+        });
+    })
 
 ## 带异步服务的组件
+如果组件调用的是异步服务，在写测试的时候更麻烦些  
+新建一个component  
 
-[https://angular.cn/guide/testing-components-scenarios#component-with-async-service](https://angular.cn/guide/testing-components-scenarios#component-with-async-service)
+    ng g c asyncnews
+
+html:  
+
+    <h3>{{asyncMsg | async}}</h3>
+
+asyncnews.component.ts  
+
+    export class AsyncnewsComponent implements OnInit {
+        public asyncMsg!:Observable<string>;
+        constructor(private asyncmsgService:AsyncmsgService) { }
+
+        ngOnInit(): void {
+            this.getAsyncMsg();
+        }
+
+        getAsyncMsg():void{
+            this.asyncMsg = this.asyncmsgService.GetAsyncMessage().pipe(
+            startWith('loading...')
+            );
+        }
+    }
+
+新建一个异步服务  
+
+    ng g service services/asyncmsgasyncmsg
+
+添加异步函数  
+
+    public GetAsyncMessage():Observable<string>{
+        return of('This is async message from async message service.').pipe(delay(3000));
+    }
+
+app.component.html 里引入component
+
+    <app-asyncnews></app-asyncnews>
+
+页面加载时显示loading...，过三秒之后显示从service里拿到的异步信息.  
+
+### 使用spy进行异步测试
+
+    describe('AsyncnewsComponent', () => {
+        let component: AsyncnewsComponent;
+        let fixture: ComponentFixture < AsyncnewsComponent > ;
+        let msgAsyncServiceSpy: jasmine.Spy;
+        let asyTestMsg: string;
+        let h3: HTMLElement;
+
+        beforeEach(async () => {
+            asyTestMsg = 'test async message';
+            const msgServiceSpy = jasmine.createSpyObj('AsyncmsgService', ['GetAsyncMessage']);
+            msgAsyncServiceSpy = msgServiceSpy.GetAsyncMessage.and.returnValue( of (asyTestMsg));
+
+            await TestBed.configureTestingModule({
+                declarations: [AsyncnewsComponent],
+                providers: [{
+                provide: AsyncmsgService,
+                useValue: msgServiceSpy
+                }]
+            })
+            .compileComponents();
+
+            fixture = TestBed.createComponent(AsyncnewsComponent);
+            component = fixture.componentInstance;
+            h3 = fixture.nativeElement.querySelector('h3');
+            fixture.detectChanges();
+        });
+    });
+
+spy设计目标是让所有对 GetAsyncMessage 的调用都会收到一个带有`asyTestMsg`的可观察对象。与真正的 GetAsyncMessage() 方法不同，这个间谍会绕过服务器，并返回一个立即同步提供可用值的可观察对象。虽然这个 Observable 是同步的，但你也可以用这个间谍编写很多有用的测试。  
+
+#### 同步测试
+同步 Observable 的一个关键优势是，你通常可以把异步过程转换成同步测试。  
+当spy的结果同步返回时，GetAsyncMessage() 方法会在第一个变更检测周期（Angular 在这里调用 ngOnInit）后立即更新屏幕上的消息。  
+
+
+    describe('when test with synchronous observable', () => {
+        it('should show msg after component initialized', () => {
+            fixture.detectChanges();
+            expect(h3.textContent).toBe(asyTestMsg);
+            expect(msgAsyncServiceSpy.calls.any())
+                .withContext('msgServiceSpy called')
+                .toBe(true);
+        });
+    })
+
+#### 使用 fakeAsync() 进行异步测试
+要使用 fakeAsync() 功能，需要在测试的环境设置文件中导入 zone.js/testing。Angular CLI 在创建项目的时候，已经在src/test.ts 中配置好了 zone-testing。  
+上述的同步测试只是测试了最终的结果，真实的服务并不是这样工作的。真实的服务会向远程服务器发送请求。服务器需要一定的时间才能做出响应，并且其响应体肯定不会像前面两个测试中一样是立即可用的。  
+
+如果能从spy中返回一个异步的observable，测试就会更真实地反映真实的情况。  
+
+    msgAsyncServiceSpy.and.returnValue(asyncData(asyTestMsg));
+
+异步的observable对象可以由`asyncData` 生成。`asyncData` 是Angular提供的代码示例。   
+async-observable-helpers.ts  
+
+    import { defer, delay } from 'rxjs';
+    export function asyncData<T>(data: T) {
+        return defer(() => Promise.resolve(data));
+    }
+
+这个助手返回的异步的observable对象会在 JavaScript 引擎的下一个周期中发送 data 值。  
+`defer()`操作符返回一个可观察对象。它的参数是一个返回 Promise 或可观察对象的工厂函数。当某个订阅者订阅 defer 生成的可观察对象时，defer 就会调用此工厂函数生成新的可观察对象，并让该订阅者订阅这个新对象。  
+defer() 操作符会把 Promise.resolve() 转换成一个新的可观察对象，它和 HttpClient 一样只会发送一次然后立即结束（complete）。这样，当订阅者收到数据后就会自动取消订阅。  
+
+    describe('when test with async observable', () => {
+        beforeEach(() => {
+            msgAsyncServiceSpy.and.returnValue(asyncData(asyTestMsg));
+        });
+
+        it('should show async msg after GetAsyncMessage (fakeAsync)', fakeAsync(() => {
+            component.ngOnInit(); 
+            fixture.detectChanges();
+            expect(h3.textContent)
+                .withContext('should show placeholder')
+                .toBe('loading...');
+            tick();
+            fixture.detectChanges();
+            expect(h3.textContent)
+                .withContext('should show async msg')
+                .toBe(asyTestMsg);
+        }));
+    })
+
+`tick()` 函数  
+`tick()` 函数是 Angular 测试工具函数之一。它是 `fakeAsync()`的伴生工具，只能在 `fakeAsync()` 测试体内调用它。  
+`tick()` 函数接受毫秒数(milliseconds) 和 tick 选项(tickOptions) 作为参数，毫秒数（默认值为 0）参数表示虚拟时钟要前进多少。比如，如果你在 fakeAsync() 测试中有一个 setTimeout(fn, 100)，你就需要使用 tick(100) 来触发其 fn 回调。  
+
+#### 用 waitForAsync() 进行异步测试
+要使用 waitForAsync() 函数，需要在测试的环境设置文件中导入 zone.js/testing。Angular CLI 在创建项目的时候，已经在src/test.ts 中配置好了 zone-testing。
+
+这是之前的 fakeAsync() 测试，用 waitForAsync() 工具函数重写的版本。  
+
+    it('should show async msg after GetAsyncMessage (waitForAsync)', waitForAsync(() => {
+      component.ngOnInit(); // ngOnInit()
+      fixture.detectChanges();
+      expect(h3.textContent)
+        .withContext('should show placeholder')
+        .toBe('loading...');
+
+      fixture.whenStable().then(() => { // wait for async GetAsyncMessage
+        fixture.detectChanges(); // update view with async msg
+        expect(h3.textContent).toBe(asyTestMsg);
+      });
+    }));
+
+`waitForAsync()` 工具函数通过把测试代码安排到在特殊的异步测试区（async test zone）下运行来隐藏某些用来处理异步的样板代码。  
+
+`whenStable`   
+测试必须等待 GetAsyncMessage() 可观察对象发出下一个msg。它并没有调用 tick()，而是调用了 `fixture.whenStable()`。`fixture.whenStable()` 返回一个 Promise, 测试会在该 Promise 的回调中继续进行。  
 
 # 测试管道
 可以在没有 Angular 测试工具的情况下测试管道。  
