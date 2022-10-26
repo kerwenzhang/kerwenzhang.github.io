@@ -226,7 +226,7 @@ ComponentFixture 是一个测试夹具，用于与所创建的组件及其对应
 ComponnetFixture.nativeElement能获取到页面DOM元素.  
 在html中新加 h1 title  
 
-    <h1>{{title}}</h1>
+    <h1>{ {title} }</h1>
 
 ts文件：  
 
@@ -293,7 +293,7 @@ ComponentFixtureAutoDetect 服务会响应异步活动，比如 Promise、定时
 组件通常都有服务依赖。  
 在News html中新加一个h2
 
-    <h2>{{msg}}</h2>
+    <h2>{ {msg} }</h2>
 
 ts文件中新加一个服务引用：  
 
@@ -399,7 +399,7 @@ ts文件中新加一个服务引用：
 
 html:  
 
-    <h3>{{asyncMsg | async}}</h3>
+    <h3>{ {asyncMsg | async} }</h3>
 
 asyncnews.component.ts  
 
