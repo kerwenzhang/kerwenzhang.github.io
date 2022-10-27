@@ -354,7 +354,7 @@ ts文件中新加一个服务引用：
         expect(h2.textContent).toContain('abc');
     })
 
-也可以写一个Mock Service,当使用MsgServiceService时，会自动调用MockMsgService    
+也可以写一个Mock Service,当使用MsgServiceService时，会自动调用MockMsgService。注意provide里用的是useClass，而不是useValue    
 
     class MockMsgService{
         msg ='This is mock test message';
@@ -464,9 +464,26 @@ app.component.html 里引入component
 
 spy设计目标是让所有对 GetAsyncMessage 的调用都会收到一个带有测试`asyTestMsg`的可观察对象。与真正的 GetAsyncMessage() 方法不同，这个spy会绕过异步服务，并立即返回`asyTestMsg`的Observable对象。虽然这个 Observable 是同步的，但你也可以用它来编写很多有用的测试。  
 
+    spy = spyOn(truService, 'isAuthenticated').and.returnValue(false);
+
 Mock vs spy  
 Mock对象完全替换原先的类，返回记录或默认值。 可以“凭空”创建模拟。 这是单元测试期间最常用的。  
 spy是获取现有对象并仅“替换”某些方法。 如果有一个庞大的类并且只想模拟某些方法（部分模拟）时，这很有用。  
+
+#### done()  
+done()是Jasmine提供的异步测试方法：  
+
+    it('test',(done)=>{
+        fixture.detectChanges();
+        let spy=spyOn(authService, 'isAuthenticated').and.returnValue(Promise);
+        component.ngOnit();
+
+        spy.calls.mostRecent().returnValue.then(()=>{
+            fixture.detectChanges();
+            expected...
+            done();
+        })
+    })
 
 #### 同步测试
 同步测试的一个关键优势是，你通常可以把异步过程转换成同步测试。  
@@ -585,6 +602,7 @@ title-case.pipe.spec.ts:
 [Angular测试](https://angular.cn/guide/testing)  
 [Jasmine](https://jasmine.github.io/tutorials/your_first_suite)  
 [Testing with Mocks & Spies](https://codecraft.tv/courses/angular/unit-testing/mocks-and-spies/)  
+[Angular: From Theory To Practice](https://www.youtube.com/playlist?list=PL-TLnxxt_AVGz9wRWkCajUkcH5zfa9JKP)  
 [Testing Angular Components with Stub Services and Spies in Jasmine](https://shashankvivek-7.medium.com/testing-a-component-with-stub-services-and-spies-in-jasmine-1428d4242a49)  
 [Angular 单元测试简介](https://www.jianshu.com/p/ab84653ce166)  
 [聊聊Angular中的单元测试](https://www.muzhuangnet.com/show/48871.html)  
