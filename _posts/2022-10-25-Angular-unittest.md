@@ -106,7 +106,7 @@ Angular 使用了Jasmine测试框架，打开`app.component.spec.ts`, 已经创�
     });
 
 
-`describe` 用于对测试进行分组，通常每个测试文件在顶层都有一个。字符串参数`'AppComponent'`用于命名测试集合。这有助于在大型套件中查找测试。  
+`describe` 用于对测试进行分组，通常每个测试文件在顶层都有一个。字符串参数`'AppComponent'`用于命名测试集合。这有助于在大型产品中查找相应的测试。  
 
 `it` 单元测试函数，就像 describe 一样，它需要一个字符串和一个函数。字符串是标题，函数是具体的测试。一个单元测试可以包含一个或多个`expect`。   
 
@@ -115,9 +115,9 @@ Angular 使用了Jasmine测试框架，打开`app.component.spec.ts`, 已经创�
 ## beforeEach
 `beforeEach`、`afterEach`、`beforeAll` 和 `afterAll` 函数  
 顾名思义，beforeEach 函数在每个单元测试执行之前被调用一次， 调用 beforeEach() 来为每一个 it() 测试设置前置条件  
-在每个测试之后调用一次 afterEach 函数。  
-在 describe 中的所有测试运行之前， beforeAll 函数仅被调用一次  
-并且在所有规范完成后调用 afterAll 函数  
+afterEach 在每个测试之后调用一次.    
+beforeAll 在 describe 中的所有测试运行之前，该函数仅被调用一次  
+afterAll 在所有测试完成后调用    
 
 
 # 测试一个服务
@@ -177,7 +177,7 @@ Angular 使用了Jasmine测试框架，打开`app.component.spec.ts`, 已经创�
 
     ERROR: 'NG0304: 'app-news' is not a known element (used in the 'AppComponent' component template):
 
-当我们往`app.component.html`里添加News组件的时候，对应的单元测试`app.component.spec.ts`里没有更新，添加NewsComponent之后提示消失  
+当我们往`app.component.html`里添加News组件的时候，单元测试`app.component.spec.ts`里也要添加相应的组件，添加NewsComponent之后错误提示消失  
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -213,7 +213,7 @@ Angular 使用了Jasmine测试框架，打开`app.component.spec.ts`, 已经创�
         });
     });
 
-相比于service的测试，会发现写法不一样了，多了一个`ComponentFixture`  
+相比于service的测试，会发现写法不一样了，组件需要用`createCompnent`来创建，并且多了几个新的关键词`ComponentFixture`,`detectChanges`  
 ## ComponentFixture
 ComponentFixture 是一个测试夹具，用于与所创建的组件及其对应的元素进行交互。  
 可以通过测试夹具（fixture）访问组件实例，并用 `expect` 断言来确认它是否存在.  
@@ -223,7 +223,7 @@ ComponentFixture 是一个测试夹具，用于与所创建的组件及其对应
     });
 
 
-ComponnetFixture.nativeElement能获取到页面DOM元素.  
+`ComponnetFixture.nativeElement`能获取到页面DOM元素.  
 在html中新加 h1 title  
 
     <h1>{ {title} }</h1>
@@ -232,7 +232,7 @@ ts文件：
 
     public title:string='original title';
 
-测试文件中可以通过nativeElement来获取h1  
+测试中可以通过`nativeElement`来获取h1  
 
     let component: NewsComponent;
     let fixture: ComponentFixture<NewsComponent>;
@@ -281,11 +281,11 @@ ts文件：
     })
     .compileComponents();
 
-ComponentFixtureAutoDetect 服务会响应异步活动，比如 Promise、定时器和 DOM 事件。但却看不见对组件属性的直接同步更新。该测试必须用 fixture.detectChanges() 来触发另一个变更检测周期。  
+ComponentFixtureAutoDetect 服务会响应异步活动，比如 Promise、定时器和 DOM 事件。但无法检测到对组件属性的直接同步更新。因此测试还是要调用`fixture.detectChanges()` 来触发另一个变更检测周期。  
 
     it('Should display new title after detectChanges', ()=>{
-        component.title='Changed title';
-        fixture.detectChanges();
+        component.title='Changed title';    // Change property directly
+        fixture.detectChanges();            // Call detectChange manually
         expect(h1.textContent).toContain('Changed title');
     })
 
@@ -317,11 +317,11 @@ ts文件中新加一个服务引用：
         }
     }
 
-在写单元测试时，我们不必注入真正的服务。而是使用服务的替身（stubs，fakes，spies 或 mocks）。News组件的单元测试是为了测试组件，而不是服务。  
-
+在写单元测试时，我们不必注入真正的服务。而是使用服务的替身（stubs，fakes，spies 或 mocks）。News组件的单元测试是为了测试News组件，而不是它引用的服务。  
+下面的示例中添加了一个Stub，模拟`MsgServiceService`的功能，在配置TestBed的时候，通过provider来告诉测试使用stub 
 
     let msgService:MsgServiceService;
-    let userServiceStub: Partial<UserService>;
+    let msgServiceStub:Partial<MsgServiceService>;
 
     beforeEach(async () => {
         msgServiceStub = {
@@ -332,9 +332,8 @@ ts文件中新加一个服务引用：
         }
 
         await TestBed.configureTestingModule({
-        declarations: [ NewsComponent ],
-
-        providers: [{provide: MsgServiceService, useValue: msgServiceStub}]
+            declarations: [ NewsComponent ],
+            providers: [{provide: MsgServiceService, useValue: msgServiceStub}]
         
         })
         .compileComponents();
@@ -355,10 +354,10 @@ ts文件中新加一个服务引用：
         expect(h2.textContent).toContain('abc');
     })
 
-也可以写一个大的Mock Service  
+也可以写一个Mock Service,当使用MsgServiceService时，会自动调用MockMsgService    
 
     class MockMsgService{
-        msg ='This is test message';
+        msg ='This is mock test message';
         GetMessage():string {
             return this.msg;  
         }
@@ -381,7 +380,7 @@ ts文件中新加一个服务引用：
 
         it('Use mock msgService in ngOnnit()', () => {
             component.ngOnInit();
-            expect(component.msg).toContain(msgService.msg);
+            expect(component.msg).toContain('This is mock test message');
         });
 
         it('Change mock msgService value', () => {
@@ -451,8 +450,7 @@ app.component.html 里引入component
             await TestBed.configureTestingModule({
                 declarations: [AsyncnewsComponent],
                 providers: [{
-                provide: AsyncmsgService,
-                useValue: msgServiceSpy
+                provide: AsyncmsgService, useValue: msgServiceSpy
                 }]
             })
             .compileComponents();
@@ -465,6 +463,10 @@ app.component.html 里引入component
     });
 
 spy设计目标是让所有对 GetAsyncMessage 的调用都会收到一个带有测试`asyTestMsg`的可观察对象。与真正的 GetAsyncMessage() 方法不同，这个spy会绕过异步服务，并立即返回`asyTestMsg`的Observable对象。虽然这个 Observable 是同步的，但你也可以用它来编写很多有用的测试。  
+
+Mock vs spy  
+Mock对象完全替换原先的类，返回记录或默认值。 可以“凭空”创建模拟。 这是单元测试期间最常用的。  
+spy是获取现有对象并仅“替换”某些方法。 如果有一个庞大的类并且只想模拟某些方法（部分模拟）时，这很有用。  
 
 #### 同步测试
 同步测试的一个关键优势是，你通常可以把异步过程转换成同步测试。  
@@ -582,5 +584,7 @@ title-case.pipe.spec.ts:
 # Reference 
 [Angular测试](https://angular.cn/guide/testing)  
 [Jasmine](https://jasmine.github.io/tutorials/your_first_suite)  
+[Testing with Mocks & Spies](https://codecraft.tv/courses/angular/unit-testing/mocks-and-spies/)  
+[Testing Angular Components with Stub Services and Spies in Jasmine](https://shashankvivek-7.medium.com/testing-a-component-with-stub-services-and-spies-in-jasmine-1428d4242a49)  
 [Angular 单元测试简介](https://www.jianshu.com/p/ab84653ce166)  
 [聊聊Angular中的单元测试](https://www.muzhuangnet.com/show/48871.html)  
