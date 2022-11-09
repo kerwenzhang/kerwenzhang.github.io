@@ -645,6 +645,7 @@ Source code:
             
             const req = httpTestingController.expectOne('http://localhost/login')
             expect(req.request.method).toEqual('POST');
+            expect(req.request.body).toEqual({'username':userName, 'password':password});
             req.flush(mockLoginResponse);
         })
     })
