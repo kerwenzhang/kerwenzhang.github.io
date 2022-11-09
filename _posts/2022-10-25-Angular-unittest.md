@@ -596,6 +596,59 @@ title-case.pipe.spec.ts:
         // ... more tests ...
     });
 
+# 测试http.get/post
+Source code:  
+
+    public login(username: string, password: string) {
+        return this.http
+            .post('http://localhost/login', { username: username, password: password })
+            .pipe(
+                map((response) => {
+                    // login successful if there's a jwt token in the response
+                    const serverResponse = response;
+                    if (serverResponse && serverResponse['token']) {
+                        this.handleToken(serverResponse['token']);
+                    }
+                })
+            );
+    }
+  
+单元测试需要用到`HttpClientTestingModule`和`HttpTestingController`:  
+  
+    describe('AuthenticationService', () => {
+        let service: AuthenticationService;
+        let httpTestingController:HttpTestingController;
+
+        beforeEach(() => {            
+            TestBed.configureTestingModule({
+                imports: [HttpClientTestingModule],
+                providers: [AuthenticationService]
+            });
+            httpTestingController = TestBed.inject(HttpTestingController);
+            service = TestBed.inject(AuthenticationService);
+        });
+
+        afterEach(()=>{
+            httpTestingController.verify();
+        })
+
+        it('login', ()=>{
+            const userName='test user name';
+            const password = 'test password';
+            const mockLoginResponse = {token:'This is test reponse token'};
+            spyOn(service, 'handleToken');
+
+            service.login(userName, password)
+                .subscribe(()=>{
+                    expect(service.handleToken).toHaveBeenCalled();
+                });
+            
+            const req = httpTestingController.expectOne('http://localhost/login')
+            expect(req.request.method).toEqual('POST');
+            req.flush(mockLoginResponse);
+        })
+    })
+
 
 
 # Reference 
