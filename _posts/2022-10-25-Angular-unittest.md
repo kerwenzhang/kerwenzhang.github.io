@@ -650,6 +650,19 @@ Source code:
         })
     })
 
+# spy on private property/function
+
+    private socket;
+    private testFun(){
+        ...
+    }
+
+unit test:
+
+    service['socket'];
+    spyOn<any>(service, 'testFun');
+
+    expect(service['testFun']).toHaveBeenCalled();
 
 
 # Reference 
