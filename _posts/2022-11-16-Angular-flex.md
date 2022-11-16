@@ -51,8 +51,6 @@ flex-container的结构如下图
 | fxLayoutGap | %, px, vw, vh| N/A |指定 flexbox 容器（例如，嵌套在 fxLayout 容器中）内子项的边距间隙 |  
 
 
-
-
 flex-direction: 决定主轴的方向(即项目的排列方向)  
 
     .container {
