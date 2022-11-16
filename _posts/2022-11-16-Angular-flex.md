@@ -37,7 +37,7 @@ app.module.ts
 # Guide
 Angular Layout 功能提供了智能的语法指令，使开发人员能够使用 Flexbox 和 CSS Grid 轻松直观地创建响应式和自适应布局。  
 flex-container的结构如下图  
-![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/flex1.png?raw=true) 
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/flex1.jpg?raw=true) 
 在 flex 容器中默认存在两条轴，水平主轴(main axis) 和垂直的交叉轴(cross axis)，这是默认的设置  
 在容器中的每个单元块被称之为 flex item，每个项目占据的主轴空间为 (main size), 占据的交叉轴的空间为 (cross size)。  
 这里需要强调，不能先入为主认为宽度就是 main size，高度就是 cross size，这个还要取决于你主轴的方向，如果你垂直方向是主轴，那么项目的高度就是 main size。  
