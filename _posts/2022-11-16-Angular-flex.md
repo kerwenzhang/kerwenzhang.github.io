@@ -44,7 +44,7 @@ flex-container的结构如下图
 
 以下API可以用在容器container上  
 
-| HTML | API | 允许的值 | 说明
+| HTML | API | 允许的值 | 说明|
 | --- | ----------- | --------| --------|
 | fxLayout | direction [wrap] | row, column, row-reverse, column-reverse | 决定主轴的方向(即项目的排列方向) |  
 | fxLayoutAlign | main-axis, cross-axis | main-axis: start, center, end, space-around, space-between, space-evenly; cross-axis: start, center, end, stretch, space-between, space-around, baseline | 子容器应在主轴和横轴上对齐（可选）|  
