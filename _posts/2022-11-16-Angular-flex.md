@@ -101,6 +101,7 @@ flex-grow 定义项目的放大比例
     .item {
         flex-grow: <number>;
     }
+
 默认值为 0，即如果存在剩余空间，也不放大  
 
 flex-shrink 定义了项目的缩小比例
