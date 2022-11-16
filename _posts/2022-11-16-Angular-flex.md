@@ -84,7 +84,7 @@ align-items: 定义了项目在交叉轴上的对齐方式
 
 以下API可以用在元素element上  
 
-| HTML | 允许的值 | 说明
+| HTML | 允许的值 | 说明|
 | --- | ----------- | --------| --------|
 | fxFlex | "", px, %, vw, vh, grow, shrink, basis | 应用于 fxLayout 容器中的元素，并标识flexbox容器流中该元素的大小调整。 |  
 | fxFlexOrder | int | 用于已排序的fxLayout容器中的元素，并标识元素的位置顺序 |  
@@ -117,7 +117,7 @@ align-self 允许单个项目有与其他项目不一样的对齐方式
 
 以下API可以用在任何元素上：  
 
-| HTML | 允许的值 | 说明
+| HTML | 允许的值 | 说明|
 | --- | ----------- | --------| --------|
 | fxHide | TRUE, FALSE, 0, "" | 显示/隐藏托管元素。fxHide 逻辑默认隐藏一个元素 |   
 | fxShow | TRUE, FALSE, 0, "" | 显示/隐藏托管元素。fxShow 逻辑默认显示一个元素 |   
