@@ -123,6 +123,7 @@ align-self 允许单个项目有与其他项目不一样的对齐方式
 | fxShow | TRUE, FALSE, 0, "" | 显示/隐藏托管元素。fxShow 逻辑默认显示一个元素 |   
 
 以下代指屏幕的大小，可以与指令结合起来使用
+
 | breakpoint | mediaQuery |  
 | xs	| 'screen and (max-width: 599px)'|  
 | sm	| 'screen and (min-width: 600px) and (max-width: 959px)'|  
