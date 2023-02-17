@@ -44,28 +44,42 @@ SQL语句在创建过程时进行分析和编译。 存储过程是预编译的�
 
 语法
 1. 创建  
+SQL Server Management Studio -> 找到database, 右键 New Query, 会弹出编辑窗口  
+无参数:  
 
-    create procedure proc_name
-    [
-        {@参数数据类型} [=默认值] [output]，
-        {@参数数据类型} [=默认值] [output]
-    ]
-    as SQL_statements
-
-    create procedure proc_name
+    create procedure GetBatchHis
     as
-    select * from 《表名》
+    begin
+        select * from batchhis;
+    end
 
-2. 删除  
+点工具栏中的Execute，会在database > Programmability -> Stored Procedures 下生成procedure
 
-    if (exists(select * from sysobjects where name=‘proc_name’)){
-        drop proc_name
-    }
+    执行： exec GetBatchHis
+    删除: drop procedure if exists GetBatchHis
 
-3. 调用  
+有输入参数：
 
-    exec proc_name
+    create proc GetBatchHisWithParam(@BatchID varchar(255))
+    As
+        select count(UniqueID) from batchhis where BatchID=@BatchID
+    Go
 
+    执行： exec GetBatchHisWithParam @BatchID='STRAWBERRY'
+
+有输出参数：
+
+    create proc GetBatchHisWithOutParam
+    @BatchID varchar(255),
+    @Count int output
+    As
+        select @Count=count(UniqueID) from batchhis where BatchID=@BatchID
+    Go
+
+    执行: 
+    declare @count1 int
+    exec GetBatchHisWithOutParam @BatchID='STRAWBERRY', @count=@count1 output;
+    print @count1
 
 Reference  
 [SQL 存储过程](https://blog.csdn.net/paoe1612205661/article/details/127280048)  
