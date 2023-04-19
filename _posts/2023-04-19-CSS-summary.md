@@ -1,7 +1,7 @@
 ---                                  
 layout: post                                  
 title: "CSS 总结"                                  
-date:   2020-07-10 9:00:00                                   
+date:   2023-04-19 9:00:00                                   
 categories: "Web"                                  
 catalog: true                                  
 tags:                                   
@@ -110,6 +110,13 @@ line-height属性指的是行高，而不是行间距。
 简洁的写法：  
 
     border:1px solid gray;  
+
+
+### box-sizing
+`box-sizing` 属性定义如何计算一个元素的总宽度和总高度，主要设置是否需要加上内边距(padding)和边框等。  
+|值|说明|
+|content-box|默认值。如果 div 的样式为 width:100px; border:10px solid red; padding:10px; 则最终 div的宽度是： 100px(width)+2*10px*(padding)+2*10px(border)=140px |
+|border-box| 设置的边框和内边距的值是包含在 width 内的，但不包含 margin。 如果div的样式为width:100px; border:10px solid red; padding:10px; 则内容部分（content）的有效宽度变成了 100px-2*10px-2*10px =60px; |
 
 ### 背景样式
 #### background-color
