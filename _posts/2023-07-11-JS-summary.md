@@ -187,13 +187,19 @@ unshift()
                 firends: ['Michael', 'Peter', 'Steven']
         };
 
-对象的访问可以使用键值也可以用方括号
+对象的访问可以使用键值也可以用方括号  
 
         jonas.firstName
         jonas['lastName']
         
         const nameKey = 'Name';
         jonas['first' + nameKey]        // 可以拼接
+
+检查键值是否存在:  
+
+        if(!jonas['location']) {
+                console.log('does not exist');
+        }
 
 对象的每一个键名又称为“属性”（property），它的“键值”可以是任何数据类型。如果一个属性的值为函数，通常把这个属性称为“方法”，它可以像函数那样调用。   
 
