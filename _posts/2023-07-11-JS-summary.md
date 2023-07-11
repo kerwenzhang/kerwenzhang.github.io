@@ -1,7 +1,7 @@
 ---                                  
 layout: post                                  
 title: "JavaScript 总结"                                  
-date:   2020-07-11 9:00:00                                   
+date:   2023-07-11 9:00:00                                   
 categories: "Web"                                  
 catalog: true                                  
 tags:                                   
@@ -253,6 +253,16 @@ JavaScript 提供两种相等运算符：==和===。
     console.trace方法显示当前执行的代码在堆栈中的调用路径。  
     
 ### 字符串对象
+
+0. 字符串模板
+
+        const firstName = Jonas;
+        const birthYear = 1991;
+        const year = 2037;
+        const job = 'teacher'
+        const jonas = `I'm ${firstName}, a ${year - bithYear} year old ${job}!`;
+        console.log(jonas);
+
 1. length属性  
 我们可以通过length属性来获取字符串的长度。  
 
