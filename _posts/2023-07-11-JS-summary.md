@@ -17,6 +17,10 @@ tags:
 [JavaScript 教程](https://wangdoc.com/javascript/)   
 
 HTML是网页的结构，CSS是网页的外观，而JavaScript是页面的行为。  
+### 历史
+
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript.jpg?raw=true) 
+
 
 ### 变量
 变量是对“值”的具名引用。变量就是为“值”起名，然后引用这个名字，就等同于引用这个值。变量的名字就是变量名。  
