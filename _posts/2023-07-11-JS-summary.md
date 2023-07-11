@@ -179,10 +179,21 @@ unshift()
 ### 对象(object)
 对象就是一组“键值对”（key-value）的集合，是一种无序的复合数据集合。  
 
-        let obj = {
-                foo: 'Hello',
-                bar: 'World'
+        const jonas = {
+                firtName: 'Jonas',
+                lastName: 'Schemdtman',
+                age: 2023 - 1991,
+                job: 'teacher',
+                firends: ['Michael', 'Peter', 'Steven']
         };
+
+对象的访问可以使用键值也可以用方括号
+
+        jonas.firstName
+        jonas['lastName']
+        
+        const nameKey = 'Name';
+        jonas['first' + nameKey]        // 可以拼接
 
 对象的每一个键名又称为“属性”（property），它的“键值”可以是任何数据类型。如果一个属性的值为函数，通常把这个属性称为“方法”，它可以像函数那样调用。   
 
