@@ -1,7 +1,7 @@
 ---                                  
 layout: post                                  
 title: "CSS 总结"                                  
-date:   2020-07-10 9:00:00                                   
+date:   2023-04-19 9:00:00                                   
 categories: "Web"                                  
 catalog: true                                  
 tags:                                   
@@ -101,6 +101,15 @@ line-height属性指的是行高，而不是行间距。
     height: 30px;
     line-height: 30px;  /* line-height等于height, 实现垂直居中的效果 */
 
+#### font-size
+字体大小
+
+#### font-weight
+字体粗细
+
+#### letter-spacing
+字间间距
+
 ### 边框样式
 
 要设置一个元素的边框必须要设置以下3个方面：  
@@ -110,6 +119,13 @@ line-height属性指的是行高，而不是行间距。
 简洁的写法：  
 
     border:1px solid gray;  
+
+
+### box-sizing
+`box-sizing` 属性定义如何计算一个元素的总宽度和总高度，主要设置是否需要加上内边距(padding)和边框等。  
+
+content-box: 默认值。如果 `div` 的样式为 `width:100px; border:10px solid red; padding:10px;` 则最终`div`的宽度是： `100px(width)+2*10px*(padding)+2*10px(border)=140px`   
+border-box: 设置的边框和内边距的值是包含在 width 内的，但不包含 margin。 如果div的样式为`width:100px; border:10px solid red; padding:10px;` 则内容部分（content）的有效宽度变成了 `100px-2*10px-2*10px =60px;`  
 
 ### 背景样式
 #### background-color
@@ -126,6 +142,21 @@ color为元素文本颜色，background-color为元素背景颜色
     div {
         background-image:url("../images/one piece.jpg") no-repeat;
     }
+
+
+#### linear-gradient() 函数
+创建一个表示两种或多种颜色线性渐变的图片。   
+
+    /* 从右下到左上、从蓝色渐变到红色 */
+    linear-gradient(to left top, blue, red);
+
+#### clip-path
+使用裁剪方式创建元素的可显示区域。区域内的部分显示，区域外的隐藏。   
+polygon() 绘制多边形  
+
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
+
+图形参照[https://bennettfeely.com/clippy/](https://bennettfeely.com/clippy/)  
 
 ### 超链接样式
 
@@ -205,3 +236,68 @@ text-align一般只用在两个地方：文本水平对齐和图片水平对齐�
 #### 静态定位static
 如果没有指定元素的position属性值，也就是默认情况下，元素是静态定位。  
 只要是支持position属性的html对象都是默认为static。static是position属性的默认值，它表示块保留在原本应该在的位置，不会重新定位。  
+
+
+#### 居中
+
+1. 结合top,left 和 transform
+
+    .parent {
+        position:relative;
+        background-color: red;
+    }
+
+    .child {
+        position:absolute:
+        background-color:blue;
+        top:50%;
+        left:50%;
+        transform: translate(-50%, -50%);
+    }
+
+
+## 动画效果
+从左到右  
+
+    .container {
+        animation-name: moveInLeft;
+        animation-duration: 1s;
+        animation-timing-function: ease-out;
+    }
+
+
+    @keyframes moveInLeft {
+        0% {
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+        80% {
+            transform: translateX(10px);
+        }
+        100% {
+            opacity: 1;
+            transform: translate(0);
+        }
+    }
+
+
+从右到左  
+
+    .sub {
+        animation: moveInRight 1s ease-out;
+
+    }
+
+    @keyframes moveInRight {
+        0% {
+            opacity: 0;
+            transform: translateX(100px);
+        }
+        80% {
+            transform: translateX(-10px);
+        }
+        100% {
+            opacity: 1;
+            transform: translate(0);
+        }
+    }

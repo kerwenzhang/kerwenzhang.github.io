@@ -1,7 +1,7 @@
 ---                                  
 layout: post                                  
 title: "JavaScript 总结"                                  
-date:   2020-07-11 9:00:00                                   
+date:   2023-07-11 9:00:00                                   
 categories: "Web"                                  
 catalog: true                                  
 tags:                                   
@@ -17,6 +17,10 @@ tags:
 [JavaScript 教程](https://wangdoc.com/javascript/)   
 
 HTML是网页的结构，CSS是网页的外观，而JavaScript是页面的行为。  
+### 历史
+
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript.jpg?raw=true) 
+
 
 ### 变量
 变量是对“值”的具名引用。变量就是为“值”起名，然后引用这个名字，就等同于引用这个值。变量的名字就是变量名。  
@@ -72,6 +76,12 @@ JavaScript 内部，所有数字都是以64位浮点数形式储存，即使整�
         0.1 + 0.2 === 0.3        // false
         0.3 / 0.1        // 2.9999999999999996
         (0.3 - 0.2) === (0.2 - 0.1)        // false
+
+#### boolean
+
+5种falsy value： 
+
+        0, '', undefined, null, NaN
 
 #### NaN
 NaN是 JavaScript 的特殊值，表示“非数字”（Not a Number），主要出现在将字符串解析成数字出错的场合。  
@@ -133,8 +143,21 @@ typeof运算符用于返回它的操作数当前所容纳的数据的类型，�
 
 1. 字符串型转换为数值型    
 
+        const inputYear = '1991'
+        Number(inputYear);
+        Number('test string')  // NAN
+        
+        String(23);
+
         parseInt()  //将字符串型转换为整型
         parseFloat()  //将字符串型转换为浮点型
+
+        console.log('23' - '10' - 3)  //输出 number 10
+        console.log('23' + '10' +3) //输出 string 23103
+
+        let n = '1'+1
+        n = n - 1;
+        console.log(n)  //输出数字10
 
 2. 数值型转换为字符串型
     	
@@ -144,6 +167,11 @@ typeof运算符用于返回它的操作数当前所容纳的数据的类型，�
 在JavaScript中，使用函数前，必须用function关键字来定义函数。  
 JavaScript 语言将函数看作一种值，与其它值（数值、字符串、布尔值等等）地位相同。凡是可以使用值的地方，就能使用函数。比如，可以把函数赋值给变量和对象的属性，也可以当作参数传入其他函数，或者作为函数的结果返回。函数只是一个可以执行的值，此外并无特殊之处。  
 由于函数与其他数据类型地位平等，所以在 JavaScript 语言中又称函数为第一等公民。  
+
+        const calAge = function(birthYear) {
+                return 2023 - birthYear;
+        }
+        console.log(calAge(1991));
 
 #### 参数传递方式 
 函数参数如果是原始类型的值（数值、字符串、布尔值），传递方式是传值传递（passes by value）。这意味着，在函数体内修改参数值，不会影响到函数外部。  
@@ -222,6 +250,10 @@ JavaScript 提供两种相等运算符：==和===。
 两个复合类型（对象、数组、函数）的数据比较时，不是比较它们的值是否相等，而是比较它们是否指向同一个地址。  
 相等运算符会自动转换变量类型，造成很多意想不到的情况。建议不要使用相等运算符（==），只使用严格相等运算符（===）。  
 
+        18 === 18  // true
+        '18' == 18  // true
+        '18' === 18 // false
+
 ### console对象
 1. console.warn()，console.error()  
     warn方法和error方法也是在控制台输出信息，它们与log方法的不同之处在于，warn方法输出信息时，在最前面加一个黄色三角，表示警告；error方法输出信息时，在最前面加一个红色的叉，表示出错。  
@@ -253,6 +285,22 @@ JavaScript 提供两种相等运算符：==和===。
     console.trace方法显示当前执行的代码在堆栈中的调用路径。  
     
 ### 字符串对象
+
+0. 字符串模板
+
+        const firstName = Jonas;
+        const birthYear = 1991;
+        const year = 2037;
+        const job = 'teacher'
+        const jonas = `I'm ${firstName}, a ${year - bithYear} year old ${job}!`;
+        console.log(jonas);
+
+可以用反斜杠实现多行输出
+
+        console.log(`String
+        multiple
+        lines`)
+
 1. length属性  
 我们可以通过length属性来获取字符串的长度。  
 
