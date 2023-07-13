@@ -230,7 +230,6 @@ unshift()
         Object.keys(obj);
         // ['key1', 'key2']
 
-
 ### 字符串对象
 
 0.  字符串模板
@@ -776,6 +775,10 @@ DOM，全称“Document Object Model（文档对象模型）”，它是由 W3C 
         ccontent.style.left = "10px";
         cparent.appendChild(ccontent);
 
+3.  选择节点
+
+        document.querySelector('.message').textContent
+
 ### 事件
 
 在 JavaScript 中，事件往往是页面的一些动作引起的，例如当用户按下鼠标或者提交表单，甚至在页面移动鼠标时，事件都会出现。  
@@ -821,5 +824,3 @@ DOM，全称“Document Object Model（文档对象模型）”，它是由 W3C 
         onload	页面加载事件
         onresize	页面大小事件
         onerror	页面或图片加载出错事件
-
-
