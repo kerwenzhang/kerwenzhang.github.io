@@ -59,7 +59,7 @@ JavaScript 数据类型有 2 大分类：一是“基本数据类型”，二是
 （2）未定义值（undefined 型）；  
 （3）转义字符；
 
-### 数字型
+### Number
 
 JavaScript 内部，所有数字都是以 64 位浮点数形式储存，即使整数也是如此。这就是说，JavaScript 语言的底层根本没有整数，所有数字都是小数（64 位浮点数）。
 
@@ -71,13 +71,13 @@ JavaScript 内部，所有数字都是以 64 位浮点数形式储存，即使�
         0.3 / 0.1        // 2.9999999999999996
         (0.3 - 0.2) === (0.2 - 0.1)        // false
 
-### boolean
+### Boolean
 
 5 种 falsy value：
 
         0, '', undefined, null, NaN
 
-#### typeof 运算符
+### typeof 运算符
 
 typeof 运算符用于返回它的操作数当前所容纳的数据的类型，这对于判断一个变量是否已被定义特别有用。  
 例如：typeof(1)返回值是 number，typeof("javascript")返回值是 string。  
@@ -94,7 +94,7 @@ typeof 运算符用于返回它的操作数当前所容纳的数据的类型，�
         // ...
         }
 
-#### NaN
+### NaN
 
 NaN 是 JavaScript 的特殊值，表示“非数字”（Not a Number），主要出现在将字符串解析成数字出错的场合。
 
@@ -102,83 +102,6 @@ isNaN 方法可以用来判断一个值是否为 NaN。
 
         isNaN(NaN) // true
         isNaN(123) // false
-
-### 数组
-
-#### 创建数组
-
-在 JavaScript 中，创建数组共有 3 种方法：
-
-    let myArr = new Array();
-
-    let myArr = new Array(3);
-    myArr[0]="HTML";
-    myArr[1]="CSS";
-    myArr[2]="JavaScript";
-
-    let myArr = new Array(1,2,3,4);     // bad
-    let arr = ['a', 'b', 'c'];          // good
-
-本质上，数组属于一种特殊的对象。typeof 运算符会返回数组的类型是 object。
-
-清空数组的一个有效方法，就是将 length 属性设为 0。
-
-        let arr = [ 'a', 'b', 'c' ];
-        arr.length = 0;
-
-#### 常用方法
-
-    slice()	//获取数组中的某段数组元素
-    push()	//在数组末尾添加元素
-    pop()	//删除数组最后一个元素
-    toString()	//将数组转换为字符串
-    join()	//将数组元素连接成字符串
-    concat()	//多个数组连接为字符串
-    sort()	//数组元素正向排序
-    reverse()	//数组元素反转
-    indexOf('subElement')   //返回指定元素的位置
-    includes('subElement')  //是否包含指定元素
-
-slice()方法的一个重要应用，是将类似数组的对象转为真正的数组。
-
-    Array.prototype.slice.call(document.querySelectorAll("div"));
-    Array.prototype.slice.call(arguments);
-
-map()  
-map 方法将数组的所有成员依次传入参数函数，然后把每一次的执行结果组成一个新数组返回。
-
-    let numbers = [1, 2, 3];
-    numbers.map(function (n) {
-        return n + 1;
-    });
-    // [2, 3, 4]
-
-filter()  
-filter 方法用于过滤数组成员，满足条件的成员组成一个新数组返回。
-
-    [1, 2, 3, 4, 5].filter(function (elem) {
-        return (elem > 3);
-    })
-    // [4, 5]
-
-some()，every()  
-some 方法是只要一个成员的返回值是 true，则整个 some 方法的返回值就是 true，否则返回 false。
-
-        let arr = [1, 2, 3, 4, 5];
-        arr.some(function (elem, index, arr) {
-            return elem >= 3;
-        });
-        // true
-
-every 方法是所有成员的返回值都是 true，整个 every 方法才返回 true，否则返回 false。
-
-unshift()  
-将一个或多个元素添加到数组的开头，并返回数组的新长度
-
-        const friends = [ 'Michale', 'Steven', 'Peter'];
-        const newLength = friend.unshift('John');
-        console.log(friends);     // ['John', 'Michale', 'Steven', 'Peter']
-        console.log(newLength);   // 4
 
 ### 对象(object)
 
@@ -230,9 +153,88 @@ unshift()
         Object.keys(obj);
         // ['key1', 'key2']
 
-### 字符串对象
+#### 数组
 
-0.  字符串模板
+##### 创建数组
+
+在 JavaScript 中，创建数组共有 3 种方法：
+
+    let myArr = new Array();
+
+    let myArr = new Array(3);
+    myArr[0]="HTML";
+    myArr[1]="CSS";
+    myArr[2]="JavaScript";
+
+    let myArr = new Array(1,2,3,4);     // bad
+    let arr = ['a', 'b', 'c'];          // good
+
+本质上，数组属于一种特殊的对象。typeof 运算符会返回数组的类型是 object。
+
+清空数组的一个有效方法，就是将 length 属性设为 0。
+
+        let arr = [ 'a', 'b', 'c' ];
+        arr.length = 0;
+
+##### 常用方法
+
+    slice()                  //获取数组中的某段数组元素
+    push()                   //在数组末尾添加元素
+    pop()                    //删除数组最后一个元素
+    toString()               //将数组转换为字符串
+    join()                   //将数组元素连接成字符串
+    concat()                 //多个数组连接为字符串
+    sort()                   //数组元素正向排序
+    reverse()                //数组元素反转
+    indexOf('subElement')   //返回指定元素的位置
+    includes('subElement')  //是否包含指定元素
+    shift()                 //移除第一个元素
+    unshift('newItem')      //添加新的元素到数组开头
+
+slice()方法的一个重要应用，是将类似数组的对象转为真正的数组。
+
+    Array.prototype.slice.call(document.querySelectorAll("div"));
+    Array.prototype.slice.call(arguments);
+
+map()  
+map 方法将数组的所有成员依次传入参数函数，然后把每一次的执行结果组成一个新数组返回。
+
+    let numbers = [1, 2, 3];
+    numbers.map(function (n) {
+        return n + 1;
+    });
+    // [2, 3, 4]
+
+filter()  
+filter 方法用于过滤数组成员，满足条件的成员组成一个新数组返回。
+
+    [1, 2, 3, 4, 5].filter(function (elem) {
+        return (elem > 3);
+    })
+    // [4, 5]
+
+some()，every()  
+some 方法是只要一个成员的返回值是 true，则整个 some 方法的返回值就是 true，否则返回 false。
+
+        let arr = [1, 2, 3, 4, 5];
+        arr.some(function (elem, index, arr) {
+            return elem >= 3;
+        });
+        // true
+
+every 方法是所有成员的返回值都是 true，整个 every 方法才返回 true，否则返回 false。
+
+unshift()  
+将一个或多个元素添加到数组的开头，并返回数组的新长度
+
+        const friends = [ 'Michale', 'Steven', 'Peter'];
+        const newLength = friend.unshift('John');
+        console.log(friends);     // ['John', 'Michale', 'Steven', 'Peter']
+        console.log(newLength);   // 4
+
+#### 字符串对象
+
+1.  字符串模板拼接
 
         const firstName = Jonas;
         const birthYear = 1991;
@@ -241,55 +243,49 @@ unshift()
         const jonas = `I'm ${firstName}, a ${year - bithYear} year old ${job}!`;
         console.log(jonas);
 
-可以用反斜杠实现多行输出
-
-        console.log(`String
-        multiple
-        lines`)
-
-1.  length 属性  
+2.  length 属性  
     我们可以通过 length 属性来获取字符串的长度。
 
             字符串名.length
 
-2.  match()  
+3.  match()  
     使用 match()方法可以从字符串内索引指定的值，或者找到一个或多个正则表达式的匹配。
 
             stringObject.match(字符串)    //匹配字符串;
             stringObject.match(正则表达式)  //匹配正则表达式
 
-3.  indexOf()  
+4.  indexOf()  
     使用 indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置。
 
             stringObject.indexOf(字符串)
 
-4.  replace()  
+5.  replace()  
     replace()方法常常用于在字符串中用一些字符替换另一些字符，或者替换一个与正则表达式匹配的子串。
 
             stringObject.replace(原字符,替换字符)
             stringObject.replace(正则表达式,替换字符)  //匹配正则表达式
 
-5.  charAt()  
+6.  charAt()  
     使用 charAt()方法来获取字符串中的某一个字符
 
             stringObject.charAt(n)
 
-6.  连接字符串  
+7.  连接字符串  
     使用 concat()方法来连接 2 个或多个字符串。
 
             字符串1.concat(字符串2,字符串3,…,字符串n);
 
-7.  split()  
+8.  split()  
     使用 split()方法把一个字符串分割成字符串数组。
 
             字符串.split(分割符)
 
-8.  substring()  
+9.  substring()  
     使用 substring()方法来提取字符串中的某一部分字符串。
 
             字符串.substring(开始位置,结束位置)
 
-### 日期对象
+#### 日期对象
 
 创建日期对象必须使用“new 语句”。
 
@@ -312,7 +308,118 @@ unshift()
     toLocaleString()	//将日期时间转换为本地时间格式的字符串
     toJSON()            //方法返回一个符合 JSON 格式的 ISO 日期字符串
 
-#### 类型转换
+#### console 对象
+
+1.  `console.warn()`，`console.error()`  
+    warn 方法和 error 方法也是在控制台输出信息，它们与 log 方法的不同之处在于，warn 方法输出信息时，在最前面加一个黄色三角，表示警告；error 方法输出信息时，在最前面加一个红色的叉，表示出错。
+2.  console.table()  
+    对于某些复合类型的数据，console.table 方法可以将其转为表格显示。
+
+        let languages = [
+                { name: "JavaScript", fileExtension: ".js" },
+                { name: "TypeScript", fileExtension: ".ts" },
+                { name: "CoffeeScript", fileExtension: ".coffee" }
+        ];
+        console.table(languages);
+
+3.  console.count()  
+    count 方法用于计数，输出它被调用了多少次。
+
+4.  console.time()，console.timeEnd()  
+    这两个方法用于计时，可以算出一个操作所花费的准确时间。
+
+        console.time('Array initialize');
+        let array= new Array(1000000);
+        for (let i = array.length - 1; i >= 0; i--) {
+        array[i] = new Object();
+        };
+        console.timeEnd('Array initialize');
+        // Array initialize: 1914.481ms
+
+5.  console.trace()  
+    console.trace 方法显示当前执行的代码在堆栈中的调用路径。
+
+#### RegExp 对象
+
+新建正则表达式有两种方法。一种是使用字面量，以斜杠表示开始和结束。
+
+    let regex = /xyz/;
+
+另一种是使用 RegExp 构造函数。
+
+    let regex = new RegExp('xyz');
+
+第一种方法在引擎编译代码时，就会新建正则表达式，第二种方法在运行时新建正则表达式，所以前者的效率较高。而且，前者比较便利和直观
+
+常用方法：
+
+1.  test()  
+    正则实例对象的 test 方法返回一个布尔值，表示当前模式是否能匹配参数字符串。
+
+            /cat/.test('cats and dogs') // true
+
+2.  exec()  
+    用来返回匹配结果。如果发现匹配，就返回一个数组，成员是匹配成功的子字符串，否则返回 null。
+
+            let s = '_x_x';
+            let r1 = /x/;
+            r1.exec(s) // ["x"]
+
+3.  String.match()  
+    字符串实例对象的 match 方法对字符串进行正则匹配，返回匹配结果。
+
+            let s = '_x_x';
+            let r1 = /x/;
+            s.match(r1) // ["x"]
+
+##### 匹配规则
+
+[https://wangdoc.com/javascript/stdlib/regexp.html](https://wangdoc.com/javascript/stdlib/regexp.html)
+
+#### Math 对象
+
+    max(x,y)	//返回x和y中的最大值
+    min(x,y)	//返回x和y中的最小值
+    pow(x,y)	//返回x的y次幂
+    abs(x)	//返回数的绝对值
+    random()	//返回0~1之间的随机数
+    trunc()     //截取整数部分，舍弃小数部分
+    round(x)	//把数四舍五入为最接近的整数
+    ceil(x)	//对一个数进行上舍入
+    floor(x)	//对一个数进行下舍入
+
+生成一个 1-20 的随机数
+
+        Math.trunc(Math.random() * 20) + 1;
+
+#### JSON 对象
+
+JSON 格式（JavaScript Object Notation 的缩写）是一种用于数据交换的文本格式，2001 年由 Douglas Crockford 提出，目的是取代繁琐笨重的 XML 格式。  
+字符串必须使用双引号表示，不能使用单引号。  
+对象的键名必须放在双引号里面。  
+数组或对象最后一个成员的后面，不能加逗号。
+
+以下都是合法的 JSON。
+
+        ["one", "two", "three"]
+        { "one": 1, "two": 2, "three": 3 }
+        { name: "张三", "age": 32 }
+        {"names": ["张三", "李四"] }
+        [ { "name": "张三"}, {"name": "李四"} ]
+
+JSON.stringify()  
+将一个值转为 JSON 字符串。该字符串符合 JSON 格式，并且可以被 JSON.parse 方法还原。
+
+        JSON.stringify([1, "false", false])  // '[1,"false",false]'
+        JSON.stringify({ name: "张三" })   // '{"name":"张三"}'
+
+JSON.parse()  
+JSON.parse 方法用于将 JSON 字符串转换成对应的值。
+
+        let o = JSON.parse('{"name": "张三"}');
+        o.name // 张三
+
+### 类型转换
 
 1.  字符串型转换为数值型
 
@@ -333,9 +440,24 @@ unshift()
         console.log(n)  //输出数字10
 
 2.  数值型转换为字符串型
-    .toString()
 
-### 函数
+        .toString()
+
+## 运算符
+
+### 相等运算符
+
+JavaScript 提供两种相等运算符：==和===。  
+简单说，它们的区别是相等运算符（==）比较两个值是否相等，严格相等运算符（===）比较它们是否为“同一个值”。如果两个值不是同一类型，严格相等运算符（===）直接返回 false，而相等运算符（==）会将它们转换成同一个类型，再用严格相等运算符进行比较。
+
+两个复合类型（对象、数组、函数）的数据比较时，不是比较它们的值是否相等，而是比较它们是否指向同一个地址。  
+相等运算符会自动转换变量类型，造成很多意想不到的情况。建议不要使用相等运算符（==），只使用严格相等运算符（===）。
+
+        18 === 18  // true
+        '18' == 18  // true
+        '18' === 18 // false
+
+## 函数
 
 在 JavaScript 中，使用函数前，必须用 function 关键字来定义函数。  
 JavaScript 语言将函数看作一种值，与其它值（数值、字符串、布尔值等等）地位相同。凡是可以使用值的地方，就能使用函数。比如，可以把函数赋值给变量和对象的属性，也可以当作参数传入其他函数，或者作为函数的结果返回。函数只是一个可以执行的值，此外并无特殊之处。  
@@ -430,127 +552,7 @@ arguments 对象包含了函数运行时的所有参数，这个对象只有在�
         p1.setAge(25);
         p1.getAge() // 25
 
-### 运算符
-
-#### 相等运算符
-
-JavaScript 提供两种相等运算符：==和===。  
-简单说，它们的区别是相等运算符（==）比较两个值是否相等，严格相等运算符（===）比较它们是否为“同一个值”。如果两个值不是同一类型，严格相等运算符（===）直接返回 false，而相等运算符（==）会将它们转换成同一个类型，再用严格相等运算符进行比较。
-
-两个复合类型（对象、数组、函数）的数据比较时，不是比较它们的值是否相等，而是比较它们是否指向同一个地址。  
-相等运算符会自动转换变量类型，造成很多意想不到的情况。建议不要使用相等运算符（==），只使用严格相等运算符（===）。
-
-        18 === 18  // true
-        '18' == 18  // true
-        '18' === 18 // false
-
-### console 对象
-
-1.  console.warn()，console.error()  
-    warn 方法和 error 方法也是在控制台输出信息，它们与 log 方法的不同之处在于，warn 方法输出信息时，在最前面加一个黄色三角，表示警告；error 方法输出信息时，在最前面加一个红色的叉，表示出错。
-2.  console.table()  
-    对于某些复合类型的数据，console.table 方法可以将其转为表格显示。
-
-        let languages = [
-                { name: "JavaScript", fileExtension: ".js" },
-                { name: "TypeScript", fileExtension: ".ts" },
-                { name: "CoffeeScript", fileExtension: ".coffee" }
-        ];
-        console.table(languages);
-
-3.  console.count()  
-    count 方法用于计数，输出它被调用了多少次。
-
-4.  console.time()，console.timeEnd()  
-    这两个方法用于计时，可以算出一个操作所花费的准确时间。
-
-        console.time('Array initialize');
-        let array= new Array(1000000);
-        for (let i = array.length - 1; i >= 0; i--) {
-        array[i] = new Object();
-        };
-        console.timeEnd('Array initialize');
-        // Array initialize: 1914.481ms
-
-5.  console.trace()  
-    console.trace 方法显示当前执行的代码在堆栈中的调用路径。
-
-### RegExp 对象
-
-新建正则表达式有两种方法。一种是使用字面量，以斜杠表示开始和结束。
-
-    let regex = /xyz/;
-
-另一种是使用 RegExp 构造函数。
-
-    let regex = new RegExp('xyz');
-
-第一种方法在引擎编译代码时，就会新建正则表达式，第二种方法在运行时新建正则表达式，所以前者的效率较高。而且，前者比较便利和直观
-
-常用方法：
-
-1.  test()  
-    正则实例对象的 test 方法返回一个布尔值，表示当前模式是否能匹配参数字符串。
-
-            /cat/.test('cats and dogs') // true
-
-2.  exec()  
-    用来返回匹配结果。如果发现匹配，就返回一个数组，成员是匹配成功的子字符串，否则返回 null。
-
-            let s = '_x_x';
-            let r1 = /x/;
-            r1.exec(s) // ["x"]
-
-3.  String.match()  
-    字符串实例对象的 match 方法对字符串进行正则匹配，返回匹配结果。
-
-            let s = '_x_x';
-            let r1 = /x/;
-            s.match(r1) // ["x"]
-
-#### 匹配规则
-
-[https://wangdoc.com/javascript/stdlib/regexp.html](https://wangdoc.com/javascript/stdlib/regexp.html)
-
-### Math 对象
-
-    max(x,y)	//返回x和y中的最大值
-    min(x,y)	//返回x和y中的最小值
-    pow(x,y)	//返回x的y次幂
-    abs(x)	//返回数的绝对值
-    random()	//返回0~1之间的随机数
-    round(x)	//把数四舍五入为最接近的整数
-    ceil(x)	//对一个数进行上舍入
-    floor(x)	//对一个数进行下舍入
-
-### JSON 对象
-
-JSON 格式（JavaScript Object Notation 的缩写）是一种用于数据交换的文本格式，2001 年由 Douglas Crockford 提出，目的是取代繁琐笨重的 XML 格式。  
-字符串必须使用双引号表示，不能使用单引号。  
-对象的键名必须放在双引号里面。  
-数组或对象最后一个成员的后面，不能加逗号。
-
-以下都是合法的 JSON。
-
-        ["one", "two", "three"]
-        { "one": 1, "two": 2, "three": 3 }
-        { name: "张三", "age": 32 }
-        {"names": ["张三", "李四"] }
-        [ { "name": "张三"}, {"name": "李四"} ]
-
-JSON.stringify()  
-将一个值转为 JSON 字符串。该字符串符合 JSON 格式，并且可以被 JSON.parse 方法还原。
-
-        JSON.stringify([1, "false", false])  // '[1,"false",false]'
-        JSON.stringify({ name: "张三" })   // '{"name":"张三"}'
-
-JSON.parse()  
-JSON.parse 方法用于将 JSON 字符串转换成对应的值。
-
-        let o = JSON.parse('{"name": "张三"}');
-        o.name // 张三
-
-### 面向对象
+## 面向对象
 
 JavaScript 语言的对象体系，不是基于“类”的，而是基于构造函数（constructor）和原型链（prototype）。  
 构造函数就是一个普通的函数，但是有自己的特征和用法。
