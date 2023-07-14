@@ -779,6 +779,20 @@ DOM，全称“Document Object Model（文档对象模型）”，它是由 W3C 
 
         document.querySelector('.message').textContent
 
+4.  添加事件
+
+        document.querySelector('.btnCheck').addEventListener('click', function () {
+                console.log(document.querySelector('.guess').value);
+        });
+
+监听键盘 keydown 事件：
+
+        document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                        console.log('ESC is pressed!');
+                }
+        });
+
 ### 事件
 
 在 JavaScript 中，事件往往是页面的一些动作引起的，例如当用户按下鼠标或者提交表单，甚至在页面移动鼠标时，事件都会出现。  
