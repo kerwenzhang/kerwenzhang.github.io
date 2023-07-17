@@ -59,8 +59,63 @@ JavaScript 数据类型有 2 大分类：一是“基本数据类型”，二是
 （2）未定义值（undefined 型）；  
 （3）转义字符；
 
+### 值类型与引用类型
+
 基本数据类型属于值类型，值存储在 Stack 里。 Object 等属于引用类型，存储在 Heap 里  
 ![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript2.jpg?raw=true)
+
+当我们申请一个值类型时，我们实际上是在堆栈中申请了一块内存，分配如下：
+
+        let age = 30;
+
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript3.jpg?raw=true)
+当再声明一个变量等于 age 时
+
+        let age = 30;
+        let oldAge = age;
+
+在内存中，实际发生的事情是两个变量都指向了同一个内存地址：
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript4.jpg?raw=true)
+
+第三步，当我们修改 age 的值时
+
+        let age = 30;
+        let oldAge = age;
+        let age = 31;
+
+在内存中，已分配的内存中的值不可再修改（the value at a certain memory address is immutable)，实际发生的事情是变量 age 重新申请了一块新的内存，去存储新的值 31.  
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript5.jpg?raw=true)
+
+而对于引用类型，当初始化一个引用类型时，变量的值存储在 Heap 里，堆栈的 value 只记录了 heap 的地址。
+
+        const me = {
+                age: 30
+        }
+
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript6.jpg?raw=true)  
+当定义另一个变量 friend 时, friend 和 me 都指向了同一个内存地址.
+
+        const me = {
+                age: 30
+        }
+        const friend = me;
+
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript7.jpg?raw=true)  
+如果此时修改 friend 的 age， 我们实际上只是修改了 Heap 中存储的 value，Stack 里的地址没有发生任何变化。
+
+        const me = {
+                age: 30
+        }
+        const friend = me;
+        friend.age = 27;
+
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript8.jpg?raw=true)
+所以如何一个引用类型声明为 const，我们仍然可以修改它的值
+
+        const testObj = {
+                age: 30
+        }
+        test.Obj = 27;
 
 ### Number
 
