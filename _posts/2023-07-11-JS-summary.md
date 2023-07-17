@@ -110,7 +110,7 @@ JavaScript 数据类型有 2 大分类：一是“基本数据类型”，二是
         friend.age = 27;
 
 ![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript8.jpg?raw=true)
-所以如何一个引用类型声明为 const，我们仍然可以修改它的值
+这也解释了一个引用类型声明为 const，我们仍然可以修改它的值
 
         const testObj = {
                 age: 30
