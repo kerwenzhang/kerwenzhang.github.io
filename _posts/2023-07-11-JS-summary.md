@@ -59,6 +59,9 @@ JavaScript 数据类型有 2 大分类：一是“基本数据类型”，二是
 （2）未定义值（undefined 型）；  
 （3）转义字符；
 
+基本数据类型属于值类型，值存储在 Stack 里。 Object 等属于引用类型，存储在 Heap 里  
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript2.jpg?raw=true)
+
 ### Number
 
 JavaScript 内部，所有数字都是以 64 位浮点数形式储存，即使整数也是如此。这就是说，JavaScript 语言的底层根本没有整数，所有数字都是小数（64 位浮点数）。
@@ -492,6 +495,51 @@ JavaScript 语言将函数看作一种值，与其它值（数值、字符串、
                 return retirement;
         }
         console.log(yearsUntilRetirement(1991));
+
+注意： 箭头函数没有自己的 this 对象，而是使用 parent 的 this:
+
+        const jonas = {
+                firstName: 'Jonas',
+                greet: () => console.log(`Hey ${this.firstName}`),
+        }
+        jonas.greet();   // console result: Hey undefined
+
+箭头函数中 this 和 var 使用会产生奇怪效果：
+
+        var firstName = 'Matilda';
+        const jonas = {
+                firstName: 'Jonas',
+                greet: () => console.log(`Hey ${this.firstName}`),
+        }
+        jonas.greet();  // console result: Hey Matilda
+
+对比以下两段代码：
+
+        const jonas = {
+                firstName: 'Jonas',
+                year: 1995,
+                calcAge: function() {
+                        const isMillenial = function() {
+                                console.log(this.year >=1991 & this.year <= 1996)
+                        }
+                        isMillenial();
+                }
+        }
+        jonas.calcAge();  // 会报错, this is undefined
+
+使用箭头函数
+
+        const jonas = {
+                firstName: 'Jonas',
+                year: 1995,
+                calcAge: function() {
+                        const isMillenial = () => {
+                                console.log(this.year >=1991 & this.year <= 1996)
+                        }
+                        isMillenial();
+                }
+        }
+        jonas.calcAge(); // 箭头函数继承了parent的this，能正常输出
 
 #### 参数传递方式
 
