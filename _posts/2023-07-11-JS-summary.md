@@ -462,6 +462,18 @@ JavaScript 提供两种相等运算符：==和===。
 在 JavaScript 中，使用函数前，必须用 function 关键字来定义函数。  
 JavaScript 语言将函数看作一种值，与其它值（数值、字符串、布尔值等等）地位相同。凡是可以使用值的地方，就能使用函数。比如，可以把函数赋值给变量和对象的属性，也可以当作参数传入其他函数，或者作为函数的结果返回。函数只是一个可以执行的值，此外并无特殊之处。  
 由于函数与其他数据类型地位平等，所以在 JavaScript 语言中又称函数为第一等公民。  
+可以将函数作为变量传递给另一个变量
+
+        const jonas = {
+                year: 1991,
+                calcAge: function() {
+                        return 2023 - this.year;
+                }
+        }
+
+        const f = jonas.calcAge;
+        f();   // 会报错, 因为单独使用function，函数没有owner，导致this是undefined
+
 函数表达式：
 
         const calAge = function(birthYear) {
