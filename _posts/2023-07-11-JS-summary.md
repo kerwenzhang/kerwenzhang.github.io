@@ -115,7 +115,8 @@ JavaScript 数据类型有 2 大分类：一是“基本数据类型”，二是
         const testObj = {
                 age: 30
         }
-        test.Obj = 27;
+        testObj.age = 27;  // allow
+        testObj = {}  // not allow, due testObj is const
 
 ### Number
 
@@ -500,6 +501,100 @@ JSON.parse 方法用于将 JSON 字符串转换成对应的值。
 2.  数值型转换为字符串型
 
         .toString()
+
+### 解构
+
+在 ES5 中：如果计划从数组中提取特定元素，就需使用元素的索引，并将其保存到变量之中
+
+        const arr = [2, 3, 4];
+        const a = arr[0];
+        const b = arr[1];
+        const c = arr[2]
+
+如果想对元素进行交换，需要引入一个临时变量
+
+        const temp = arr[0];
+        arr[0] = arr[1];
+        arr[1] = temp;
+        console.log(arr)   // [3,2,4]
+
+在 ES6 中引入了解构的功能，以简化获取数组中数据的过程：
+
+        const arr = [2,3,4];
+        const [x, y, z] = = arr;
+        console.log(x, y, z);
+
+        const [x1, y1] = arr;
+        console.log(x1, y1);  //只取前两个元素
+
+        const[x2,,z2] = arr;
+        console.log(x2, z2)  // 用逗号跳过元素
+
+利用解构进行数组元素交换:
+
+        const arr1 = [2, 3, 4];
+        let [first, second] = arr1;
+        [first, second] = [second, first];
+        console.log(first, second); // 3,2
+        console.log(arr1)   // still return 2,3,4
+
+利用解构，让函数返回多个值
+
+        const switchElement = function (a, b) {
+        return [b, a];
+        };
+
+        const [item1, item2] = switchElement(1, 2);
+        console.log(item1, item2);
+
+利用解构设置默认值，通常用在 API 函数调用设置默认值：
+
+        const [p = 1, q = 1, r = 1] = [2, 3];
+        console.log(p, q, r);   // 2, 3, 1
+
+在 Object 对象上使用解构:
+
+        const restaurant = {
+                name: 'Classico Italiano',
+                location: 'Via Angelo Tavanti 23, Firenze, Italy',
+                categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+        };
+        const { name, categories } = restaurant;
+        console.log(name, categories);
+
+在 Object 上进行解构需要用大括号，并且变量名必须与 Object 中的属性名一致。  
+也可以进行重命名。
+
+        const { name: restaurantName, categories: tags } = restaurant;
+        console.log(restaurantName, tags);
+
+设置默认值:
+
+        const { name: restaurantName = '', categories: tags = [], menu=[] } = restaurant;
+        console.log(restaurantName, tags, menu);
+
+嵌套
+
+        const restaurant = {
+                openingHours: {
+                        thu: {
+                                open: 12,
+                                close: 22,
+                        },
+                        fri: {
+                                open: 11,
+                                close: 23,
+                        },
+                        sat: {
+                                open: 0, // Open 24 hours
+                                close: 24,
+                        },
+                },
+        };
+
+        const { openingHours } = restaurant;
+        const { fri: { open, close } } = openingHours;
+        console.log(open, close);
 
 ## 运算符
 
