@@ -610,6 +610,47 @@ JavaScript 提供两种相等运算符：==和===。
         '18' == 18  // true
         '18' === 18 // false
 
+### Spread Operator
+
+        const arr=[7,8,9]
+        const newArr = [1,2, ...arr];
+        console.log(newArr)   // [1,2,7,8,9]
+        console.log(...newArr)  // 1,2,7,8,9
+
+合并两个数组
+
+        const arr1 = [1,2];
+        const arr2 = [3,4];
+        const arr3 = [...arr1, ...arr2];
+
+也可以用在字符串上：
+
+        const str = 'Jonas';
+        const letters = [...str, ' ', 'S.'];
+        console.log(letters)  //["J","o", "n", "a", "s", " ", "S."]
+
+Rest Pattern
+
+        const arr = [1,2, ...[3,4]];
+        console.log(arr)                // [1,2,3,4]
+        const [a,b,...others] = arr;
+        console.log(a, b, others)   // 1,2, [3,4]
+
+
+        const { Sat, ...workDays } = restaurant.openingHours;
+        console.log(workDays);
+
+
+        const add = function (...param) {
+                let sum = 0;
+                for (let index = 0; index < param.length; index++) {
+                        sum += param[index];
+                }
+                return sum;
+        };
+
+        console.log(add(1, 2, 3, 4, 5, 6));
+
 ## 函数
 
 在 JavaScript 中，使用函数前，必须用 function 关键字来定义函数。  
