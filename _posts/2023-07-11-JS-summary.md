@@ -702,7 +702,7 @@ JavaScript 提供两种相等运算符：==和===。
         '18' == 18  // true
         '18' === 18 // false
 
-### Spread Operator
+### Spread Operator...
 
         const arr=[7,8,9]
         const newArr = [1,2, ...arr];
@@ -767,6 +767,21 @@ JavaScript 语言将函数看作一种值，与其它值（数值、字符串、
         const f = jonas.calcAge;
         f();   // 会报错, 因为单独使用function，函数没有owner，导致this是undefined
 
+将函数传递给其他高阶函数
+
+        const upperFirstWord = function (str) {
+                const [first, ...others] = str.split(' ');
+                return [first.toUpperCase(), ...others].join(' ');
+        };
+
+        const transform = function (str, fn) {
+                console.log(`Original string: ${str}`);
+                console.log(`Transformed string: ${fn(str)}`);
+                console.log(`Transformed by: ${fn.name}`);
+        };
+
+        transform('JavaScript is the best!', upperFirstWord);
+
 函数表达式：
 
         const calAge = function(birthYear) {
@@ -830,6 +845,20 @@ JavaScript 语言将函数看作一种值，与其它值（数值、字符串、
                 }
         }
         jonas.calcAge(); // 箭头函数继承了parent的this，能正常输出
+
+#### 默认参数
+
+        const bookings = [];
+        const createBooking = function (flightNum, numPassengers = 1, price = 199) {
+                const booking = {
+                        flightNum,
+                        numPassengers,
+                        price,
+                };
+                bookings.push(booking);
+        };
+        createBooking('LH123');
+        createBooking('LH123', undefined, 1000);
 
 #### 参数传递方式
 
@@ -901,6 +930,33 @@ arguments 对象包含了函数运行时的所有参数，这个对象只有在�
         let p1 = Person('张三');
         p1.setAge(25);
         p1.getAge() // 25
+
+#### call
+
+call 第一个参数传递的是 this 指针
+
+        const lufthansa = {
+                name: 'Lufthansa',
+                iataCode: 'LH',
+                bookings: [],
+                book(flightNum, name) {
+                        console.log(
+                        `${name} booked a seat on ${this.name} flight ${this.iataCode}${flightNum}`
+                        );
+                        bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+                },
+        };
+
+        lufthansa.book(239, 'Jonas');
+
+        const eurowings = {
+                name: 'Eurowings',
+                iataCode: 'EW',
+                bookings: [],
+        };
+
+        const book = lufthansa.book;
+        book.call(eurowings, 23, 'Sara');
 
 ## 面向对象
 
