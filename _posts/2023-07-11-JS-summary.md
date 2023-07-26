@@ -212,6 +212,40 @@ isNaN 方法可以用来判断一个值是否为 NaN。
         Object.keys(obj);
         // ['key1', 'key2']
 
+使用`for...of`遍历 Object 的 keys
+
+        let obj = {
+                key1: 1,
+                key2: 2
+        };
+        for(const key of Object.keys(obj)) {
+                console.log(key);
+        }
+
+Object.values 可以返回所有的 value 值  
+Object.entries:
+
+        const openingHours = {
+                thu: {
+                        open: 12,
+                        close: 22,
+                },
+                fir: {
+                        open: 11,
+                        close: 23,
+                },
+                sat: {
+                        open: 0, // Open 24 hours
+                        close: 24,
+                },
+        };
+
+        const entries = Object.entries(openingHours);
+
+        for (const [key, { open, close }] of entries) {
+                console.log(`On ${key} we open at ${open} and close at ${close}`);
+        }
+
 #### 数组
 
 ##### 创建数组
@@ -291,11 +325,49 @@ unshift()
         console.log(friends);     // ['John', 'Michale', 'Steven', 'Peter']
         console.log(newLength);   // 4
 
+#### Set
+
+Set 与数组相似，但元素是唯一的
+
+        const orderArr = ['Pasta', 'Pizza', 'Pizza', 'Risotto', 'Pasta', 'Pizza'];
+
+        const orderSet = new Set(orderArr);
+
+        console.log(orderSet); // {"Pasta", "Pizza", "Risotto"}
+        console.log(orderSet.size); // 3
+        console.log(orderSet.has('Pizza')); // true
+        orderSet.add('Garlic Bread');
+        orderSet.delete('Risotto');
+        orderSet.clear();
+
+与数组不同，Set 没有索引，所以无法通过 index 来访问元素. orderSet[0] 是错误的
+
+#### Maps
+
+Maps 用来存储 key,value pair
+
+        const rest = new Map();
+        rest.set('name', 'Classico Italiano');
+        rest.set('open', 11);
+        rest.set('close', 23);
+        rest.set(true, 'We are open');
+        rest.set(false, 'We are closed');
+
+        console.log(rest.get(true)); // We are open
+
+        const currentTime = 12;
+        console.log(
+                rest.get(currentTime > rest.get('open') && currentTime < rest.get('close'))
+        );    // We are open
+
+        console.log(rest.has('categories'));    // false
+        rest.delete('name');
+
 #### 字符串对象
 
 1.  字符串模板拼接
 
-        const firstName = Jonas;
+        const firstName = 'Jonas';
         const birthYear = 1991;
         const year = 2037;
         const job = 'teacher'
@@ -343,6 +415,26 @@ unshift()
     使用 substring()方法来提取字符串中的某一部分字符串。
 
             字符串.substring(开始位置,结束位置)
+
+10. slice(startIndex, length)  
+    剪切字符串
+
+        str.slice(-1)   // get last character
+
+11. .toLowerCase(), .toUpperCase()
+12. includes() 是否含有指定字符串，返回 boolean
+13. startsWith(str), endsWith(str)
+14. padEnd(), padStart() 填充字符串
+
+        const maskCreditCard = function (number) {
+                const str = String(number);
+                const last = str.slice(-4);
+                return last.padStart(str.length, '*');
+        };
+
+        console.log(maskCreditCard(123456789));
+
+15. repeat(count)
 
 #### 日期对象
 
@@ -650,6 +742,13 @@ Rest Pattern
         };
 
         console.log(add(1, 2, 3, 4, 5, 6));
+
+### Optional Chaining ?.
+
+        console.log(restaurant.order?.(0,1) ?? 'Method does not exist');  //如果order function存在，则调用，否则返回Method does not exist
+
+        const users = [{ name: 'Jonas'}];
+        console.log(users[0]?.name ?? 'User array empty');
 
 ## 函数
 
