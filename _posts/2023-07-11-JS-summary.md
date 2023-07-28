@@ -931,7 +931,7 @@ arguments 对象包含了函数运行时的所有参数，这个对象只有在�
         p1.setAge(25);
         p1.getAge() // 25
 
-#### call
+#### call, bind
 
 call 第一个参数传递的是 this 指针
 
@@ -957,6 +957,30 @@ call 第一个参数传递的是 this 指针
 
         const book = lufthansa.book;
         book.call(eurowings, 23, 'Sara');
+
+        const bookEW = book.bind(eurowings);
+        bookEW(34, 'Sahara');
+
+        const bookEw23 = book.bind(eurowings, 23);
+        bookEw23('John Switch');
+
+另外一个例子，每个国家可以指定自己的税率
+
+        const addTax = (rate, value) => value + value * rate;
+        console.log(addTax(0.1, 200));
+
+        const addJapan = addTax.bind(null, 0.23);
+        console.log(addJapan(200));
+
+        // .bind 相当于以下的复杂函数
+        const addTaxRate = function (rate) {
+                return function (value) {
+                        return value + value * rate;
+        };
+        };
+
+        const addJapn2 = addTaxRate(0.23);
+        console.log(addJapn2(200));
 
 ## 面向对象
 
