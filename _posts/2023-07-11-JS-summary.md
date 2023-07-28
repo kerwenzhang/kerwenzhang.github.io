@@ -900,15 +900,16 @@ arguments 对象包含了函数运行时的所有参数，这个对象只有在�
 闭包是“定义在一个函数内部的函数”。闭包最大的特点，就是它可以“记住”诞生的环境，比如 f2 记住了它诞生的环境 f1，所以从 f2 可以得到 f1 的内部变量。在本质上，闭包就是将函数内部和函数外部连接起来的一座桥梁。  
 闭包的最大用处有两个，一个是可以读取函数内部的变量，另一个就是让这些变量始终保持在内存中，即闭包可以使得它诞生环境一直存在。
 
-        function createIncrementor(start) {
+        function createIncrementor() {
+            let num = 0;
             return function () {
-                return start++;
+                return num++;
             };
         }
-        let inc = createIncrementor(5);
-        inc() // 5
-        inc() // 6
-        inc() // 7
+        let inc = createIncrementor();
+        inc() // 0
+        inc() // 1
+        inc() // 2
 
 闭包的另一个用处，是封装对象的私有属性和私有方法。
 
@@ -933,36 +934,37 @@ arguments 对象包含了函数运行时的所有参数，这个对象只有在�
 
 #### call, bind
 
-call 第一个参数传递的是 this 指针
+call() 方法是 JavaScript 中的函数方法，用于调用一个函数，并将指定的对象作为函数的上下文（this 值）。除了可以指定上下文外，我们还可以将参数作为一个列表传递给该方法。
 
-        const lufthansa = {
-                name: 'Lufthansa',
-                iataCode: 'LH',
-                bookings: [],
-                book(flightNum, name) {
-                        console.log(
-                        `${name} booked a seat on ${this.name} flight ${this.iataCode}${flightNum}`
-                        );
-                        bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
-                },
+        function.call(thisArg, arg1, arg2, ...)
+
+示例:
+
+        function greet(message) {
+                console.log(message + ', ' + this.name + '!');
+        }
+
+        const person = {
+                name: 'Alice'
         };
 
-        lufthansa.book(239, 'Jonas');
+        greet.call(person, 'Hello');
 
-        const eurowings = {
-                name: 'Eurowings',
-                iataCode: 'EW',
-                bookings: [],
+在上述示例中，我们定义了一个 greet 函数，它接受一个消息作为参数，并将该消息与 this.name 的值一起输出到控制台。然后，我们使用 call() 方法将 person 对象作为上下文来调用 greet 函数，并传递了消息参数。  
+bind() 方法也是 JavaScript 中的函数方法，用于创建一个新的绑定函数。绑定函数是原始函数的一个副本，其中的 this 值被永久地绑定到指定的对象。与 call() 方法不同，bind() 方法不会立即执行函数，而是返回一个绑定了指定上下文的新函数。
+
+        function greet(message) {
+                console.log(message + ', ' + this.name + '!');
+        }
+
+        const person = {
+                name: 'Alice'
         };
 
-        const book = lufthansa.book;
-        book.call(eurowings, 23, 'Sara');
+        const greetPerson = greet.bind(person, 'Hello');
+        greetPerson();
 
-        const bookEW = book.bind(eurowings);
-        bookEW(34, 'Sahara');
-
-        const bookEw23 = book.bind(eurowings, 23);
-        bookEw23('John Switch');
+在上述示例中，我们定义了一个 greet 函数，与之前的示例相同。然后，我们使用 bind() 方法创建了一个绑定函数 greetPerson，将 person 对象作为上下文，并传递了消息参数。最后，我们调用 greetPerson() 函数，它会在 person 对象的上下文中输出相应的消息。
 
 另外一个例子，每个国家可以指定自己的税率
 
@@ -981,6 +983,26 @@ call 第一个参数传递的是 this 指针
 
         const addJapn2 = addTaxRate(0.23);
         console.log(addJapn2(200));
+
+两者区别：
+
+1. 执行时机：  
+   call() 方法立即调用原始函数，并传递参数列表。  
+   bind() 方法返回一个新的绑定函数，不会立即调用原始函数，需要手动调用返回的绑定函数。
+2. 返回值：  
+   call() 方法执行后，会返回原始函数的结果。  
+   bind() 方法返回一个新的函数，该函数与原始函数具有相同的函数体，但上下文已被永久绑定。
+3. 函数绑定：  
+   call() 方法在调用时临时绑定函数的上下文（this 值）到指定的对象，只在函数调用期间有效。  
+   bind() 方法创建一个新的绑定函数，将函数的上下文永久绑定到指定的对象。
+4. 参数传递：  
+   call() 方法在调用时可以接受一个参数列表，并将这些参数作为参数传递给函数。  
+   bind() 方法可以预先传递参数给绑定函数，并在调用绑定函数时作为参数传递。
+
+适用场景：  
+当我们知道参数的具体数量时，可以使用 call()。  
+当我们想预设函数的部分参数，并创建一个新的函数时，可以使用 bind() 方法。  
+当我们需要立即调用函数，并指定执行上下文时，可以使用 call()方法。
 
 ## 面向对象
 
