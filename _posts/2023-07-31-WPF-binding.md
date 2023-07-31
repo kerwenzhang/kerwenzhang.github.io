@@ -96,15 +96,10 @@ tags:
 如果你的Next button已经绑定了Command，官方的建议是使用CanExecute，而不是直接enable/disable button。   
 1. 在xaml中新建一个textbox和button   
 
-        <TextBox Height="30" Width="300" Margin="10" Name="ComputerName" Text="{Binding ComputerName}" TextChanged="ComputerName_TextChanged"/>
+        <TextBox Height="30" Width="300" Margin="10" Name="ComputerName" Text="{Binding Path=ComputerName, UpdateSourceTrigger=PropertyChanged}"/>
         <Button Height="50" Width="100" Margin="10" Command="{Binding TestCommand}" Background="White">Test</Button>
 
-2. xaml.cs中添加事件  
-
-        private void ComputerName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            vm.HandleComputerNameTextChanged(((TextBox)sender).Text);
-        }
+2. xaml.cs中不需要添加Text change事件
 
 3. View Model中添加属性，button Command 及事件处理, 当ComputerName发生改变时，通过`RaiseCanExecuteChanged`触发button Command的`CanExecute`    
 
@@ -119,13 +114,8 @@ tags:
             {
                 computerName = value;
                 OnPropertyChanged();
+                TestCommand.RaiseCanExecuteChanged(); 
             }
-        }
-
-        internal void HandleComputerNameTextChanged(string text)
-        {
-            ComputerName = text;
-            TestCommand.RaiseCanExecuteChanged(); 
         }
 
         public ICommand _testCommand;
