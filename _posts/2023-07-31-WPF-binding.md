@@ -8,6 +8,8 @@ tags:
   - Web
 ---
 
+# 属性绑定
+
 1. 新建一个 WPF .net framework 工程
 2. 为 MainWindow 新建一个 View model， 新建一个 class， 取名 MainWindowViewModel.cs
 3. ViewModel 继承INotifyPropertyChanged接口，用于事件的触发  
@@ -56,9 +58,7 @@ tags:
             set
             {
                 serverName = value;
-                //InstallVM.Model.SetVariable("ServerName", value);
                 OnPropertyChanged();
-                NextCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -89,5 +89,73 @@ tags:
             else
             {
                 IsButtonEnabled = true;
+            }
+        }
+
+# Command
+如果你的Next button已经绑定了Command，官方的建议是使用CanExecute，而不是直接enable/disable button。   
+1. 在xaml中新建一个textbox和button   
+
+        <TextBox Height="30" Width="300" Margin="10" Name="ComputerName" Text="{Binding ComputerName}" TextChanged="ComputerName_TextChanged"/>
+        <Button Height="50" Width="100" Margin="10" Command="{Binding TestCommand}" Background="White">Test</Button>
+
+2. xaml.cs中添加事件  
+
+        private void ComputerName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            vm.HandleComputerNameTextChanged(((TextBox)sender).Text);
+        }
+
+3. View Model中添加属性，button Command 及事件处理, 当ComputerName发生改变时，通过`RaiseCanExecuteChanged`触发button Command的`CanExecute`    
+
+        private string computerName = "";
+        public string ComputerName
+        {
+            get
+            {
+                return computerName;
+            }
+            set
+            {
+                computerName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        internal void HandleComputerNameTextChanged(string text)
+        {
+            ComputerName = text;
+            TestCommand.RaiseCanExecuteChanged(); 
+        }
+
+        public ICommand _testCommand;
+        public virtual ICommand TestCommand
+        {
+            get
+            {
+
+                if (_testCommand == null)
+                {
+
+                    _testCommand = new DelegateCommand(
+                        () =>
+                        {
+                            MessageBox.Show("test");
+                        },
+                        // can execute
+                        () => canGotoNext());
+                }
+                return _testCommand;
+            }
+        }
+
+        public virtual bool canGotoNext()
+        {
+            if (string.IsNullOrEmpty(ComputerName))
+            {
+                return false;
+            } else
+            {                
+                return true;
             }
         }
