@@ -269,6 +269,26 @@ Object.entries:
         let arr = [ 'a', 'b', 'c' ];
         arr.length = 0;
 
+##### 遍历
+
+    const arr3 = [1,2,3,4,5,6]
+    for(const item of arr3){
+        console.log(item);
+    }
+    for(const [index, item] of arr3.entries()){
+        console.log(`index: ${index}, item: ${item}`);
+    }
+
+    arr3.forEach(function(item) {
+        console.log(item);
+    })
+    arr3.forEach( function(item, index, array) {
+        console.log(`index: ${index}, item: ${item}`);  
+    })
+
+注意：  
+forEach 无法添加break和Continue  
+
 ##### 常用方法
 
     at(index)           // 获取数组指定位置的元素
@@ -285,6 +305,7 @@ Object.entries:
     includes('subElement')  //是否包含指定元素
     shift()                 //移除第一个元素
     unshift('newItem')      //添加新的元素到数组开头
+    reduce(function, initialValue)   //对数组遍历,返回一个单个返回值
 
 example:  
 
@@ -300,7 +321,7 @@ example:
 
         const sum = arr1.concat(arr2);         
         console.log(sum);                        // [1,2,3,4,5,6]
-        console.log([...arr1, ...arr2]);
+        console.log([...arr1, ...arr2]);         // [1,2,3,4,5,6]
 
         console.log(sum.join('-'));             // 1-2-3-4-5-6
 
@@ -320,11 +341,11 @@ slice()方法的一个重要应用，是将类似数组的对象转为真正的�
 map()  
 map 方法将数组的所有成员依次传入参数函数，然后把每一次的执行结果组成一个新数组返回。
 
-    let numbers = [1, 2, 3];
-    numbers.map(function (n) {
+    const numbers = [1, 2, 3];
+    const newArr = numbers.map(function (n) {
         return n + 1;
-    });
-    // [2, 3, 4]
+    });    // [2, 3, 4]
+    const newArr2 = numbers.map(num => num + 1);        // [2,3,4]
 
 filter()  
 filter 方法用于过滤数组成员，满足条件的成员组成一个新数组返回。
@@ -352,6 +373,17 @@ unshift()
         const newLength = friend.unshift('John');
         console.log(friends);     // ['John', 'Michale', 'Steven', 'Peter']
         console.log(newLength);   // 4
+
+reduce()  
+Array.reduce()方法是对数组的遍历,返回一个单个返回值  
+
+        const array1 = [1, 2, 3, 4];
+        const initialValue = 0;
+        const sumWithInitial = array1.reduce((accumulator, currentValue) => accumulator + currentValue, initialValue);
+        console.log(sumWithInitial);   // 10
+
+        const max = array1.reduce((acc, mov) => acc > mov ? acc : mov, array1[0]);  // 4
+
 
 #### Set
 
@@ -390,6 +422,10 @@ Maps 用来存储 key,value pair
 
         console.log(rest.has('categories'));    // false
         rest.delete('name');
+        
+        rest.forEach(function(value, key, map) {
+            console.log(`${key}: ${value}`);
+        })
 
 #### 字符串对象
 
@@ -1267,13 +1303,24 @@ DOM，全称“Document Object Model（文档对象模型）”，它是由 W3C 
                 console.log(document.querySelector('.guess').value);
         });
 
-监听键盘 keydown 事件：
+    监听键盘 keydown 事件：
 
         document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') {
                         console.log('ESC is pressed!');
                 }
         });
+
+5. 修改HTML, `innerHTML` 获取全部html内容, `insertAdjacentHTML`插入页面元素    
+
+        const containerMovements = document.querySelector('.movements');
+        containerMovements.innerHTML = '';
+        const html = `
+            <div class="movements__row">
+                ...
+            </div>
+        `;
+        containerMovements.insertAdjacentHTML("afterbegin", html);
 
 ### 事件
 
