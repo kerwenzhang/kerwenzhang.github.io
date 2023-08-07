@@ -292,20 +292,23 @@ forEach 无法添加break和Continue
 ##### 常用方法
 
     at(index)           // 获取数组指定位置的元素
+    concat()                 //多个数组合并
+    find()                  //返回第一个符合的元素
+    filter()                //过滤数组成员，将满足条件的成员组成一个新数组返回。
+    includes('subElement')  //是否包含指定元素    
+    indexOf('subElement')   //返回指定元素的位置
+    join('seperator')                   //将数组元素连接成字符串
+    map()  // 将数组的所有成员依次传入参数函数，然后把每一次的执行结果组成一个新数组返回
+    shift()                 //移除第一个元素
     slice(startIndex, endIndex)                  //获取数组中的某段数组元素
     splice(startIndex, endIndex)        // 与slice相似，但会影响原数组
-    push()                   //在数组末尾添加元素
     pop()                    //删除数组最后一个元素
-    toString()               //将数组转换为字符串
-    join('seperator')                   //将数组元素连接成字符串
-    concat()                 //多个数组合并
-    sort()                   //数组元素正向排序
-    reverse()                //数组元素反转，影响原数组
-    indexOf('subElement')   //返回指定元素的位置
-    includes('subElement')  //是否包含指定元素
-    shift()                 //移除第一个元素
-    unshift('newItem')      //添加新的元素到数组开头
+    push()                   //在数组末尾添加元素
     reduce(function, initialValue)   //对数组遍历,返回一个单个返回值
+    reverse()                //数组元素反转，影响原数组
+    sort()                   //数组元素正向排序
+    toString()               //将数组转换为字符串
+    unshift('newItem')      //添加新的元素到数组开头
 
 example:  
 
