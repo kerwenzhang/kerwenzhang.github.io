@@ -262,6 +262,11 @@ Object.entries:
     let myArr = new Array(1,2,3,4);     // bad
     let arr = ['a', 'b', 'c'];          // good
 
+    const x = new Array(7);
+    x.fill(23, 3, 5);  
+
+    const y = Array.from({lenght: 3}, () => 1);  //[1,1,1]
+
 本质上，数组属于一种特殊的对象。typeof 运算符会返回数组的类型是 object。
 
 清空数组的一个有效方法，就是将 length 属性设为 0。
@@ -293,6 +298,7 @@ forEach 无法添加break和Continue
 
     at(index)           // 获取数组指定位置的元素
     concat()                 //多个数组合并
+    fill(data, startIndex, endIndex)  // 填充数组
     find()                  //返回第一个符合的元素
     findIndex()             //返回第一个符合的元素的index
     filter()                //过滤数组成员，将满足条件的成员组成一个新数组返回。
@@ -312,6 +318,8 @@ forEach 无法添加break和Continue
     sort()                   //数组元素正向排序
     toString()               //将数组转换为字符串
     unshift('newItem')      //添加新的元素到数组开头
+
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/arrayFunctions.jpg?raw=true)
 
 example:  
 
