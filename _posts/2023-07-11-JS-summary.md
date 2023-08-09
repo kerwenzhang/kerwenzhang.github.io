@@ -319,7 +319,7 @@ forEach 无法添加break和Continue
     toString()               //将数组转换为字符串
     unshift('newItem')      //添加新的元素到数组开头
 
-![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/arrayFunctions.jpg?raw=true)
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/arrayFunctions.png?raw=true)
 
 example:  
 
