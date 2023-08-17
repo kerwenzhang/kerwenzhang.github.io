@@ -130,6 +130,29 @@ JavaScript 内部，所有数字都是以 64 位浮点数形式储存，即使�
         0.3 / 0.1        // 2.9999999999999996
         (0.3 - 0.2) === (0.2 - 0.1)        // false
 
+将string转为Number
+
+        Number('23');
+        Number.parseInt('30px')         // 30
+        Number.parseInt('23.15')        // 23
+
+        Number.isFinit(20)      // Checking if value is number
+        Number.isNaN(20)        // Check if value is NaN
+
+对于较长的数字，可以加下划线进行分隔
+
+        const diameter = 287_460_000_000
+        console.log(diameter);          // 287460000000
+
+### BigInt
+
+        console.log(2**53 -1 );
+        console.log(Number.MAX_SAFE_INTEGER) //Number 有最大限制9007199254740991, 超过这个最大值，JavaScript无法保证准确
+
+BigInt没有最大值的限制
+
+        console.log(typeof 20n) // bigint
+
 ### Boolean
 
 5 种 falsy value：
@@ -524,6 +547,9 @@ Maps 用来存储 key,value pair
 
         console.log(maskCreditCard(123456789));
 
+        const month = 8;
+        console.log(`${month}`.padStart(2, 0));   // 08
+
 15. repeat(count)
 
 #### 日期对象
@@ -624,10 +650,14 @@ Maps 用来存储 key,value pair
     pow(x,y)	//返回x的y次幂
     abs(x)	//返回数的绝对值
     random()	//返回0~1之间的随机数
+
     trunc()     //截取整数部分，舍弃小数部分
+    
     round(x)	//把数四舍五入为最接近的整数
     ceil(x)	//对一个数进行上舍入
     floor(x)	//对一个数进行下舍入
+ 
+    toFixed(2)   //将数字转换为字符串,并将字符串四舍五入为指定的小数位数。
 
 生成一个 1-20 的随机数
 
