@@ -139,7 +139,7 @@ align-self 允许单个项目有与其他项目不一样的对齐方式
 
 
 # Reference
-[Angular Layout](https://github.com/angular/flex-layout/wiki)
+[Angular Layout](https://github.com/angular/flex-layout/wiki)  
 [Flex布局详解](https://zhuanlan.zhihu.com/p/367346487)    
 [Flex布局详解](https://zhuanlan.zhihu.com/p/359561226)    
 [Flex布局总结](https://blog.csdn.net/tsfx051435adsl/article/details/86075602)  
