@@ -1321,6 +1321,7 @@ document 对象是 window 对象中的子对象。
 
 DOM，全称“Document Object Model（文档对象模型）”，它是由 W3C 组织定义的一个标准。  
 在前端开发时，我们往往需要在页面某个地方添加一个元素或者删除元素，这种添加元素、删除元素的操作就是通过 DOM 来实现的。说白了，DOM 就是一个接口，我们可以通过 DOM 来操作页面中各种元素，例如添加元素、删除元素、替换元素等。
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript9.jpg?raw=true)  
 
 1.  DOM 节点属性
 
