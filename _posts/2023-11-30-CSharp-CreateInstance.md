@@ -16,3 +16,5 @@ For Late binding we have to use System.Reflection namespace, which allows us to 
 + Invoke the Method using objAddType.InvokeMember function.  
 
 ![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/latebinding.png?raw=true)  
+
+The method Type.GetTypeFromProgID is used to load the type information of the COM object. The call to Activator.CreateInstance returns an instance of the COM object. And Finally InvokeMember function is used to call the Method of COM object.  
