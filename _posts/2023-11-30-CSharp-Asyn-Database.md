@@ -7,7 +7,14 @@ catalog: true
 tags:
   - C#
 ---
- 
+
+# Calling stored procedure in C#:
+https://stackoverflow.com/a/20766080/7352168 
+
+# async call sql stored procedure
+
+
+
 [Using Async/Await Task Methods With SQL Queries .NET 4.5](https://www.codeproject.com/Articles/1121822/Using-Async-Await-Task-Methods-With-SQL-Queries-NE)  
 [C# async with SQL query](https://www.codeproject.com/Questions/5264846/Csharp-async-with-SQL-query)  
 [Is it possible to commit/rollback SqlTransaction in asynchronous?](https://stackoverflow.com/questions/31152954/is-it-possible-to-commit-rollback-sqltransaction-in-asynchronous)  
