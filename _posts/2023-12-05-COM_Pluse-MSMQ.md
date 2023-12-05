@@ -332,3 +332,9 @@ CoGetObject 显示名称参数是`queue:/new:`，后跟要实例化的服务器�
 
 # Reference
 [COM+ Queued Components](https://learn.microsoft.com/en-us/windows/win32/cossdk/com--queued-components-concepts)  
+[Using Message Queues In C#](https://www.c-sharpcorner.com/article/using-message-queues-in-c-sharp/)  
+[Message Queuing Using C#](https://www.c-sharpcorner.com/article/message-queuing-using-C-Sharp/)  
+[Message Queue](https://www.codeproject.com/Articles/1260171/Message-Queue-2)  
+[Send Message to Microsoft Message Queue (MSMQ) – C# Example](https://coding-examples.com/csharp/remoting/send-message-to-microsoft-message-queue-msmq-c-example/)  
+[Use Visual C# to write to and read from Microsoft Message Queuing](https://learn.microsoft.com/en-us/previous-versions/troubleshoot/msmq/write-read-msmq-visual-csharp)  
+[MessageQueue Class](https://learn.microsoft.com/en-us/dotnet/api/system.messaging.messagequeue?view=netframework-4.8.1)  
