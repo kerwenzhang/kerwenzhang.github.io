@@ -493,5 +493,6 @@ CoGetObject 显示名称参数是`queue:/new:`，后跟要实例化的服务器�
 [Use Visual C# to write to and read from Microsoft Message Queuing](https://learn.microsoft.com/en-us/previous-versions/troubleshoot/msmq/write-read-msmq-visual-csharp)  
 [MessageQueue Class](https://learn.microsoft.com/en-us/dotnet/api/system.messaging.messagequeue?view=netframework-4.8.1)    
 
-[COM+ and .NET - A practical approach - Part 2](https://www.codeproject.com/Articles/6291/COM-and-NET-A-practical-approach-Part-2)
+[COM+ and .NET - A practical approach - Part 2](https://www.codeproject.com/Articles/6291/COM-and-NET-A-practical-approach-Part-2)  
+[COM+ activation on a remote server with partitions in C#](https://stackoverflow.com/a/42353997/7352168)
 
