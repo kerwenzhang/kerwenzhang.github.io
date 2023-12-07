@@ -329,7 +329,8 @@ CoGetObject 显示名称参数是`queue:/new:`，后跟要实例化的服务器�
 [Handling Errors in Queued Components](https://learn.microsoft.com/en-us/windows/win32/cossdk/handling-errors-in-queued-components)  
 
 
-# C#实例
+# C# QC实例
+以下是如何在C#中操控QC，不牵扯COM+ QC组件。  
 在 C# 中，我们还可以使用 MessageQueue 类的 Create（） 方法以编程方式创建消息队列。使用 Create（） 方法，必须传递新队列的路径。路径由队列所在的主机名和队列名称组成。  
 1. 创建一个新的C# .net framework winform工程FirstQueue
 2. 在form上添加四个button： Create,Find, Send和Read，添加一个label，用来显示读取的队列消息
@@ -490,4 +491,7 @@ CoGetObject 显示名称参数是`queue:/new:`，后跟要实例化的服务器�
 [Message Queue](https://www.codeproject.com/Articles/1260171/Message-Queue-2)  
 [Send Message to Microsoft Message Queue (MSMQ) – C# Example](https://coding-examples.com/csharp/remoting/send-message-to-microsoft-message-queue-msmq-c-example/)  
 [Use Visual C# to write to and read from Microsoft Message Queuing](https://learn.microsoft.com/en-us/previous-versions/troubleshoot/msmq/write-read-msmq-visual-csharp)  
-[MessageQueue Class](https://learn.microsoft.com/en-us/dotnet/api/system.messaging.messagequeue?view=netframework-4.8.1)  
+[MessageQueue Class](https://learn.microsoft.com/en-us/dotnet/api/system.messaging.messagequeue?view=netframework-4.8.1)    
+
+[COM+ and .NET - A practical approach - Part 2](https://www.codeproject.com/Articles/6291/COM-and-NET-A-practical-approach-Part-2)
+
