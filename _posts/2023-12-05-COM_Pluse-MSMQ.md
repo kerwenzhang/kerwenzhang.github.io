@@ -424,7 +424,7 @@ CoGetObject 显示名称参数是`queue:/new:`，后跟要实例化的服务器�
         private void buttonRead_Click(object sender, EventArgs e)
         {
             MessageQueue queue = new MessageQueue(@".\Private$\myqueue");
-            queue.Formatter  = new XmlMessageFormatter(new Type[2] { typeof(string), typeof(string)});
+            queue.Formatter = new XmlMessageFormatter(new String[] { "System.String, mscorlib" });
             System.Messaging.Message Mymessage = queue.Receive();
             labelQueue.Text = Mymessage.Body.ToString();
         }
@@ -441,7 +441,7 @@ CoGetObject 显示名称参数是`queue:/new:`，后跟要实例化的服务器�
             public int Hours;
             public double Rate;
         }
-        
+
     比如，我们自己创建一个员工信息类，在消息队列里传送一个该类的实例  
 
         private void Send()
@@ -478,11 +478,7 @@ CoGetObject 显示名称参数是`queue:/new:`，后跟要实例化的服务器�
             MessageQueue queue = new MessageQueue(@".\Private$\myqueue");
             
             var emp = new Employee();
-            Object o = new object();
-            System.Type[] arrTypes = new System.Type[2];
-            arrTypes[0] = emp.GetType();
-            arrTypes[1] = o.GetType();
-            queue.Formatter = new XmlMessageFormatter(arrTypes);
+            queue.Formatter = new XmlMessageFormatter(new Type[]{ typeof(Employee)});
             emp = ((Employee)queue.Receive().Body);
             labelQueue.Text = $"Employee name: {emp.Name} Salary: {emp.Hours * emp.Rate}";
         }
