@@ -328,6 +328,164 @@ CoGetObject 显示名称参数是`queue:/new:`，后跟要实例化的服务器�
 有时，出现无法将消息成功传递到其预期目标的情况，通常是由于系统或配置存在问题。 例如，消息可能定向到不存在的队列，或者目标队列可能未处于要接收的状态。 消息移动器是一种工具，可将所有失败 的消息队列 消息从一个队列移动到另一个队列，以便可以重试。 消息移动器实用工具是可以使用 VBScript 调用的自动化对象。  
 [Handling Errors in Queued Components](https://learn.microsoft.com/en-us/windows/win32/cossdk/handling-errors-in-queued-components)  
 
+
+# C#实例
+在 C# 中，我们还可以使用 MessageQueue 类的 Create（） 方法以编程方式创建消息队列。使用 Create（） 方法，必须传递新队列的路径。路径由队列所在的主机名和队列名称组成。  
+1. 创建一个新的C# .net framework winform工程FirstQueue
+2. 在form上添加四个button： Create,Find, Send和Read，添加一个label，用来显示读取的队列消息
+3. 在Create button单击事件里添加以下代码创建队列
+
+        private void buttonCreate_Click(object sender, EventArgs e)
+        {
+            using (MessageQueue queue = MessageQueue.Create(@". \myqueue"))
+            {
+                queue.Label = "First Queue";
+                MessageBox.Show($"Queue Created, Path: {queue.Path}, FormatName: {queue.FormatName}");
+            }
+        }
+
+
+    我们将在 localhost 上创建“MynewPublicQueue”。若要创建专用队列，路径名必须包含 private$。例如：\private$\MynewPrivateQueue。  
+    调用 create（） 方法后，可以更改队列的属性。使用 label 属性，将队列的标签设置为“First Queue”。然后将队列的路径和格式名称打出来。格式名称是使用 UUID（通用唯一标识符）自动创建的，该 UUID 可用于访问队列，而无需服务器名称。  
+
+    ![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/mq1.png?raw=true)
+
+    如果你遇到以下错误 `A workgroup installation computer does not support the operation.`  
+    说明你是在一个domain域里，domain的policy不允许创建public的消息队列，将消息队列改为private，成功  
+    @".\private$\myqueue"  
+
+
+
+4. 在Find button的事件里添加以下代码来发现队列  
+
+        private void buttonFind_Click(object sender, EventArgs e)
+        {
+            string publicQueuePath = string.Empty;
+            foreach (MessageQueue queue in MessageQueue.GetPublicQueues())
+            {
+                publicQueuePath += queue.Path + "\r\n";
+            }
+
+            string privateQueuePath = string.Empty;
+            foreach(MessageQueue queue in MessageQueue.GetPrivateQueuesByMachine("localhost"))
+            {
+                privateQueuePath += queue.Path + "\r\n";
+            }
+            MessageBox.Show($"Get all public queues: \r\n {publicQueuePath} Get all private queues: \r\n {privateQueuePath}");
+        }
+
+    若要查找队列，可以使用路径名和格式名称。还可以区分公共队列和private队列。公用队列在 Active Directory 中发布。对于这些队列，没有必要知道它们所在的机器名。
+
+    private队列只能在已知队列所在的机器名称中找到。
+    类 MessageQueue 具有用于搜索队列的静态方法：
+
+        GetPublicQueuesByLable()
+        GetPublicQueuesByCategory()
+        GetPublicQueuesByMachine()
+        GetPublicQueues()
+
+    以上方法返回域中所有公共队列的数组。
+    还可以使用`GetPrivateQueuesByMachine()`获取私有队列。需要指定机器名  
+    注意：  如果你的机器在domain域里，调用`GetPublicQueues`也会抛出异常`A workgroup installation computer does not support the operation.`  
+5. 在Send button的事件里添加以下代码来发送消息  
+
+        private void buttonSend_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!MessageQueue.Exists(@".\Private$\myqueue"))
+                {
+                    MessageQueue.Create(@".\Private$\myqueue");
+                }
+                MessageQueue queue = new MessageQueue(@".\Private$\myqueue");
+                queue.Send("First Message ", "Label1");
+            }
+            catch (MessageQueueException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+    需要为打开的队列指定格式名称。在断开连接的环境中，在发送消息时无法访问队列，因此必须使用格式名称。  
+    格式名称队列的语法为：
+
+    |队列类型|语法|
+    |-------|----|
+    |专用队列|MachineName\Private$\QueueName|
+    |公共队列|MachineName\QueueName|
+    |日记队列|MachineName\QueueName\Journal$|
+    |计算机日志队列|MachineName\Journal$|
+    |机器死信队列|MachineName\DeadLetter$|
+    |计算机事务死信队列|计算机名称\XactDeadLetter$|
+
+    消息发送成功后，可以在 Component Management 管理工具中查看到该消息
+    ![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/mq2.png?raw=true)  
+6. 在Read button的事件里添加以下代码来读取消息   
+
+        private void buttonRead_Click(object sender, EventArgs e)
+        {
+            MessageQueue queue = new MessageQueue(@".\Private$\myqueue");
+            queue.Formatter  = new XmlMessageFormatter(new Type[2] { typeof(string), typeof(string)});
+            System.Messaging.Message Mymessage = queue.Receive();
+            labelQueue.Text = Mymessage.Body.ToString();
+        }
+
+    再次查看Component Management 管理工具，消息已经清空了
+
+7. 发送自定消息  
+    上边我们只是发送了一个string消息，在实际中，我们可能自定义一个数据格式进行发送。  
+
+        public class Employee
+        {
+            public int Id;
+            public string Name;
+            public int Hours;
+            public double Rate;
+        }
+    比如，我们自己创建一个员工信息类，在消息队列里传送一个该类的实例  
+
+        private void Send()
+        {
+            try
+            {
+                if (!MessageQueue.Exists(@".\Private$\myqueue"))
+                {
+                    MessageQueue.Create(@".\Private$\myqueue");
+                }
+                MessageQueue queue = new MessageQueue(@".\Private$\myqueue");
+
+                var emp = new Employee()
+                {
+                    Id = 100,
+                    Name = "John Doe",
+                    Hours = 55,
+                    Rate = 21.0
+                };
+                System.Messaging.Message msg = new System.Messaging.Message();
+                msg.Body = emp;
+                queue.Send(msg);
+            }
+            catch (MessageQueueException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+    读取队列消息  
+
+        private void Read()
+        {
+            MessageQueue queue = new MessageQueue(@".\Private$\myqueue");
+            
+            var emp = new Employee();
+            Object o = new object();
+            System.Type[] arrTypes = new System.Type[2];
+            arrTypes[0] = emp.GetType();
+            arrTypes[1] = o.GetType();
+            queue.Formatter = new XmlMessageFormatter(arrTypes);
+            emp = ((Employee)queue.Receive().Body);
+            labelQueue.Text = $"Employee name: {emp.Name} Salary: {emp.Hours * emp.Rate}";
+        }
+
 # Reference
 [COM+ Queued Components](https://learn.microsoft.com/en-us/windows/win32/cossdk/com--queued-components-concepts)  
 [Using Message Queues In C#](https://www.c-sharpcorner.com/article/using-message-queues-in-c-sharp/)  
