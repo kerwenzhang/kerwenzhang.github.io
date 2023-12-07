@@ -345,14 +345,13 @@ CoGetObject 显示名称参数是`queue:/new:`，后跟要实例化的服务器�
         }
 
 
-    我们将在 localhost 上创建“MynewPublicQueue”。若要创建专用队列，路径名必须包含 private$。例如：\private$\MynewPrivateQueue。  
+    我们将在 localhost 上创建一个新的public队列“myQueue”。若要创建私有队列，路径名必须包含 private$。例如：\private$\MynewPrivateQueue。  
     调用 create（） 方法后，可以更改队列的属性。使用 label 属性，将队列的标签设置为“First Queue”。然后将队列的路径和格式名称打出来。格式名称是使用 UUID（通用唯一标识符）自动创建的，该 UUID 可用于访问队列，而无需服务器名称。  
 
     ![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/mq1.png?raw=true)
 
     如果你遇到以下错误 `A workgroup installation computer does not support the operation.`  
-    说明你是在一个domain域里，domain的policy不允许创建public的消息队列，将消息队列改为private，成功  
-    @".\private$\myqueue"  
+    说明你是在一个domain域里，domain的policy不允许创建public的消息队列，将消息队列改为private，`@".\private$\myqueue"` 
 
 
 
@@ -405,6 +404,7 @@ CoGetObject 显示名称参数是`queue:/new:`，后跟要实例化的服务器�
                 Console.WriteLine(ex.Message);
             }
         }
+
     需要为打开的队列指定格式名称。在断开连接的环境中，在发送消息时无法访问队列，因此必须使用格式名称。  
     格式名称队列的语法为：
 
@@ -441,6 +441,7 @@ CoGetObject 显示名称参数是`queue:/new:`，后跟要实例化的服务器�
             public int Hours;
             public double Rate;
         }
+        
     比如，我们自己创建一个员工信息类，在消息队列里传送一个该类的实例  
 
         private void Send()
