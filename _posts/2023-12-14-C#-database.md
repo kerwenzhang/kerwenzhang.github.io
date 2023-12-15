@@ -29,7 +29,7 @@ C# 中的 SqlCommand 允许用户查询数据库并发送SQL命令。 SQL命令�
         {
             string connetionString;
             SqlConnection cnn;
-            connetionString = @"Data Source=xxxx;Initial Catalog=Demodb;Trusted_Connection=Yes;";
+            connetionString = @"Data Source=localhost;Initial Catalog=Demodb;Trusted_Connection=Yes;";
             cnn = new SqlConnection(connetionString);
             cnn.Open();
             MessageBox.Show("Connection Open  !");
@@ -44,7 +44,7 @@ SqlDataReader 用于获取 SQL 查询命令返回的数据， 获取到数据后
     {
         string connetionString;
         SqlConnection cnn;
-        connetionString = @"Data Source=F3JW9G3;Initial Catalog=Demodb;Trusted_Connection=Yes;";
+        connetionString = @"Data Source=localhost;Initial Catalog=Demodb;Trusted_Connection=Yes;";
         cnn = new SqlConnection(connetionString);
         cnn.Open();
 
@@ -76,7 +76,7 @@ SqlDataReader 用于获取 SQL 查询命令返回的数据， 获取到数据后
     {
         string connetionString;
         SqlConnection cnn;
-        connetionString = @"Data Source=xxxx;Initial Catalog=Demodb;Trusted_Connection=Yes;";
+        connetionString = @"Data Source=localhost;Initial Catalog=Demodb;Trusted_Connection=Yes;";
         cnn = new SqlConnection(connetionString);
         cnn.Open();
 
@@ -96,7 +96,7 @@ SqlDataReader 用于获取 SQL 查询命令返回的数据， 获取到数据后
     {
         string connetionString;
         SqlConnection cnn;
-        connetionString = @"Data Source=F3JW9G3;Initial Catalog=Demodb;Trusted_Connection=Yes;";
+        connetionString = @"Data Source=localhost;Initial Catalog=Demodb;Trusted_Connection=Yes;";
         cnn = new SqlConnection(connetionString);
         cnn.Open();
 
@@ -116,7 +116,7 @@ SqlDataReader 用于获取 SQL 查询命令返回的数据， 获取到数据后
     {
         string connetionString;
         SqlConnection cnn;
-        connetionString = @"Data Source=xxxx;Initial Catalog=Demodb;Trusted_Connection=Yes;";
+        connetionString = @"Data Source=localhost;Initial Catalog=Demodb;Trusted_Connection=Yes;";
         cnn = new SqlConnection(connetionString);
         cnn.Open();
 
