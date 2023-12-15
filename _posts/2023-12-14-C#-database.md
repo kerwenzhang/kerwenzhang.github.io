@@ -11,7 +11,10 @@ tags:
 # 数据库基本操作
 
 C# 中的 SqlCommand 允许用户查询数据库并发送SQL命令。 SQL命令由SQL连接对象指定。 最常见的有两种方法，用于查询结果的 `ExecuteReader` 方法和用于插入、更新和删除命令的 `ExecuteNonQuery` 方法。 
-在正式开始前，先在SQL Server里创建一个Demodb数据库。在Demodb里创建一个demotb的表。表里只有两列TutorialID和TutorialName。插入两行测试数据.
+
+## 准备工作
+在正式开始前，先在SQL Server里创建一个Demodb数据库。在Demodb里创建一个demotb的表。表里只有两列TutorialID和TutorialName。插入两行测试数据.  
+
 |TutorialID|TutorialName|
 |--|--|
 |1|C#|
@@ -136,13 +139,13 @@ ADODB （ActiveX Data Objects DB）是 OLEDB 上的 API 层, 由 Microsoft 于 1
 ADO.Net 是基于 .Net 的数据库连接, 它是 .NET Framework 的一个组件， 是ADODB的升级/替换。ADO.NET 内置了对 SQL Server、OleDB 和 ODBC 的支持. ADO.Net 现在使用 System.Data.SqlClient 库为MS 的数据库提供服务。
 
 ### ADODB vs ADO.NET
- ADO（和 ADO.NET 都是用于Microsoft环境中数据访问的技术，但它们在体系结构、功能和编程模型方面有很大不同。  
+ ADO和 ADO.NET 都是用于Microsoft环境中数据访问的技术，但它们在体系结构、功能和编程模型方面有很大不同。  
 1. 结构  
-  ADO：它遵循连接的体系结构模型，其中与数据库建立连接，并直接通过连接访问和操作数据。  
-  ADO.NET：它遵循断开连接的体系结构模型，其中数据从数据库中检索，存储在 DataSet（或其他数据容器）中，并与数据库断开连接。可以在本地操作数据，并在必要时对数据库进行更改。  
+  ADO：它遵循连接的体系结构模型，与数据库建立连接，并直接通过连接访问和操作数据。  
+  ADO.NET：它遵循断开连接的体系结构模型，从数据库中检索数据，将其存储在 DataSet（或其他数据容器）中，然后断开数据库连接。用户可以在本地操作数据，并在必要时对数据库进行更改。  
 2. 数据访问组件
-  ADO：它使用 Recordset 和 Connection 等对象来管理数据访问和检索。  
-  ADO.NET：它使用 DataSet、DataTable、DataReader 和 DataAdapter 作为主要数据访问组件。DataSet 表示具有多个 DataTable 的数据的内存中缓存，DataAdapter 促进了数据库和 DataSet 之间的通信。  
+  ADO：使用 Recordset 和 Connection 等来访问和检索数据。  
+  ADO.NET：使用 DataSet、DataTable、DataReader 和 DataAdapter 作为主要数据访问组件。DataSet 具有多个 DataTable，是数据在内存中的缓存，DataAdapter 方便了数据库和 DataSet 之间的通信。  
 3. 可扩展性和性能  
   ADO：对于大型数据集，它的效率可能较低，因为它需要与数据库的持续连接，这可能会影响性能。  
   ADO.NET：其断开连接的特性允许提高可扩展性和性能。数据可以获取一次，然后在本地操作，而无需连续的数据库连接。  
