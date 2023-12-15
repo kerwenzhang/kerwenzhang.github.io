@@ -127,5 +127,32 @@ SqlDataReader 用于获取 SQL 查询命令返回的数据， 获取到数据后
         cnn.Close();
     }
 
+# ADODB
+## OLEDB, ADODB, ADO.NET
+Oledb（Object Linking and Embedding DB）和 ODBC 都是与数据库通信的标准. OLEDB 是 Microsoft设计的标准，它定义了一组用于访问数据库的 API（应用程序接口）函数。它其实是一个 COM（组件对象模型）API，是 ODBC的一种高级替代者和继承者。通常，OLEDB 用于创建特定于数据库的驱动程序（称为提供程序），该驱动程序可由更高级别的数据访问库（如 ADO 或 ADO.NET）实现。   
+
+ADODB （ActiveX Data Objects DB）是 OLEDB 上的 API 层, 由 Microsoft 于 1996 年推出, 它基于 COM。适用于基于 MS 的数据库（如 Sql Server），提供一致的 API 和优化。ADODB 是 OLEDB 使用者。它与 OLEDB 通信，而 OLEDB 提供程序又直接与数据库或数据库服务器通信。  
+
+ADO.Net 是基于 .Net 的数据库连接, 它是 .NET Framework 的一个组件， 是ADODB的升级/替换。ADO.NET 内置了对 SQL Server、OleDB 和 ODBC 的支持. ADO.Net 现在使用 System.Data.SqlClient 库为MS 的数据库提供服务。
+
+### ADODB vs ADO.NET
+ ADO（和 ADO.NET 都是用于Microsoft环境中数据访问的技术，但它们在体系结构、功能和编程模型方面有很大不同。  
+1. 结构  
+  ADO：它遵循连接的体系结构模型，其中与数据库建立连接，并直接通过连接访问和操作数据。  
+  ADO.NET：它遵循断开连接的体系结构模型，其中数据从数据库中检索，存储在 DataSet（或其他数据容器）中，并与数据库断开连接。可以在本地操作数据，并在必要时对数据库进行更改。  
+2. 数据访问组件
+  ADO：它使用 Recordset 和 Connection 等对象来管理数据访问和检索。  
+  ADO.NET：它使用 DataSet、DataTable、DataReader 和 DataAdapter 作为主要数据访问组件。DataSet 表示具有多个 DataTable 的数据的内存中缓存，DataAdapter 促进了数据库和 DataSet 之间的通信。  
+3. 可扩展性和性能  
+  ADO：对于大型数据集，它的效率可能较低，因为它需要与数据库的持续连接，这可能会影响性能。  
+  ADO.NET：其断开连接的特性允许提高可扩展性和性能。数据可以获取一次，然后在本地操作，而无需连续的数据库连接。  
+4. 语言独立性  
+  ADO：它主要设计用于基于 COM 的语言，如 VB6 和 VBScript，但它也可以与其他语言一起使用。  
+  ADO.NET：它基于 .NET Framework 构建，与语言无关，可以从各种 .NET 语言（如 C#、VB.NET 和 F#）访问。  
+5. 安全性和性能优化  
+  ADO：它提供有限的内置安全功能和优化选项。  
+  ADO.NET：它提供了改进的安全措施，例如防止 SQL 注入的参数化查询，以及连接池和异步数据访问等性能优化技术。  
+
 # Reference
 [C# Database Connection: How to connect SQL Server (Example)](https://www.guru99.com/c-sharp-access-database.htm)  
+[ADO 和 ADO.NET 之间的差异](https://net-informations.com/faq/ado/ado-difference.htm)  
