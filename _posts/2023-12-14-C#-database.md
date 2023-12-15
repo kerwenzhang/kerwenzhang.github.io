@@ -297,8 +297,89 @@ ADO.Net 是基于 .Net 的数据库连接, 它是 .NET Framework 的一个组件
         MessageBox.Show("Success to DELETE data");
     }
 
+# ADO.NET
+ADO.NET 是一组向 .NET Framework 程序员公开数据访问服务的类。 ADO.NET 为创建分布式数据共享应用程序提供了一组丰富的组件, 提供对诸如 SQL Server 和 XML 这样的数据源以及通过 OLE DB 和 ODBC 公开的数据源的一致访问。ADO.NET 类位于 System.Data.dll 中，并与 System.Xml.dll 中的 XML 类集成。  
+
+以前，数据处理主要依赖于基于连接的双层模型。 随着数据处理越来越多地使用多层体系结构，程序员正在向断开方法转换，以便为他们的应用程序提供更好的可伸缩性。  
+
+ADO.NET 用于访问和操作数据的两个主要组件是 .NET Framework 数据提供程序(data providers)和 DataSet。  
+
+**.NET Framework data providers** 是专门为数据操作以及快速、只进、只读访问数据而设计的组件。 data providers包括四个核心对象：    
+
+|对象|说明|
+|--|--|
+|Connection|建立与特定数据源的连接。|
+|Command|对数据源执行命令。 使用 Command 对象可以访问用于返回数据、修改数据、运行存储过程以及发送或检索参数信息的数据库命令。|
+|DataReader|从数据源中读取只进且只读的数据流。DataReader 可从数据源提供高性能的数据流。|
+|DataAdapter|DataAdapter 在 DataSet 对象和数据源之间起到桥梁作用。 DataAdapter 使用 Command 对象在数据源中执行 SQL 命令以向 DataSet 中加载数据，并将对 DataSet 中数据的更改协调回数据源。|
+
+除了核心类之外，.NET Framework data providers还包含以下类。
++ Transaction  
+  将命令登记在数据源处的事务中。 ADO.NET 还使用 System.Transactions 命名空间中的类提供对事务的支持。  
++ CommandBuilder  
+  一个帮助器对象，它自动生成 DataAdapter 的命令属性或从存储过程中派生参数信息，并填充 Parameters 对象的 Command 集合。   
++ ConnectionStringBuilder  
+  一个帮助器对象，它提供一种用于创建和管理由 Connection 对象使用的连接字符串的内容的简单方法。   
++ Parameter  
+  定义命令和存储过程的输入、输出和返回值参数。   
+
+**ADO.NET DataSet** 是专门为独立于任何数据源的数据访问而设计的。 因此，它可以用于多种不同的数据源，用于 XML 数据，或用于管理应用程序本地的数据。DataSet 对象对于支持 ADO.NET 中的断开连接的分布式数据方案起到至关重要的作用。 DataSet 是数据驻留在内存中的表示形式，不管数据源是什么，它都可提供一致的关系编程模型。 DataSet 包含一个或多个 DataTable 对象的集合，这些对象由数据行和数据列以及有关 DataTable 对象中数据的主键、外键、约束和关系信息组成。
+
+DataReader 还是 DataSet?  
+当你决定应用程序是应该使用 DataReader还是 DataSet时，请考虑应用程序所需的功能类型。 使用 DataSet 可执行以下操作：
+
++ 在应用程序中将数据缓存在本地，以便可以对数据进行处理。 如果只需要读取查询结果，则 DataReader 是更好的选择。  
++ 在层间或从 XML Web services 对数据进行远程处理。  
++ 与数据进行动态交互，例如绑定到 Windows 窗体控件或组合并关联来自多个源的数据。
++ 对数据执行大量的处理，而不需要与数据源保持打开的连接，从而将该连接释放给其他客户端使用。
+
+如果不需要 DataSet 所提供的功能，则可以通过使用 DataReader 以只进、只读方式返回数据，从而提高应用程序的性能。 虽然 DataAdapter 使用 DataReader 来填充 DataSet 的内容，但使用 DataReader 可以提升性能，因为这样可以节省 DataSet 所使用的内存，并将省去创建 DataSet 并填充其内容所需的处理。  
+
+## SQL Server数据类型映射 
+
+[MS Link](https://learn.microsoft.com/zh-cn/dotnet/framework/data/adonet/sql-server-data-type-mappings)
+
+## 连接池
+连接到数据源可能需要很长时间。 连接到数据库服务器通常由几个需要很长时间的步骤组成。 必须建立物理通道（例如套接字或命名管道），必须与服务器进行初次握手，必须分析连接字符串信息，必须由服务器对连接进行身份验证，必须运行检查以便在当前事务中登记，等等。实际上，大多数应用程序仅使用一个或几个不同的连接配置。 这意味着在执行应用程序期间，许多相同的连接将反复地打开和关闭。  
+为了最大程度地降低打开连接的成本，ADO.NET 使用一种称为“连接池”的优化技术，这种技术可最大程度地降低重复打开和关闭连接所造成的成本。  
+连接池通过为每个给定的连接配置保留一组活动连接来管理连接。每当用户在连接上调用 Open 时，池进程就会查找池中可用的连接。 如果某个池连接可用，会将该连接返回给调用者，而不是打开新连接。 应用程序在该连接上调用 Close 时，池进程会将连接返回到活动连接池集中，而不是关闭连接。 连接返回到池中之后，即可在下一个 Open 调用中重复使用。    
+只有配置相同的连接可以建立池连接。 ADO.NET 会同时保留多个池，每个池对应一种配置。在初次打开连接时，将根据完全匹配算法创建连接池，该算法将池与连接中的连接字符串关联。 每个连接池都与一个不同的连接字符串相关联。 打开新连接时，如果连接字符串并非与现有池完全匹配，将创建一个新池。 按进程、应用程序域、连接字符串以及 Windows 标识（在使用集成的安全性时）来建立池连接。 连接字符串还必须是完全匹配的；按不同顺序为同一连接提供的关键字将分到单独的池中。  
+
+
+    using (SqlConnection connection = new SqlConnection(  
+      "Integrated Security=SSPI;Initial Catalog=Northwind"))  
+        {  
+            connection.Open();
+            // Pool A is created.  
+        }  
+      
+    using (SqlConnection connection = new SqlConnection(  
+      "Integrated Security=SSPI;Initial Catalog=pubs"))  
+        {  
+            connection.Open();
+            // Pool B is created because the connection strings differ.  
+        }  
+      
+    using (SqlConnection connection = new SqlConnection(  
+      "Integrated Security=SSPI;Initial Catalog=Northwind"))  
+        {  
+            connection.Open();
+            // The connection string matches pool A.  
+        }
+
+
+如果空闲时间达到大约 4-8 分钟，或池进程检测到与服务器的连接已断开，连接池进程会将该连接从池中移除。 注意，只有在尝试与服务器进行通信之后才能检测到断开的连接。 如果发现某连接不再连接到服务器，则会将其标记为无效。 无效连接只有在关闭或重新建立后，才会从连接池中移除。  
+
+# 事务
+
+# 存储过程
+
+
+# 异步
+
 # Reference
 [C# Database Connection: How to connect SQL Server (Example)](https://www.guru99.com/c-sharp-access-database.htm)  
 [ADO 和 ADO.NET 之间的差异](https://net-informations.com/faq/ado/ado-difference.htm)  
 [ADODB Connection in .NET Application Using C#](https://www.c-sharpcorner.com/UploadFile/9a81a4/adodb-connection-in-net-application-using-C-Sharp/)  
 [C# (CSharp) ADODB.Command示例](https://www.cnblogs.com/lothar/p/15781452.html)   
+[Asynchronous Programming](https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/asynchronous-programming)  
