@@ -90,7 +90,7 @@ SqlDataReader 用于获取 SQL 查询命令返回的数据， 获取到数据后
         cnn.Close();
     }
 
-## 更新数据库
+## 更新数据
 
     private void buttonUpdate_Click(object sender, EventArgs e)
     {
@@ -110,7 +110,7 @@ SqlDataReader 用于获取 SQL 查询命令返回的数据， 获取到数据后
         cnn.Close();
     }
 
-## 删除  
+## 删除数据  
 
     private void buttonDelete_Click(object sender, EventArgs e)
     {
@@ -156,6 +156,149 @@ ADO.Net 是基于 .Net 的数据库连接, 它是 .NET Framework 的一个组件
   ADO：它提供有限的内置安全功能和优化选项。  
   ADO.NET：它提供了改进的安全措施，例如防止 SQL 注入的参数化查询，以及连接池和异步数据访问等性能优化技术。  
 
+
+## 实例
+添加ADODB引用  
+  在Reference上右键- Add Reference - 在COM tab页上搜索data，选择 `Microsoft ActiveX Data Objects 6.1 Library`
+   ![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/db.png?raw=true)  
+## 连接数据库
+在form里新加一个button ADO Connect， 添加事件  
+
+    private void buttonAdoConnect_Click(object sender, EventArgs e)
+    {
+        string str = "Provider=MSOLEDBSQL;Server=localhost;Database=Demodb;Trusted_Connection=Yes;";
+        ADODB.Connection conn;
+        conn = new ADODB.Connection();
+        conn.Open(str, "", "", -1);  // connection Open
+        MessageBox.Show("Success to connect database using ADODB");
+        conn.Close();
+    }
+      
+## 读取数据
+在form里新加一个button ADO Read，添加事件  
+
+    private void buttonAdoRead_Click(object sender, EventArgs e)
+    {
+        string str = "Provider=MSOLEDBSQL;Server=localhost;Database=Demodb;Trusted_Connection=Yes;";
+
+        Connection conn = new Connection();
+        Recordset rs = new Recordset();
+
+        conn.Open(str);  // connection Open
+                          
+        rs.ActiveConnection = conn;
+        rs.CursorLocation = CursorLocationEnum.adUseClient;
+        rs.CursorType = CursorTypeEnum.adOpenForwardOnly;
+        rs.LockType = LockTypeEnum.adLockReadOnly;
+        rs.CacheSize = 500;
+
+        string SQLQuery = "Select * from demotb";
+        //* Execute query and get recordset
+        rs.Open(SQLQuery, conn, CursorTypeEnum.adOpenUnspecified, LockTypeEnum.adLockUnspecified, (int)CommandTypeEnum.adCmdUnknown);
+
+        rs.MoveFirst();
+        string output = string.Empty;
+        while(!rs.EOF)
+        {
+            string id = rs.Fields["TutorialID"].Value.ToString();
+            string name = rs.Fields["TutorialName"].Value.ToString();
+            output += id + " - " + name + "\n";
+
+            rs.MoveNext();
+        }
+
+        rs.ActiveConnection = null;
+        conn.Close();
+        MessageBox.Show(output);
+    }
+
+
+## 插入数据  
+在form里新加一个button ADO Write，添加事件   
+
+    private void buttonAdoWrite_Click(object sender, EventArgs e)
+    {
+        string str = "Provider=MSOLEDBSQL;Server=localhost;Database=Demodb;Trusted_Connection=Yes;";
+
+        ADODB.Connection conn = new Connection();
+        
+        conn.Open(str);  // connection Open
+
+        ADODB.Command cmdInsert = new Command();
+        cmdInsert.ActiveConnection = conn;
+
+        cmdInsert.CommandText = "Insert into Demotb(TutorialID, TutorialName) VALUES(?,?)";
+        cmdInsert.CommandType = CommandTypeEnum.adCmdText;
+
+        ADODB.Parameter paramId = cmdInsert.CreateParameter(
+            "TutorialID",
+            DataTypeEnum.adVarChar,
+            ParameterDirectionEnum.adParamInput,
+            10,
+            "3");
+        cmdInsert.Parameters.Append(paramId);
+        ADODB.Parameter paramName = cmdInsert.CreateParameter(
+            "TutorialName",
+            DataTypeEnum.adVarChar,
+            ParameterDirectionEnum.adParamInput,
+            10,
+            "VB.Net");
+        cmdInsert.Parameters.Append(paramName);
+        object nRecrodsAffected = Type.Missing;
+        object oParams = Type.Missing;
+        cmdInsert.Execute(out nRecrodsAffected, ref oParams, (int)ExecuteOptionEnum.adExecuteNoRecords);
+
+        conn.Close();
+        MessageBox.Show("Success to write database");
+    } 
+
+## 更新数据
+在form里新加一个button ADO Update，添加事件  
+
+    private void buttonAdoUpdate_Click(object sender, EventArgs e)
+    {
+        string str = "Provider=MSOLEDBSQL;Server=localhost;Database=Demodb;Trusted_Connection=Yes;";
+
+        ADODB.Connection conn = new Connection();
+
+        conn.Open(str);  // connection Open
+
+        ADODB.Command cmdInsert = new Command();
+        cmdInsert.ActiveConnection = conn;
+
+        //"Update demotb set TutorialName ='" + "C#NET"+"' where TutorialID=3"
+        cmdInsert.CommandText = "Update Demotb set TutorialName = 'C#Net' where TutorialID='3'";
+        cmdInsert.CommandType = CommandTypeEnum.adCmdText;
+        
+        object nRecrodsAffected = Type.Missing;
+        object oParams = Type.Missing;
+        cmdInsert.Execute(out nRecrodsAffected, ref oParams, (int)ExecuteOptionEnum.adExecuteNoRecords);
+
+        conn.Close();
+        MessageBox.Show("Success to update database");
+    }
+
+## 删除数据
+在form里新加一个button ADO Delete，添加事件  
+
+    private void buttonAdoDelete_Click(object sender, EventArgs e)
+    {
+        string str = "Provider=MSOLEDBSQL;Server=localhost;Database=Demodb;Trusted_Connection=Yes;";
+
+        ADODB.Connection conn = new Connection();
+
+        conn.Open(str);  // connection Open
+
+        string command = "Delete from Demotb where TutorialID='3'";
+        object nRecrodsAffected = Type.Missing;
+        conn.Execute(command, out nRecrodsAffected, 0);
+
+        conn.Close();
+        MessageBox.Show("Success to DELETE data");
+    }
+
 # Reference
 [C# Database Connection: How to connect SQL Server (Example)](https://www.guru99.com/c-sharp-access-database.htm)  
 [ADO 和 ADO.NET 之间的差异](https://net-informations.com/faq/ado/ado-difference.htm)  
+[ADODB Connection in .NET Application Using C#](https://www.c-sharpcorner.com/UploadFile/9a81a4/adodb-connection-in-net-application-using-C-Sharp/)  
+[C# (CSharp) ADODB.Command示例](https://www.cnblogs.com/lothar/p/15781452.html)   
