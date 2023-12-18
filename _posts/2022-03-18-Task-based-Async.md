@@ -19,14 +19,14 @@ tags:
 
 # TAP
 
-基于任务的异步模式 Task-based asynchronous pattern (TAP)是基于 System.Threading.Tasks.Task 命名空间中的 System.Threading.Tasks.Task 和 System.Threading.Tasks 类型，这些类型用于表示任意异步操作。  
+基于任务的异步模式 Task-based asynchronous pattern (TAP)是基于 `System.Threading.Tasks.Task` 命名空间中的 `System.Threading.Tasks.Task` 和 `System.Threading.Tasks` 类型，这些类型用于表示任意异步操作。  
 
 使用回调或事件来实现异步编程时，编写的代码不直观， APM 需要 Begin 和 End 方法。 EAP 需要后缀为 Async 的方法，以及一个或多个事件、事件处理程序委托类型和 EventArg 派生类型。这样很容易把代码搞得一团糟。TAP使用单个方法表示异步操作的开始和完成。 这与异步编程模型（APM 或 IAsyncResult）模式和基于事件的异步模式 (EAP) 形成对比。它让编写异步代码变得容易和优雅。通过使用async/await关键字，可以像写同步代码那样编写异步代码，所有的回调和事件处理都交给编译器和运行时帮你处理了。
 
-TAP 方法返回 System.Threading.Tasks.Task 或 System.Threading.Tasks.Task<TResult>，具体取决于相应同步方法返回的是 void 还是类型 TResult。  
-TAP 方法的参数中不能添加 out 或 ref 参数，需要返回的所有数据应该由 TResult返回。  
+TAP 方法返回 `System.Threading.Tasks.Task` 或 `System.Threading.Tasks.Task<TResult>`，具体取决于相应同步方法返回的是 void 还是类型 TResult。  
+TAP 方法的参数中不能添加 `out` 或 `ref` 参数，需要返回的所有数据应该由 TResult返回。  
 一个典型的TAP 函数包括以下元素：  
-![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/tap1.png?raw=true)  
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/tap1.png?raw=true)
 
 async是一个专门给编译器的提示，意思是该函数的实现可能会出现await。
 
