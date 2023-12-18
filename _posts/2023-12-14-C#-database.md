@@ -370,16 +370,255 @@ DataReader 还是 DataSet?
 
 如果空闲时间达到大约 4-8 分钟，或池进程检测到与服务器的连接已断开，连接池进程会将该连接从池中移除。 注意，只有在尝试与服务器进行通信之后才能检测到断开的连接。 如果发现某连接不再连接到服务器，则会将其标记为无效。 无效连接只有在关闭或重新建立后，才会从连接池中移除。  
 
+## DbCommand
+建立与数据源的连接后，可以使用 DbCommand 对象来执行命令并从数据源中返回结果。包含在 .NET Framework 中的每个 .NET Framework data provider都拥有自己的继承自 DbCommand 的命令对象。每个对象都根据命令的类型和所需的返回值公开用于执行命令的方法，如下表所述
+
+|命令|返回值|
+|--|--|
+|ExecuteReader|返回一个 DataReader 对象。|
+|ExecuteScalar|返回一个标量值。|
+|ExecuteNonQuery|执行不返回任何行的命令。|
+|ExecuteXMLReader|返回 XmlReader。 只用于 SqlCommand 对象。|
+
+示例：  
+
+    static void GetSalesByCategory(string connectionString,
+        string categoryName)
+    {
+        using (SqlConnection connection = new(connectionString))
+        {
+            // Create the command and set its properties.
+            SqlCommand command = new()
+            {
+                Connection = connection,
+                CommandText = "SalesByCategory",
+                CommandType = CommandType.StoredProcedure
+            };
+
+            // Add the input parameter and set its properties.
+            SqlParameter parameter = new()
+            {
+                ParameterName = "@CategoryName",
+                SqlDbType = SqlDbType.NVarChar,
+                Direction = ParameterDirection.Input,
+                Value = categoryName
+            };
+
+            // Add the parameter to the Parameters collection.
+            command.Parameters.Add(parameter);
+
+            // Open the connection and execute the reader.
+            connection.Open();
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Console.WriteLine("{0}: {1:C}", reader[0], reader[1]);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No rows found.");
+                }
+                reader.Close();
+            }
+        }
+    }
+
+### ExecuteScalar 
+可能需要返回 COUNT(*)、SUM(Price) 或 AVG(Quantity) 等聚合函数的结果。 Command 对象使用 ExecuteScalar 方法提供了返回单个值的功能。 ExecuteScalar 方法以标量值的形式返回结果集第一行的第一列的值。  
+
+    public static int AddProductCategory(string newName, string connString)
+    {
+        var newProdID = 0;
+        const string sql =
+            "INSERT INTO Production.ProductCategory (Name) VALUES (@Name); "
+            + "SELECT CAST(scope_identity() AS int)";
+        using (SqlConnection conn = new(connString))
+        {
+            SqlCommand cmd = new(sql, conn);
+            cmd.Parameters.Add("@Name", SqlDbType.VarChar);
+            cmd.Parameters["@name"].Value = newName;
+            try
+            {
+                conn.Open();
+                newProdID = (int)cmd.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        return newProdID;
+    }
+
+### ExecuteNonQuery 
+要执行不返回行的命令，使用相应 SQL 命令创建一个 Command 对象，并创建一个 Connection，包括所有必需的 Parameters。 使用 Command 对象的 ExecuteNonQuery 方法来执行该命令。    
+ExecuteNonQuery 方法返回一个整数，表示受已执行的语句或存储过程影响的行数。 如果执行了多个语句，则返回的值为受所有已执行语句影响的记录的总数。  
+
+    // Assumes connection is a valid SqlConnection.  
+    connection.Open();  
+    
+    string queryString = "INSERT INTO Customers " +  
+    "(CustomerID, CompanyName) Values('NWIND', 'Northwind Traders')";  
+    
+    SqlCommand command = new SqlCommand(queryString, connection);  
+    Int32 recordsAffected = command.ExecuteNonQuery();
+
 # 事务
+事务由作为包执行的单个命令或一组命令组成。 通过事务可以将多个操合并为单个工作单元。 如果在事务中的某一点发生故障，则所有更新都可以回滚到其事务前状态。
+
+事务必须符合 ACID 属性（原子性、一致性、隔离和持久性）才能保证数据的一致性。  
+
+如果事务是单阶段事务，并且由数据库直接处理，则属于本地事务。 如果事务由事务监视程序进行协调并使用故障保护机制（例如两阶段提交）解决，则属于分布式事务。 
+
+## 本地事务
+在ADO.NET 中，可以使用 Connection 对象控制事务。 可以使用 BeginTransaction 方法启动本地事务。 开始事务后，可以使用 Transaction 对象的 Command 属性在该事务中登记一个命令。 然后，可以根据事务组件的成功或失败，提交或回滚在数据源上进行的修改。
+
+    using (SqlConnection connection = new(connectionString))
+    {
+        connection.Open();
+
+        // Start a local transaction.
+        SqlTransaction sqlTran = connection.BeginTransaction();
+
+        // Enlist a command in the current transaction.
+        SqlCommand command = connection.CreateCommand();
+        command.Transaction = sqlTran;
+
+        try
+        {
+            // Execute two separate commands.
+            command.CommandText =
+            "INSERT INTO Production.ScrapReason(Name) VALUES('Wrong size')";
+            command.ExecuteNonQuery();
+            command.CommandText =
+            "INSERT INTO Production.ScrapReason(Name) VALUES('Wrong color')";
+            command.ExecuteNonQuery();
+
+            // Commit the transaction.
+            sqlTran.Commit();
+            Console.WriteLine("Both records were written to database.");
+        }
+        catch (Exception ex)
+        {
+            // Handle the exception if the transaction fails to commit.
+            Console.WriteLine(ex.Message);
+
+            try
+            {
+                // Attempt to roll back the transaction.
+                sqlTran.Rollback();
+            }
+            catch (Exception exRollback)
+            {
+                // Throws an InvalidOperationException if the connection
+                // is closed or the transaction has already been rolled
+                // back on the server.
+                Console.WriteLine(exRollback.Message);
+            }
+        }
+    }
+
+## 分布式事务
+分布式事务是影响多个资源的事务。 要提交分布式事务，所有参与者都必须保证对数据的任何更改是永久的。 即使发生系统崩溃或其他不可预见的事件，更改也必须是永久的。 即使只有一个参与者无法保证这一点，整个事务也将失败，在事务范围内对数据的任何更改均将回滚。  
+在 .NET Framework 中，分布式事务通过 System.Transactions 命名空间中的 API 进行管理。 如果涉及多个永久资源管理器，System.Transactions API 会将分布式事务处理委托给事务监视器，例如 Microsoft 分布式事务协调程序 (MS DTC)。   
 
 # 存储过程
+存储过程可以接受数据作为输入参数并可以返回数据作为输出参数、结果集或返回值。   
+## 创建一个存储过程  
+可以在SQL Server Management Studio里通过UI 创建一个存储过程.
+选择数据库Demodb- Programmability - Stored Procedure，右键 new - Stored Procedure  
+弹出一个SQLQuery窗口， 默认如下：  
+
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+    -- =============================================
+    -- Author:		<Author,,Name>
+    -- Create date: <Create Date,,>
+    -- Description:	<Description,,>
+    -- =============================================
+    CREATE PROCEDURE <Procedure_Name, sysname, ProcedureName> 
+        -- Add the parameters for the stored procedure here
+        <@Param1, sysname, @p1> <Datatype_For_Param1, , int> = <Default_Value_For_Param1, , 0>, 
+        <@Param2, sysname, @p2> <Datatype_For_Param2, , int> = <Default_Value_For_Param2, , 0>
+    AS
+    BEGIN
+        -- SET NOCOUNT ON added to prevent extra result sets from
+        -- interfering with SELECT statements.
+        SET NOCOUNT ON;
+
+        -- Insert statements for procedure here
+        SELECT <@Param1, sysname, @p1>, <@Param2, sysname, @p2>
+    END
+    GO
+
+前边的几行不用管，从`CREATE PROCEDURE`开始修改  
+
+    CREATE PROCEDURE [dbo].[InsertDb]
+        @TutorialID nchar(10), 
+        @TutorialName nchar(10)
+    AS
+    BEGIN
+        -- SET NOCOUNT ON added to prevent extra result sets from
+        -- interfering with SELECT statements.
+        SET NOCOUNT ON;
+
+        INSERT INTO demotb
+        (
+            TutorialID, TutorialName
+        )
+        VALUES 
+        (
+            @TutorialID, @TutorialName
+        )
+    END
+
+点击Execute（F5)，创建这个存储过程  
+
+## 代码调用存储过程  
+
+    private void buttonStoredProcedure_Click(object sender, EventArgs e)
+    {
+        string connetionString = @"Data Source=localhost;Initial Catalog=Demodb;Trusted_Connection=Yes;";
+        using (SqlConnection connection = new SqlConnection(connetionString))
+        {
+            using(SqlCommand cmd = new SqlCommand("InsertDb", connection))
+            {
+                cmd.Parameters.Add(new SqlParameter("@TutorialID", SqlDbType.VarChar)).Value = "4";
+                cmd.Parameters.Add(new SqlParameter("@TutorialName", SqlDbType.VarChar)).Value = "C++";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Success to write database");
+
+            }
+        }
+    }
 
 
 # 异步
+在 .NET Framework 4.5 之前，使用 SqlClient 进行的异步编程是通过以下方法和 `Asynchronous Processing=true` 连接属性完成的：
+
+    SqlCommand.BeginExecuteNonQuery  
+    SqlCommand.BeginExecuteReader  
+    SqlCommand.BeginExecuteXmlReader  
+
+.NET Framework 4.5 中增加了异步编程功能  
+以前，编写异步代码涉及回调（也称为延续）来表示异步操作完成后发生的逻辑。 这将增加异步代码结构的复杂性（与同步代码相比）。
+现在，您可以调用异步方法而无需使用回调，也不需要跨多个方法或 lambda 表达式来拆分代码。  
+async 修饰符用于指定异步方法。 调用 async 方法时，将返回一个任务。 将 await 运算符应用到任务时，当前方法会立即退出。 在该任务完成时，执行会在同一方法中恢复。  
+调用 async 方法不会分配任何附加线程。 结束时，它可以简单地使用现有 I/O 完成线程。  
 
 # Reference
 [C# Database Connection: How to connect SQL Server (Example)](https://www.guru99.com/c-sharp-access-database.htm)  
 [ADO 和 ADO.NET 之间的差异](https://net-informations.com/faq/ado/ado-difference.htm)  
 [ADODB Connection in .NET Application Using C#](https://www.c-sharpcorner.com/UploadFile/9a81a4/adodb-connection-in-net-application-using-C-Sharp/)  
 [C# (CSharp) ADODB.Command示例](https://www.cnblogs.com/lothar/p/15781452.html)   
-[Asynchronous Programming](https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/asynchronous-programming)  
+[Asynchronous Programming](https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/asynchronous-programming)   
+[与企业服务和 COM+ 事务的互操作性](https://learn.microsoft.com/zh-cn/dotnet/framework/data/transactions/interoperability-with-enterprise-services-and-com-transactions)  
