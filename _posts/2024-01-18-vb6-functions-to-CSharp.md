@@ -43,7 +43,8 @@ Mid函数是用来提取字符串中的一部分字符的。它的基本语法�
         VB          C#
 
         CLng        Convert.ToInt64()
-        
+        CDbl()      Convert.ToDouble()
+
 
 # Reference
 [https://stackoverflow.com/a/1722914/7352168](https://stackoverflow.com/a/1722914/7352168)   
