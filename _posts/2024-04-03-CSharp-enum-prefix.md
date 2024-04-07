@@ -75,6 +75,7 @@ tags:
 
         midl EnumTest.IDL /tlb EnumTest_new.tlb
 
+    注意midl需要VS Developer Command环境，可以通过开始菜单运行`Developer Command Prompt for VS xxxx`, 或者在cmd里设置VS环境`call "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\VsDevCmd.bat"`  
 4. 使用`oleview.exe`打开新的tlb
 
         typedef [uuid(AAAFE7CA-E486-3D7C-96D7-4A69C9386581), version(1.0),
