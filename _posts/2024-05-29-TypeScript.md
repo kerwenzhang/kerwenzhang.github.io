@@ -1,7 +1,7 @@
 ---                
 layout: post                
 title: "TypeScript"                
-date:   2019-7-4 20:30:00                 
+date:   2024-5-29 20:30:00                 
 categories: "Web"                
 catalog: true                
 tags:                 
@@ -67,11 +67,45 @@ TypeScript 是 JavaScript 的一个超集，扩展了 JavaScript 的语法，是
 
         let arr: number[] = [1, 2];
 
+#### 元组
+数组合并了相同类型的对象，而元组（Tuple）合并了不同类型的对象。    
+定义一对值分别为 string 和 number 的元组：   
+
+        let tom: [string, number] = ['Tom', 25];   
+
 #### 枚举 enum
 
         enum color{red,green,blue}
         let c : Color = Color.blue;
         console.log(c)
+
+#### 空值  
+JavaScript 没有空值（Void）的概念，在 TypeScript 中，可以用 void 表示没有任何返回值的函数：  
+
+        function alertName(): void {
+            alert('My name is Tom');
+        }
+
+#### Null 和 Undefined
+在 TypeScript 中，可以使用 `null` 和 `undefined` 来定义这两个原始数据类型：
+
+        let u: undefined = undefined;
+        let n: null = null;
+
+与 `void` 的区别是，`undefined` 和 `null` 是所有类型的子类型。也就是说 `undefined` 类型的变量，可以赋值给 `number` 类型的变量：
+
+        // 这样不会报错
+        let num: number = undefined;
+        // 这样也不会报错
+        let u: undefined;
+        let num: number = u;
+
+而 `void` 类型的变量不能赋值给 `number` 类型的变量：
+
+        let u: void;
+        let num: number = u;
+
+        // Type 'void' is not assignable to type 'number'.
 
 ## 变量声明
 
@@ -125,6 +159,16 @@ for...in 循环
         }
 
 while 循环
+
+        var num:number = 5; 
+        var factorial:number = 1; 
+        
+        while(num >=1) { 
+          factorial = factorial * num; 
+          num--; 
+        } 
+        console.log("5 的阶乘为："+factorial);
+
 ## 函数
         function add(x: number, y: number): number {
           return x + y;
@@ -142,9 +186,11 @@ while 循环
         
         let result1 = buildName("Bob");  // 正确
 
+需要注意的是，可选参数必须接在必需参数后面。换句话说，可选参数后面不允许再出现必需参数.   
+
 默认参数
 
-        function calculate(price:number,rate:number = 0.50) { 
+        function calculate(price:number, rate:number = 0.50) { 
           var discount = price * rate; 
           console.log("计算结果: ",discount); 
         } 
@@ -154,11 +200,13 @@ while 循环
 
     class Car {     
       engine:string;  
-      // 构造函数 
+
+      // 构造函数
       constructor(engine:string) { 
         this.engine = engine 
-      }   
-      // 方法 
+      }
+
+      // 方法
       disp():void { 
         console.log("发动机为 :   "+this.engine) 
       } 
@@ -187,3 +235,21 @@ while 循环
         };
         sites.sayHello();
         
+## 模块
+
+项目中可以将代码拆分为多个文件，多个文件可以互相加载，并通过export和import关键字完成模块功能的交换。 模块是在其自身的作用域里执行，并不是在全局作用域，这意味着定义在模块里面的变量、函数和类等在模块外部是不可见的，除非明确地使用 export 导出它们。类似地，我们必须通过 import 导入其他模块导出的变量、函数、类等。
+
+
+        export class Mail {
+                title:string;
+                content:string;
+
+                constructor(title:string,content:string){
+                        this.title = title;
+                        this.content = content;
+                }
+        }
+
+        import {Mail} from './Mail';
+        let mail = new Mail('邮箱标题','邮箱内容');
+        mail.content;

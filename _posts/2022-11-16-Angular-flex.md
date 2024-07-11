@@ -88,12 +88,9 @@ align-items: 定义了项目在交叉轴上的对齐方式
 | fxFlexOrder | int | 用于已排序的fxLayout容器中的元素，并标识元素的位置顺序 |  
 | fxFlexFill, fxFill | N/A | fxFlexFill不接受任何参数，并使用以下内联 CSS 样式填充其宿主元素 margin:0, width:100%, height:100%, min-width:100%, min-height:100%  | 	 
 
+flex  
+默认0 1 auto，flex属性是flex-grow，flex-shrink与flex-basis三个属性的简写，用于定义项目放大，缩小与宽度。
 
-Flex 项目属性：
-order  定义项目在容器中的排列顺序，数值越小，排列越靠前，默认值为 0
-
-
-flex-basis  flex-basis: 定义了在分配多余空间之前，项目占据的主轴空间，浏览器根据这个属性，计算主轴是否有多余空间 当主轴为水平方向的时候，当设置了 flex-basis，项目的宽度设置值会失效，flex-basis 需要跟 flex-grow 和 flex-shrink 配合使用才能发挥效果。  
 flex-grow 定义项目的放大比例
 
     .item {
@@ -102,16 +99,17 @@ flex-grow 定义项目的放大比例
 
 默认值为 0，即如果存在剩余空间，也不放大  
 
-flex-shrink 定义了项目的缩小比例
-flex  flex: flex-grow, flex-shrink 和 flex-basis的简写  
 
-    .item{
-        flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]
-    }
+flex-shrink    
+用于决定项目在空间不足时是否缩小，默认是1，即空间不足时大家一起等比缩小；注意，即便设置了固定宽度，也会缩小。权重比width属性高    
 
-flex 的默认值是 0 1 auto。当 flex 取值为一个非负数字，则该数字为 flex-grow 值，flex-shrink 取 1，flex-basis 取 0%  
 在同一时间，flex-shrink 和 flex-grow 只有一个能起作用，这其中的道理细想起来也很浅显：空间足够时，flex-grow 就有发挥的余地，而空间不足时，flex-shrink 就能起作用。  
-align-self 允许单个项目有与其他项目不一样的对齐方式  
+
+flex-basis   
+flex-basis: 定义了在分配多余空间之前，项目占据的主轴空间，浏览器根据这个属性，计算主轴是否有多余空间 当主轴为水平方向的时候，当设置了 flex-basis，项目的宽度设置值会失效，即如果设置了flex-basis，权重会比width属性高，会覆盖width属性。
+flex-basis 需要跟 flex-grow 和 flex-shrink 配合使用才能发挥效果。  
+
+
 
 以下API可以用在任何元素上：  
 
@@ -139,6 +137,7 @@ align-self 允许单个项目有与其他项目不一样的对齐方式
 
 
 # Reference
-[Angular Layout](https://github.com/angular/flex-layout/wiki)
+[Angular Layout](https://github.com/angular/flex-layout/wiki)  
 [Flex布局详解](https://zhuanlan.zhihu.com/p/367346487)    
 [Flex布局详解](https://zhuanlan.zhihu.com/p/359561226)    
+[Flex布局总结](https://blog.csdn.net/tsfx051435adsl/article/details/86075602)  

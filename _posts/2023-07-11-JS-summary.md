@@ -69,6 +69,65 @@ JavaScript 数据类型有 2 大分类：一是“基本数据类型”，二是
 （2）未定义值（undefined 型）；  
 （3）转义字符；
 
+### 值类型与引用类型
+
+基本数据类型属于值类型，值存储在 Stack 里。 Object 等属于引用类型，存储在 Heap 里  
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript2.jpg?raw=true)
+
+当我们申请一个值类型时，我们实际上是在堆栈中申请了一块内存，分配如下：
+
+        let age = 30;
+
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript3.jpg?raw=true)
+当再声明一个变量等于 age 时
+
+        let age = 30;
+        let oldAge = age;
+
+在内存中，实际发生的事情是两个变量都指向了同一个内存地址：
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript4.jpg?raw=true)
+
+第三步，当我们修改 age 的值时
+
+        let age = 30;
+        let oldAge = age;
+        let age = 31;
+
+在内存中，已分配的内存中的值不可再修改（the value at a certain memory address is immutable)，实际发生的事情是变量 age 重新申请了一块新的内存，去存储新的值 31.  
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript5.jpg?raw=true)
+
+而对于引用类型，当初始化一个引用类型时，变量的值存储在 Heap 里，堆栈的 value 只记录了 heap 的地址。
+
+        const me = {
+                age: 30
+        }
+
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript6.jpg?raw=true)  
+当定义另一个变量 friend 时, friend 和 me 都指向了同一个内存地址.
+
+        const me = {
+                age: 30
+        }
+        const friend = me;
+
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript7.jpg?raw=true)  
+如果此时修改 friend 的 age， 我们实际上只是修改了 Heap 中存储的 value，Stack 里的地址没有发生任何变化。
+
+        const me = {
+                age: 30
+        }
+        const friend = me;
+        friend.age = 27;
+
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript8.jpg?raw=true)
+这也解释了一个引用类型声明为 const，我们仍然可以修改它的值
+
+        const testObj = {
+                age: 30
+        }
+        testObj.age = 27;  // allow
+        testObj = {}  // not allow, due testObj is const
+
 ### Number
 
 JavaScript 内部，所有数字都是以 64 位浮点数形式储存，即使整数也是如此。这就是说，JavaScript 语言的底层根本没有整数，所有数字都是小数（64 位浮点数）。
@@ -80,6 +139,29 @@ JavaScript 内部，所有数字都是以 64 位浮点数形式储存，即使�
         0.1 + 0.2 === 0.3        // false
         0.3 / 0.1        // 2.9999999999999996
         (0.3 - 0.2) === (0.2 - 0.1)        // false
+
+将string转为Number
+
+        Number('23');
+        Number.parseInt('30px')         // 30
+        Number.parseInt('23.15')        // 23
+
+        Number.isFinit(20)      // Checking if value is number
+        Number.isNaN(20)        // Check if value is NaN
+
+对于较长的数字，可以加下划线进行分隔
+
+        const diameter = 287_460_000_000
+        console.log(diameter);          // 287460000000
+
+### BigInt
+
+        console.log(2**53 -1 );
+        console.log(Number.MAX_SAFE_INTEGER) //Number 有最大限制9007199254740991, 超过这个最大值，JavaScript无法保证准确
+
+BigInt没有最大值的限制
+
+        console.log(typeof 20n) // bigint
 
 ### Boolean
 
@@ -163,6 +245,40 @@ isNaN 方法可以用来判断一个值是否为 NaN。
         Object.keys(obj);
         // ['key1', 'key2']
 
+使用`for...of`遍历 Object 的 keys
+
+        let obj = {
+                key1: 1,
+                key2: 2
+        };
+        for(const key of Object.keys(obj)) {
+                console.log(key);
+        }
+
+Object.values 可以返回所有的 value 值  
+Object.entries:
+
+        const openingHours = {
+                thu: {
+                        open: 12,
+                        close: 22,
+                },
+                fir: {
+                        open: 11,
+                        close: 23,
+                },
+                sat: {
+                        open: 0, // Open 24 hours
+                        close: 24,
+                },
+        };
+
+        const entries = Object.entries(openingHours);
+
+        for (const [key, { open, close }] of entries) {
+                console.log(`On ${key} we open at ${open} and close at ${close}`);
+        }
+
 #### 数组
 
 ##### 创建数组
@@ -179,6 +295,11 @@ isNaN 方法可以用来判断一个值是否为 NaN。
     let myArr = new Array(1,2,3,4);     // bad
     let arr = ['a', 'b', 'c'];          // good
 
+    const x = new Array(7);
+    x.fill(23, 3, 5);  
+
+    const y = Array.from({lenght: 3}, () => 1);  //[1,1,1]
+
 本质上，数组属于一种特殊的对象。typeof 运算符会返回数组的类型是 object。
 
 清空数组的一个有效方法，就是将 length 属性设为 0。
@@ -186,20 +307,78 @@ isNaN 方法可以用来判断一个值是否为 NaN。
         let arr = [ 'a', 'b', 'c' ];
         arr.length = 0;
 
+##### 遍历
+
+    const arr3 = [1,2,3,4,5,6]
+    for(const item of arr3){
+        console.log(item);
+    }
+    for(const [index, item] of arr3.entries()){
+        console.log(`index: ${index}, item: ${item}`);
+    }
+
+    arr3.forEach(function(item) {
+        console.log(item);
+    })
+    arr3.forEach( function(item, index, array) {
+        console.log(`index: ${index}, item: ${item}`);  
+    })
+
+注意：  
+forEach 无法添加break和Continue  
+
 ##### 常用方法
 
-    slice()                  //获取数组中的某段数组元素
-    push()                   //在数组末尾添加元素
-    pop()                    //删除数组最后一个元素
-    toString()               //将数组转换为字符串
-    join()                   //将数组元素连接成字符串
-    concat()                 //多个数组连接为字符串
-    sort()                   //数组元素正向排序
-    reverse()                //数组元素反转
+    at(index)           // 获取数组指定位置的元素
+    concat()                 //多个数组合并
+    fill(data, startIndex, endIndex)  // 填充数组
+    find()                  //返回第一个符合的元素
+    findIndex()             //返回第一个符合的元素的index
+    filter()                //过滤数组成员，将满足条件的成员组成一个新数组返回。
+    flat()          //按照一个可指定的深度递归遍历数组，并将所有元素与遍历到的子数组中的元素合并为一个新数组返回
+    flatMap()       //首先使用映射函数映射每个元素，然后将结果压缩成一个新数组
+    includes('subElement')  //是否包含指定元素    
     indexOf('subElement')   //返回指定元素的位置
-    includes('subElement')  //是否包含指定元素
+    join('seperator')                   //将数组元素连接成字符串
+    map()  // 将数组的所有成员依次传入参数函数，然后把每一次的执行结果组成一个新数组返回
     shift()                 //移除第一个元素
+    slice(startIndex, endIndex)                  //获取数组中的某段数组元素
+    splice(startIndex, endIndex)        // 与slice相似，但会影响原数组
+    pop()                    //删除数组最后一个元素
+    push()                   //在数组末尾添加元素
+    reduce(function, initialValue)   //对数组遍历,返回一个单个返回值
+    reverse()                //数组元素反转，影响原数组
+    sort()                   //数组元素正向排序
+    toString()               //将数组转换为字符串
     unshift('newItem')      //添加新的元素到数组开头
+
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/arrayFunctions.png?raw=true)
+
+example:  
+
+        const arr1 = [1,2,3];
+        const arr2 = [4,5,6];
+        
+        console.log(arr1.at(0))  //1
+
+        // getting last array element
+        console.log(arr1[arr1.length - 1]);       // 3
+        console.log(arr1.slice(-1)[0]);           // 3
+        console.log(arr1.at(-1));                 // 3
+
+        const sum = arr1.concat(arr2);         
+        console.log(sum);                        // [1,2,3,4,5,6]
+        console.log([...arr1, ...arr2]);         // [1,2,3,4,5,6]
+
+        console.log(sum.join('-'));             // 1-2-3-4-5-6
+
+
+slice() 剪切数组，并返回copy数组，不会改变原数组    
+
+        let arr = ['a', 'b', 'c', 'd', 'e'];
+        console.log(arr.slice(2))    // ["c", "d", "e"]
+        console.log(arr.slice(-1))     // ["e"]  返回最后一个元素
+
 
 slice()方法的一个重要应用，是将类似数组的对象转为真正的数组。
 
@@ -209,11 +388,11 @@ slice()方法的一个重要应用，是将类似数组的对象转为真正的�
 map()  
 map 方法将数组的所有成员依次传入参数函数，然后把每一次的执行结果组成一个新数组返回。
 
-    let numbers = [1, 2, 3];
-    numbers.map(function (n) {
+    const numbers = [1, 2, 3];
+    const newArr = numbers.map(function (n) {
         return n + 1;
-    });
-    // [2, 3, 4]
+    });    // [2, 3, 4]
+    const newArr2 = numbers.map(num => num + 1);        // [2,3,4]
 
 filter()  
 filter 方法用于过滤数组成员，满足条件的成员组成一个新数组返回。
@@ -222,6 +401,18 @@ filter 方法用于过滤数组成员，满足条件的成员组成一个新数�
         return (elem > 3);
     })
     // [4, 5]
+
+flat(), flatMap()  
+
+        var arr1 = [1, 2, [3, 4]];
+        arr1.flat(); 
+        // [1, 2, 3, 4]
+
+        var arr3 = [1, 2, [3, 4, [5, 6]]];        
+        arr3.flat(Infinity);
+
+
+flatMap() 展平的深度值为 1 ，而flat() 可以指定多级。  
 
 some()，every()  
 some 方法是只要一个成员的返回值是 true，则整个 some 方法的返回值就是 true，否则返回 false。
@@ -242,11 +433,64 @@ unshift()
         console.log(friends);     // ['John', 'Michale', 'Steven', 'Peter']
         console.log(newLength);   // 4
 
+reduce()  
+Array.reduce()方法是对数组的遍历,返回一个单个返回值  
+
+        const array1 = [1, 2, 3, 4];
+        const initialValue = 0;
+        const sumWithInitial = array1.reduce((accumulator, currentValue) => accumulator + currentValue, initialValue);
+        console.log(sumWithInitial);   // 10
+
+        const max = array1.reduce((acc, mov) => acc > mov ? acc : mov, array1[0]);  // 4
+
+
+#### Set
+
+Set 与数组相似，但元素是唯一的
+
+        const orderArr = ['Pasta', 'Pizza', 'Pizza', 'Risotto', 'Pasta', 'Pizza'];
+
+        const orderSet = new Set(orderArr);
+
+        console.log(orderSet); // {"Pasta", "Pizza", "Risotto"}
+        console.log(orderSet.size); // 3
+        console.log(orderSet.has('Pizza')); // true
+        orderSet.add('Garlic Bread');
+        orderSet.delete('Risotto');
+        orderSet.clear();
+
+与数组不同，Set 没有索引，所以无法通过 index 来访问元素. orderSet[0] 是错误的
+
+#### Maps
+
+Maps 用来存储 key,value pair
+
+        const rest = new Map();
+        rest.set('name', 'Classico Italiano');
+        rest.set('open', 11);
+        rest.set('close', 23);
+        rest.set(true, 'We are open');
+        rest.set(false, 'We are closed');
+
+        console.log(rest.get(true)); // We are open
+
+        const currentTime = 12;
+        console.log(
+                rest.get(currentTime > rest.get('open') && currentTime < rest.get('close'))
+        );    // We are open
+
+        console.log(rest.has('categories'));    // false
+        rest.delete('name');
+        
+        rest.forEach(function(value, key, map) {
+            console.log(`${key}: ${value}`);
+        })
+
 #### 字符串对象
 
 1.  字符串模板拼接
 
-        const firstName = Jonas;
+        const firstName = 'Jonas';
         const birthYear = 1991;
         const year = 2037;
         const job = 'teacher'
@@ -294,6 +538,29 @@ unshift()
     使用 substring()方法来提取字符串中的某一部分字符串。
 
             字符串.substring(开始位置,结束位置)
+
+10. slice(startIndex, length)  
+    剪切字符串
+
+        str.slice(-1)   // get last character
+
+11. .toLowerCase(), .toUpperCase()
+12. includes() 是否含有指定字符串，返回 boolean
+13. startsWith(str), endsWith(str)
+14. padEnd(), padStart() 填充字符串
+
+        const maskCreditCard = function (number) {
+                const str = String(number);
+                const last = str.slice(-4);
+                return last.padStart(str.length, '*');
+        };
+
+        console.log(maskCreditCard(123456789));
+
+        const month = 8;
+        console.log(`${month}`.padStart(2, 0));   // 08
+
+15. repeat(count)
 
 #### 日期对象
 
@@ -393,10 +660,14 @@ unshift()
     pow(x,y)	//返回x的y次幂
     abs(x)	//返回数的绝对值
     random()	//返回0~1之间的随机数
+
     trunc()     //截取整数部分，舍弃小数部分
+    
     round(x)	//把数四舍五入为最接近的整数
     ceil(x)	//对一个数进行上舍入
     floor(x)	//对一个数进行下舍入
+ 
+    toFixed(2)   //将数字转换为字符串,并将字符串四舍五入为指定的小数位数。
 
 生成一个 1-20 的随机数
 
@@ -453,6 +724,100 @@ JSON.parse 方法用于将 JSON 字符串转换成对应的值。
 
         .toString()
 
+### 解构
+
+在 ES5 中：如果计划从数组中提取特定元素，就需使用元素的索引，并将其保存到变量之中
+
+        const arr = [2, 3, 4];
+        const a = arr[0];
+        const b = arr[1];
+        const c = arr[2]
+
+如果想对元素进行交换，需要引入一个临时变量
+
+        const temp = arr[0];
+        arr[0] = arr[1];
+        arr[1] = temp;
+        console.log(arr)   // [3,2,4]
+
+在 ES6 中引入了解构的功能，以简化获取数组中数据的过程：
+
+        const arr = [2,3,4];
+        const [x, y, z] = = arr;
+        console.log(x, y, z);
+
+        const [x1, y1] = arr;
+        console.log(x1, y1);  //只取前两个元素
+
+        const[x2,,z2] = arr;
+        console.log(x2, z2)  // 用逗号跳过元素
+
+利用解构进行数组元素交换:
+
+        const arr1 = [2, 3, 4];
+        let [first, second] = arr1;
+        [first, second] = [second, first];
+        console.log(first, second); // 3,2
+        console.log(arr1)   // still return 2,3,4
+
+利用解构，让函数返回多个值
+
+        const switchElement = function (a, b) {
+        return [b, a];
+        };
+
+        const [item1, item2] = switchElement(1, 2);
+        console.log(item1, item2);
+
+利用解构设置默认值，通常用在 API 函数调用设置默认值：
+
+        const [p = 1, q = 1, r = 1] = [2, 3];
+        console.log(p, q, r);   // 2, 3, 1
+
+在 Object 对象上使用解构:
+
+        const restaurant = {
+                name: 'Classico Italiano',
+                location: 'Via Angelo Tavanti 23, Firenze, Italy',
+                categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+        };
+        const { name, categories } = restaurant;
+        console.log(name, categories);
+
+在 Object 上进行解构需要用大括号，并且变量名必须与 Object 中的属性名一致。  
+也可以进行重命名。
+
+        const { name: restaurantName, categories: tags } = restaurant;
+        console.log(restaurantName, tags);
+
+设置默认值:
+
+        const { name: restaurantName = '', categories: tags = [], menu=[] } = restaurant;
+        console.log(restaurantName, tags, menu);
+
+嵌套
+
+        const restaurant = {
+                openingHours: {
+                        thu: {
+                                open: 12,
+                                close: 22,
+                        },
+                        fri: {
+                                open: 11,
+                                close: 23,
+                        },
+                        sat: {
+                                open: 0, // Open 24 hours
+                                close: 24,
+                        },
+                },
+        };
+
+        const { openingHours } = restaurant;
+        const { fri: { open, close } } = openingHours;
+        console.log(open, close);
+
 ## 运算符
 
 ### 相等运算符
@@ -467,11 +832,86 @@ JavaScript 提供两种相等运算符：==和===。
         '18' == 18  // true
         '18' === 18 // false
 
+### Spread Operator...
+
+        const arr=[7,8,9]
+        const newArr = [1,2, ...arr];
+        console.log(newArr)   // [1,2,7,8,9]
+        console.log(...newArr)  // 1,2,7,8,9
+
+合并两个数组
+
+        const arr1 = [1,2];
+        const arr2 = [3,4];
+        const arr3 = [...arr1, ...arr2];
+
+也可以用在字符串上：
+
+        const str = 'Jonas';
+        const letters = [...str, ' ', 'S.'];
+        console.log(letters)  //["J","o", "n", "a", "s", " ", "S."]
+
+Rest Pattern
+
+        const arr = [1,2, ...[3,4]];
+        console.log(arr)                // [1,2,3,4]
+        const [a,b,...others] = arr;
+        console.log(a, b, others)   // 1,2, [3,4]
+
+
+        const { Sat, ...workDays } = restaurant.openingHours;
+        console.log(workDays);
+
+
+        const add = function (...param) {
+                let sum = 0;
+                for (let index = 0; index < param.length; index++) {
+                        sum += param[index];
+                }
+                return sum;
+        };
+
+        console.log(add(1, 2, 3, 4, 5, 6));
+
+### Optional Chaining ?.
+
+        console.log(restaurant.order?.(0,1) ?? 'Method does not exist');  //如果order function存在，则调用，否则返回Method does not exist
+
+        const users = [{ name: 'Jonas'}];
+        console.log(users[0]?.name ?? 'User array empty');
+
 ## 函数
 
 在 JavaScript 中，使用函数前，必须用 function 关键字来定义函数。  
 JavaScript 语言将函数看作一种值，与其它值（数值、字符串、布尔值等等）地位相同。凡是可以使用值的地方，就能使用函数。比如，可以把函数赋值给变量和对象的属性，也可以当作参数传入其他函数，或者作为函数的结果返回。函数只是一个可以执行的值，此外并无特殊之处。  
 由于函数与其他数据类型地位平等，所以在 JavaScript 语言中又称函数为第一等公民。  
+可以将函数作为变量传递给另一个变量
+
+        const jonas = {
+                year: 1991,
+                calcAge: function() {
+                        return 2023 - this.year;
+                }
+        }
+
+        const f = jonas.calcAge;
+        f();   // 会报错, 因为单独使用function，函数没有owner，导致this是undefined
+
+将函数传递给其他高阶函数
+
+        const upperFirstWord = function (str) {
+                const [first, ...others] = str.split(' ');
+                return [first.toUpperCase(), ...others].join(' ');
+        };
+
+        const transform = function (str, fn) {
+                console.log(`Original string: ${str}`);
+                console.log(`Transformed string: ${fn(str)}`);
+                console.log(`Transformed by: ${fn.name}`);
+        };
+
+        transform('JavaScript is the best!', upperFirstWord);
+
 函数表达式：
 
         const calAge = function(birthYear) {
@@ -490,6 +930,65 @@ JavaScript 语言将函数看作一种值，与其它值（数值、字符串、
                 return retirement;
         }
         console.log(yearsUntilRetirement(1991));
+
+注意： 箭头函数没有自己的 this 对象，而是使用 parent 的 this:
+
+        const jonas = {
+                firstName: 'Jonas',
+                greet: () => console.log(`Hey ${this.firstName}`),
+        }
+        jonas.greet();   // console result: Hey undefined
+
+箭头函数中 this 和 var 使用会产生奇怪效果：
+
+        var firstName = 'Matilda';
+        const jonas = {
+                firstName: 'Jonas',
+                greet: () => console.log(`Hey ${this.firstName}`),
+        }
+        jonas.greet();  // console result: Hey Matilda
+
+对比以下两段代码：
+
+        const jonas = {
+                firstName: 'Jonas',
+                year: 1995,
+                calcAge: function() {
+                        const isMillenial = function() {
+                                console.log(this.year >=1991 & this.year <= 1996)
+                        }
+                        isMillenial();
+                }
+        }
+        jonas.calcAge();  // 会报错, this is undefined
+
+使用箭头函数
+
+        const jonas = {
+                firstName: 'Jonas',
+                year: 1995,
+                calcAge: function() {
+                        const isMillenial = () => {
+                                console.log(this.year >=1991 & this.year <= 1996)
+                        }
+                        isMillenial();
+                }
+        }
+        jonas.calcAge(); // 箭头函数继承了parent的this，能正常输出
+
+#### 默认参数
+
+        const bookings = [];
+        const createBooking = function (flightNum, numPassengers = 1, price = 199) {
+                const booking = {
+                        flightNum,
+                        numPassengers,
+                        price,
+                };
+                bookings.push(booking);
+        };
+        createBooking('LH123');
+        createBooking('LH123', undefined, 1000);
 
 #### 参数传递方式
 
@@ -531,15 +1030,16 @@ arguments 对象包含了函数运行时的所有参数，这个对象只有在�
 闭包是“定义在一个函数内部的函数”。闭包最大的特点，就是它可以“记住”诞生的环境，比如 f2 记住了它诞生的环境 f1，所以从 f2 可以得到 f1 的内部变量。在本质上，闭包就是将函数内部和函数外部连接起来的一座桥梁。  
 闭包的最大用处有两个，一个是可以读取函数内部的变量，另一个就是让这些变量始终保持在内存中，即闭包可以使得它诞生环境一直存在。
 
-        function createIncrementor(start) {
+        function createIncrementor() {
+            let num = 0;
             return function () {
-                return start++;
+                return num++;
             };
         }
-        let inc = createIncrementor(5);
-        inc() // 5
-        inc() // 6
-        inc() // 7
+        let inc = createIncrementor();
+        inc() // 0
+        inc() // 1
+        inc() // 2
 
 闭包的另一个用处，是封装对象的私有属性和私有方法。
 
@@ -561,6 +1061,78 @@ arguments 对象包含了函数运行时的所有参数，这个对象只有在�
         let p1 = Person('张三');
         p1.setAge(25);
         p1.getAge() // 25
+
+#### call, bind
+
+call() 方法是 JavaScript 中的函数方法，用于调用一个函数，并将指定的对象作为函数的上下文（this 值）。除了可以指定上下文外，我们还可以将参数作为一个列表传递给该方法。
+
+        function.call(thisArg, arg1, arg2, ...)
+
+示例:
+
+        function greet(message) {
+                console.log(message + ', ' + this.name + '!');
+        }
+
+        const person = {
+                name: 'Alice'
+        };
+
+        greet.call(person, 'Hello');
+
+在上述示例中，我们定义了一个 greet 函数，它接受一个消息作为参数，并将该消息与 this.name 的值一起输出到控制台。然后，我们使用 call() 方法将 person 对象作为上下文来调用 greet 函数，并传递了消息参数。  
+bind() 方法也是 JavaScript 中的函数方法，用于创建一个新的绑定函数。绑定函数是原始函数的一个副本，其中的 this 值被永久地绑定到指定的对象。与 call() 方法不同，bind() 方法不会立即执行函数，而是返回一个绑定了指定上下文的新函数。
+
+        function greet(message) {
+                console.log(message + ', ' + this.name + '!');
+        }
+
+        const person = {
+                name: 'Alice'
+        };
+
+        const greetPerson = greet.bind(person, 'Hello');
+        greetPerson();
+
+在上述示例中，我们定义了一个 greet 函数，与之前的示例相同。然后，我们使用 bind() 方法创建了一个绑定函数 greetPerson，将 person 对象作为上下文，并传递了消息参数。最后，我们调用 greetPerson() 函数，它会在 person 对象的上下文中输出相应的消息。
+
+另外一个例子，每个国家可以指定自己的税率
+
+        const addTax = (rate, value) => value + value * rate;
+        console.log(addTax(0.1, 200));
+
+        const addJapan = addTax.bind(null, 0.23);
+        console.log(addJapan(200));
+
+        // .bind 相当于以下的复杂函数
+        const addTaxRate = function (rate) {
+                return function (value) {
+                        return value + value * rate;
+        };
+        };
+
+        const addJapn2 = addTaxRate(0.23);
+        console.log(addJapn2(200));
+
+两者区别：
+
+1. 执行时机：  
+   call() 方法立即调用原始函数，并传递参数列表。  
+   bind() 方法返回一个新的绑定函数，不会立即调用原始函数，需要手动调用返回的绑定函数。
+2. 返回值：  
+   call() 方法执行后，会返回原始函数的结果。  
+   bind() 方法返回一个新的函数，该函数与原始函数具有相同的函数体，但上下文已被永久绑定。
+3. 函数绑定：  
+   call() 方法在调用时临时绑定函数的上下文（this 值）到指定的对象，只在函数调用期间有效。  
+   bind() 方法创建一个新的绑定函数，将函数的上下文永久绑定到指定的对象。
+4. 参数传递：  
+   call() 方法在调用时可以接受一个参数列表，并将这些参数作为参数传递给函数。  
+   bind() 方法可以预先传递参数给绑定函数，并在调用绑定函数时作为参数传递。
+
+适用场景：  
+当我们知道参数的具体数量时，可以使用 call()。  
+当我们想预设函数的部分参数，并创建一个新的函数时，可以使用 bind() 方法。  
+当我们需要立即调用函数，并指定执行上下文时，可以使用 call()方法。
 
 ## 面向对象
 
@@ -759,6 +1331,7 @@ document 对象是 window 对象中的子对象。
 
 DOM，全称“Document Object Model（文档对象模型）”，它是由 W3C 组织定义的一个标准。  
 在前端开发时，我们往往需要在页面某个地方添加一个元素或者删除元素，这种添加元素、删除元素的操作就是通过 DOM 来实现的。说白了，DOM 就是一个接口，我们可以通过 DOM 来操作页面中各种元素，例如添加元素、删除元素、替换元素等。
+![image](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/javascript9.jpg?raw=true)  
 
 1.  DOM 节点属性
 
@@ -797,13 +1370,24 @@ DOM，全称“Document Object Model（文档对象模型）”，它是由 W3C 
                 console.log(document.querySelector('.guess').value);
         });
 
-监听键盘 keydown 事件：
+    监听键盘 keydown 事件：
 
         document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') {
                         console.log('ESC is pressed!');
                 }
         });
+
+5. 修改HTML, `innerHTML` 获取全部html内容, `insertAdjacentHTML`插入页面元素    
+
+        const containerMovements = document.querySelector('.movements');
+        containerMovements.innerHTML = '';
+        const html = `
+            <div class="movements__row">
+                ...
+            </div>
+        `;
+        containerMovements.insertAdjacentHTML("afterbegin", html);
 
 ### 事件
 

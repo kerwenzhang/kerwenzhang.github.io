@@ -1,6 +1,6 @@
 # Site settings
 title: Kerwen Blog
-SEOTitle: Kerwen的博客 | 记录成长路上的点点滴滴
+SEOTitle: Kerwen的博客 | Stay Hungry Stay Foolish
 header-img: img/home-bg.jpg
 post-img: img/tag-bg.jpg
 email: xingchen0624@qq.com
@@ -78,7 +78,7 @@ netease_comment: false
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "记录成长路上的点点滴滴"
+sidebar-about-description: "Stay Hungry Stay Foolish"
 sidebar-avatar: /img/photo.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
