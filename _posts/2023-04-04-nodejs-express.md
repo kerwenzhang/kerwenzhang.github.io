@@ -109,6 +109,9 @@ app.js中引入这个模块
         resp.send("result: "+ addObj.add(parseInt(params.a), parseInt(params.b)));
     })
 
+输入url：  
+http://localhost:8888/calculate/add?a=1&b=2
+
 ## 独立模块
 创建新的`sub.js`
 
