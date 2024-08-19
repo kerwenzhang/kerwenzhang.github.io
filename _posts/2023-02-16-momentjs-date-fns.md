@@ -2,10 +2,10 @@
 layout: post
 title: 用date-fns替代momentjs
 date:   2023-02-16 9:13:14
-categories: "web"
+categories: "Web"
 catalog: true
 tags: 
-    - web
+    - Web
 ---
 
 # Moment.js

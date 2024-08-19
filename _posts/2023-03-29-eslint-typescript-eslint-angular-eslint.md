@@ -2,10 +2,10 @@
 layout: post
 title: eslint, typescript-eslint, angular-eslint
 date:   2023-03-28 9:13:14
-categories: "web"
+categories: "Web"
 catalog: true
 tags: 
-    - web
+    - Web
 ---
 
 # eslint

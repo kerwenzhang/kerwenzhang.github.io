@@ -2,10 +2,10 @@
 layout: post
 title: formGroup,formControl,formArray
 date:   2023-03-28 9:13:14
-categories: "web"
+categories: "Web"
 catalog: true
 tags: 
-    - web
+    - Web
 ---
 
 Angular 提供了两种不同的方法来通过表单处理用户输入：响应式表单和模板驱动表单。 两者都从视图中捕获用户输入事件、验证用户输入、创建表单模型、修改数据模型，并提供跟踪这些更改的途径。  

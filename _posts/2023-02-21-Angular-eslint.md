@@ -2,10 +2,10 @@
 layout: post
 title: 从tslint迁移到Angular-eslint
 date:   2023-02-21 9:13:14
-categories: "web"
+categories: "Web"
 catalog: true
 tags: 
-    - web
+    - Web
 ---
 
 1. 安装eslint依赖，运行以下命令：

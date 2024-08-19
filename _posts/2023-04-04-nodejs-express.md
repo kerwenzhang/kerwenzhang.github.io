@@ -2,10 +2,10 @@
 layout: post
 title: nodejs express
 date:   2023-04-04 9:13:14
-categories: "web"
+categories: "Web"
 catalog: true
 tags: 
-    - web
+    - Web
 ---
 
 # Express基础
