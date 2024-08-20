@@ -355,5 +355,94 @@ http://localhost:8888/calculate/add?a=1&b=2
 
 在网页中输入`http://localhost:8888/calculate/mul?a=2&b=3`
 
+# Swagger
+Swagger是一种规范，用于描述API的结构，功能和参数。它是一种开源工具，可通过该工具生成API文档，用于开发和测试。使用Swagger可以提供清晰的可视化API文档，可用于API交互的文档驱动开发，以及API的自动化测试和集成。Swagger已经成为API设计和开发中的必备工具。  
+
+在Express中使用Swagger，需要以下步骤：  
+
+安装Swagger
+
+    npm install swagger-jsdoc swagger-ui-express --save
+
+
+
+## 配置Swagger
+
+    const express = require('express');
+    const swaggerJsdoc = require('swagger-jsdoc');
+    const swaggerUi = require('swagger-ui-express');
+
+    const app = express();
+
+    const options = {
+        definition: {
+            openapi: '3.0.0',
+            info: {
+                title: 'My API',
+                version: '1.0.0'
+            }
+        },
+        apis: ['./routes/*.js']
+    };
+
+    const swaggerSpec = swaggerJsdoc(options);
+
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+其中，`options-definition`字段用于定义Swagger规范，`apis`字段用于指定使用Swagger规范的API文件路径  
+
+## 创建路由
+在根目录下创建routes文件夹，新建router.js, 添加路由信息
+
+    const express = require('express');
+    var router = express.Router();
+
+    router.get('/users', (req, res) => {
+        res.status(200).json({data: [{name: 'Tom', age: 20}, {name: 'Lucy', age: 22}]});
+    });
+
+    router.post('/users', (req, res) => {
+        res.status(200).json({success: true});
+    });
+
+    module.exports = router;
+
+## 添加Swagger说明
+在router.js中定义Swagger  
+具体可以参考[Swagger官网规范说明](https://swagger.io/specification/)或使用[Swagger Editor](https://editor.swagger.io/)进行编写。
+
+    /**
+    * @swagger
+    * /api/users:
+    *  get:
+    *    summary: 获取所有用户信息
+    *    responses:
+    *      200:
+    *        description: 成功获取所有用户信息
+    * 
+    *  post:
+    *    summary: 创建用户
+    *    parameters:
+    *      - in: body
+    *        name: user
+    *        schema:
+    *          type: object
+    *          properties:
+    *            name:
+    *              type: string
+    *            age:
+    *              type: integer
+    *    responses:
+    *      200:
+    *        description: 成功创建用户
+    */
+
+## 使用路由
+在index.js中引用路由，并添加`/api`前缀  
+
+    const router = require('./routes/router.js');
+    app.use('/api',router);
+
 # Reference  
-[node.js中express框架的使用](https://blog.csdn.net/weixin_54418006/article/details/123584850)
+[node.js中express框架的使用](https://blog.csdn.net/weixin_54418006/article/details/123584850)  
+[在Express中使用Swagger](https://www.cnblogs.com/biem/p/17426229.html)
