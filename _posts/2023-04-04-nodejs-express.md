@@ -389,7 +389,7 @@ Swagger是一种规范，用于描述API的结构，功能和参数。它是一�
 
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-其中，`options-definition`字段用于定义Swagger规范，`apis`字段用于指定使用Swagger规范的API文件路径  
+其中，`options-definition`字段用于定义Swagger规范，`apis`字段用于指定使用Swagger规范的API文件路径，指定 swagger-jsdoc 去哪个路由下收集 swagger 注释  
 
 ## 创建路由
 在根目录下创建routes文件夹，新建router.js, 添加路由信息
@@ -442,6 +442,51 @@ Swagger是一种规范，用于描述API的结构，功能和参数。它是一�
 
     const router = require('./routes/router.js');
     app.use('/api',router);
+
+
+## 返回json
+在index.js中添加以下语句，返回json规范的swagger
+
+    // 开放 swagger 相关接口，
+    app.get('/swagger.json', function(req, res) {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(swaggerSpec);
+    });
+
+## 封装
+可以将所有swagger的配置从index.js中挪出来，单独放一个文件, 新建一个文件夹swagger，在该目录下创建config.js。将所有swagger相关配置都挪进去:
+
+    const swaggerJsdoc = require('swagger-jsdoc');
+    const swaggerUi = require('swagger-ui-express');
+
+    exports.setSwagger = function(app) {
+        const options = {
+            definition:{
+                openapi:'3.0.0',
+                info:{
+                    title:'My API',
+                    version: '1.0.0'
+                }
+            },
+            apis:['./routes/*.js']
+        };
+
+        const swaggerSpec = swaggerJsdoc(options);
+
+        // 开放 swagger 相关接口，
+        app.get('/swagger.json', function(req, res) {
+            res.setHeader('Content-Type', 'application/json');
+            res.send(swaggerSpec);
+        });
+        app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    }
+
+修改index.js
+
+    const swagger = require('./swagger/config.js');
+    swagger.setSwagger(app);
+
+
 
 # Reference  
 [node.js中express框架的使用](https://blog.csdn.net/weixin_54418006/article/details/123584850)  
