@@ -14,4 +14,6 @@ Syslink能减少空间占用，这在多project的情况下带来的好处不言
 
     node-linker=hoisted
 
-删掉node modules，重新`pnpm install`
+删掉node modules，重新`pnpm install`  
+
+注意: pnpm这个功能是从v7.13开始有的，如果你的pnpm版本过低，建议升级到7.13以上版本。  
