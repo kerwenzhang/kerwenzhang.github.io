@@ -2,10 +2,10 @@
 layout: post                
 title: "electron-builder"                
 date:   2024-5-31 20:30:00                 
-categories: "Web"                
+categories: "Electron"                
 catalog: true                
 tags:                 
-    - Web                
+    - Electron                
 ---      
 用于打包和构建基于macOS,Windows和Linux的, 带自动更新的Electron App。  
 # Reference
