@@ -1,0 +1,297 @@
+---
+layout: post
+title: "Node SEA"
+date: 2024-09-10 9:00:00
+categories: "Web"
+catalog: true
+tags:
+  - Web
+---
+
+# 官方文档
+官方的文档直接机翻成汉语不像人话，尝试以自己理解的方式翻译了一下。  
+
+## 生成单执行程序
+Node.js 支持创建单个可执行应用程序，方法是注入由 Node.js 准备的 blob，其中可以包含捆绑脚本， 将js文件转为二进制文件。在启动过程中，程序会检查是否有任何内容注入。如果找到 blob，它将执行 blob 中的脚本。否则 Node.js 像往常一样运行。    
+
+### blob
+关于什么是Blob，官方在另外一个地方link了一个[链接](https://developer.mozilla.org/zh-CN/docs/Web/API/Blob)  
+
+Blob 对象表示一个不可变、原始数据的类文件对象。它的数据可以按文本或二进制的格式进行读取，也可以转换成 ReadableStream 来用于数据操作。
+
+Blob 表示的不一定是 JavaScript 原生格式的数据。`File` 接口基于 `Blob`，继承了 `blob` 的功能并将其扩展以支持用户系统上的文件。  
+
+以下示例中，用一个 JSON 字符串构造一个 blob：  
+
+    const obj = { hello: "world" };
+    const blob = new Blob([JSON.stringify(obj, null, 2)], {
+      type: "application/json",
+    });
+
+## 示例
+Node SEA目前仅支持运行 使用 CommonJS 模块系统的单个嵌入式脚本。  
+以下是Hello示例  
+
+1. 创建 JavaScript 文件：
+
+        echo 'console.log(`Hello, ${process.argv[2]}!`);' > hello.js
+
+
+2. 创建一个配置文件，构建一个可以注入到 单个可执行应用程序的blob：
+
+        echo '{ "main": "hello.js", "output": "sea-prep.blob" }' > sea-config.json
+
+
+3. 生成要注入的 blob：
+
+        node --experimental-sea-config sea-config.json
+
+4. 创建可执行文件的副本并根据您的需要命名它：
+
+
+        node -e "require('fs').copyFileSync(process.execPath, 'hello.exe')"
+
+   文件名后缀必须是.exe
+
+5. 使用 signtool 删除二进制文件的签名：
+
+        signtool remove /s hello.exe
+
+6. 通过使用 以下选项将blob注入到hello.exe中：
+    
+        npx postject hello.exe NODE_SEA_BLOB sea-prep.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2
+
+    + hello / hello.exe- 可执行文件副本的名称 在步骤 4 中创建
+    + NODE_SEA_BLOB- Blob 的名字
+    + sea-prep.blob- 在步骤 1 中创建的 blob 的名称。
+    + --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2- Node.js 项目用于检测文件是否已注入的保险丝(fuse)。
+
+7. 对二进制文件进行签名  
+8. 运行二进制文件：
+
+        $ .\hello.exe world  
+        Hello, world! 
+
+
+
+## 生成blob
+blob 可以使用node 命令`--experimental-sea-config` 来生成。需要传入一个JSON 格式的配置文件。
+
+下面是一个示例：
+
+    {
+      "main": "/path/to/bundled/script.js",
+      "output": "/path/to/write/the/generated/blob.blob",
+      "disableExperimentalSEAWarning": true, // Default: false
+      "useSnapshot": false,  // Default: false
+      "useCodeCache": true, // Default: false
+      "assets": {  // Optional
+        "a.dat": "/path/to/a.dat",
+        "b.txt": "/path/to/b.txt"
+      }
+    }
+
+
+如果路径不是绝对路径，Node.js将使用相对于 当前工作目录的路径。用于生成blob的 Node.js 版本必须与 blob 将注入的nodejs版本相同。
+
+注意：由于CodeCache和Snapshot只能在同一平台上加载， 在生成跨平台 SEA 时必须将这两个选项设置为 false 以避免生成不兼容的可执行文件。当exe尝试加载在不同平台上构建的 Code Cache 或 Snapshot时， 它可能会在启动时崩溃。
+
+## Assets
+可以在json配置文件的assets区域，用 key-path 添加assets。在构建时，Node.js会从指定路径读取assets，并将其捆绑到blob中。在生成的exe中，用户可以使用 `sea.getAsset()` 和 `sea.getAssetAsBlob()` API 来获取assets  
+
+    {
+      "main": "/path/to/bundled/script.js",
+      "output": "/path/to/write/the/generated/blob.blob",
+      "assets": {
+        "a.jpg": "/path/to/a.jpg",
+        "b.txt": "/path/to/b.txt"
+      }
+    }
+
+
+exe可以按如下方式访问assets：
+
+    const { getAsset, getAssetAsBlob, getRawAsset } = require('node:sea');
+    // Returns a copy of the data in an ArrayBuffer.
+    const image = getAsset('a.jpg');
+    // Returns a string decoded from the asset as UTF8.
+    const text = getAsset('b.txt', 'utf8');
+    // Returns a Blob containing the asset.
+    const blob = getAssetAsBlob('a.jpg');
+    // Returns an ArrayBuffer containing the raw asset without copying.
+    const raw = getRawAsset('a.jpg');
+
+
+
+## snapshot支持
+在配置文件里将`useSnapshot`设为`true`来启用快照支持。脚本不会在exe启动时执行， 相反，它是在构建计算机上， 在准备 blob 时生成的。生成的blob 将包括一个快照，捕获脚本初始化的状态。 注入了blob 的exe在运行时，会反序列化快照。
+
+当为 true 时，主脚本调用 `v8.startupSnapshot.setDeserializeMainFunction()`API 来配置exe启动时需要运行的代码
+
+exe使用快照的典型模式是：
+
+1. 在build时，在build机上，主脚本将堆(heap)初始化为准备接受用户输入的状态。脚本还会使用 `v8.startupSnapshot.setDeserializeMainFunction()` 配置 main 函数。此函数被编译并序列化到快照中，但不在build的时候调用。  
+
+2. 在运行时，main 函数将在反序列化的堆上运行，在用户计算机上处理用户输入并生成输出。
+
+启动快照脚本的一般约束也适用于主 script 来为单个可执行应用程序构建快照， 并且主脚本可以使用 v8.startupSnapshot API 来适配 这些约束。
+
+## V8 代码缓存支持
+当设置此选项时，在生成期blob期间，Node.js将编译脚本以生成 V8 代码缓存。生成的代码缓存将是blob的一部分，并最终注入到可执行文件exe中。当应用程序启动时，Node.js不会从头开始编译script，而是使用缓存来加快编译速度，这将提高启动性能。
+
+注意：当 useCodeCache为true时import() 不起作用。  
+
+## API 
+
+1. sea.isSea()  
+返回： <boolean> 此脚本是否在单可执行文件中运行。  
+
+2. sea.getAsset(key[, encoding])  
+用于检索在build时，捆绑到exe里的assets。 如果找不到匹配的资产时，将抛出error。
+
+    + key \<string\> 在配置文件中指定的assets的key。
+    + encoding \<string\> 如果指定，则将Assets解码为一个字符串。接受任何的支持编码。 如果不指定，则返回一个包含该资产的副本。  
+
+   返回： string 或者 ArrayBuffer
+
+3. sea.getAssetAsBlob(key[, options])  
+类似于 sea.getAsset()，但返回 Blob 中的结果。 如果找不到匹配的资产时，将抛出error。
+
+    + key \<string\> 在配置文件指定的assets的key。
+    + options \<Object\>
+      type \<string\> blob 的可选 MIME 类型。?  
+
+    返回： \<Blob\>
+
+4. sea.getRawAsset(key)  
+    此方法可用于检索build时，捆绑到exe的assets。 当找不到匹配的资产时，将抛出error。
+
+    与 2或 3不同，此方法不会 返回副本。相反，它会返回捆绑在可执行文件中的原始资源。
+
+    目前，用户应避免往返回的数组缓冲区做写入操作。如果 注入的部分未标记为可写或未正确对齐， 往返回的数组缓冲区写入可能会导致崩溃。
+
+    key \<string\> 在配置文件指定的assets的key  
+    返回： \<string\> |\<ArrayBuffer\>
+
+### require(id)在注入的主脚本中不是基于文件的
+注入的主脚本中的 require() 与未注入模块可用的 require() 不同。它也没有非注入的 require() 所具有的任何属性（require.main 除外）。它只能用于加载内置模块。尝试加载只能在文件系统中找到的模块将引发错误。
+
+用户可以将应用程序编译到一个 JavaScript 文件中，并注入可执行文件，而不是依赖基于文件的 require()。这还可以确保更确定的依赖关系图。
+
+但是，如果仍然需要基于文件，也可以实现：
+
+    const { createRequire } = require('node:module');
+    require = createRequire(__filename);
+
+### __filename和注入的主脚本module.filename
+注入的主脚本中_filename 和 _module.filename 的值 等于 process.execPath。
+
+### __dirname在注入的主脚本中#
+注入的主脚本中的 __dirname 等于目录 process.execPath
+
+
+# 当前状态概述
+原文地址[An Overview of the Current State](https://github.com/nodejs/single-executable/blob/main/blog/2022-08-05-an-overview-of-the-current-state.md)
+
+一个Node.js Single Executable Application （SEA）程序是一个完整的Node.js程序， 既包括程序本身，也包括Node.js 运行时(runtime)。它们一起作为单个独立二进制文件进行分发。如何将应用程序代码与 Node.js平台捆绑在一起， 这个问题已经在 Node.js 社区探索了多年，现有的解决方案记录在这个[链接](https://github.com/nodejs/single-executable/blob/main/docs/existing-solutions.md)。更有趣的是， 同一问题的某一些方面的也在其他开源社区(比如 Deno、AppImage、Electron 和 Redbean 等项目)中探索过了。
+
+虽然在 Node.js 生态系统中有很多很好的解决方案来解决这个问题，但他们中没有一个被证明严格优于其他人。许多此类工具都实现了类似的架构，通常最终解决相同的问题，因此也往往面临相同的挑战。
+
+我们相信，携手合作不仅会在 Node.js 环境中产生更优的解决方案，而且还会引入基础模块来解决整个开源世界中的相关问题。
+
+## SEAs如何工作的
+将应用程序资源与 Node.js 可执行文件结合起来的问题乍一看似乎很棘手，但事实并非如此！该过程通常如下所示：  
+![Create](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/sea1.png?raw=true)  
+
+首先，我们从构成 Node.js 应用程序的assets开始。这些assets通常包括来自应用程序和 node_modules 目录的 JavaScript 文件、由主应用程序或其依赖项构建的addon、JSON 文件等。使用 TypeScript 等转译器实现的代码或通过 WebAssembly 编译为 JavaScript 的代码不在此讨论范围内，被认为已经处理完毕。
+
+Node.js 程序通常由多个文件组成。要将这些多个文件嵌入可执行文件中，我们需要将它们“捆绑”在一起。应用程序代码可能依赖文件系统的特性，例如它们相对于项目根目录的位置、添加到应用程序文件的权限（即执行位）或基于符号链接的目录结构。为了确保这些特性被保留，应用程序文件通常捆绑为虚拟文件系统 (Virtual File System  VFS)。
+
+本地可执行程序、对象、共享库和静态库通常使用操作系统可以理解的二进制格式进行表示。例如，macOS 和 Windows 分别使用 Mach-O 和可移植可执行 (PE) 二进制格式。这些二进制格式通常将他们的数据作为自身的一部分。例如，二进制文件一部分包含程序的主要可执行代码，另一个部分包含静态初始化的变量。
+
+因此，在build应用程序文件时生成的虚拟文件系统(VFS)可以作为新的部分“附加”到 Node.js 二进制文件中。Node.js C++ 本地化初始化逻辑可以知道它已经包含了哪些部分，直接跳转到 VFS 部分执行。
+
+## 当前SEAs遇到的问题
+
+根据我们的经验，现有的 Node.js 单可执行方案至少存在以下问题或限制：
+
++ 需要维护自定义 Node.js 补丁。这些补丁通常涉及 Node.js 的初始化逻辑，并且在不同的 Node.js 版本中有所不同。这些补丁会导致高维护负担，并使 SEA 应用程序难以在发布新 Node.js 版本后立即支持它们。理想的 SEA 工具应该能够使用任何官方的更新的 Node.js 来创建 可执行应用程序。
++ 需要从源代码开始编译 Node.js。管理自定义 Node.js 补丁还意味着 SEA 应用程序需要自己编译 Node.js 。编译很复杂、容易出错，并且可能耗费大量资源。在其他情况下，SEA 项目在编译时嵌入应用程序资源，将编译 Node.js 的需求推给用户。
++ 需要对 Node.js 内部模块进行 monkey-patching。通常，SEA 程序需要监听 I/O 相关的 Node.js 功能，包括从 fs 和 child_process 模块到 require() 的内部工作。Node.js 不提供解决此问题的工具，导致猴子补丁复杂且容易出错。
++ 与代码签名的互操作性有限。在许多情况下，应用程序的资源会嵌入到二进制文件的尾部，超出了 Mach-O 和 PE 等二进制格式的边界。鉴于代码签名时在二进制格式级别运行，这些操作可能会导致二进制文件无法进行签名、无法执行，又或者签名的二进制文件实际上不受签名的保护。
++ 不支持非 JavaScript assets。一些 SEA 实现会将JavaScript 资产连接起来，作为“单个”文件注入可执行文件中。虽然这种方法适用于简单程序，但许多 Node.js 应用程序需要程序资源独立存在，不作为 JavaScript 代码的一部分链接到一起。例如 Node.js addon、文本文件、可执行脚本等。这些资产通常使用 fs 和 child_process 动态使用。
++ 部分覆盖 Node.js 支持的平台。Node.js 为各种操作系统和架构提供不同程度的官方支持。相比之下，许多 SEA 实现将其支持限制在其中的一小部分。
+
+## SEA 的架构
+支持 Node.js SEA 的问题可以分解为 3 个互补且正交的成分：资源注入、虚拟文件系统和引导程序。有趣的是，这些组件足够通用，它们每个都可能开辟 SEA 以外的用例。  
+![Create](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/sea2.png?raw=true)  
+
+### 资源注入
+此组件涉及以二进制格式友好的方式向预编译二进制文件注入任意数据的能力。数据注入后，程序必须能够在运行时检测注入数据的偏移量和长度。实现一个跨平台的资源注入器并支持运行时自检，这需要了解各种二进制格式。
+
+此组件的初始要求如下：  
+
+
+1. 在二进制格式的边界内注入数据，而不是在其之外
+2. Node.js 所支持的平台的所有二进制格式，SEA都需要支持
+3. 支持注入任意数据，无论其格式和内容如何
+4. 为运行时反射(runtime reflection)提供互补的跨平台原生 API
+5. 注入器实现不得依赖native addon
+6. 允许注入任何平台（从 macOS 到 Windows 等）中任何受支持的二进制格式
+
+要求5 的目的是防止使用 SEA 技术的开发人员需要在本地环境中拥有完整的本机编译器工具链来编译支持注入的本地addon。这种设置在 Windows 上通常很复杂，并且可能会成为寻求帮助的常见问题来源。
+
+要求6 是一个主要用于持续集成的便利功能。有了它，开发人员无需使用与目标匹配的主机操作系统执行数据注入。例如，开发人员可以在 Linux 上对 Windows 二进制文件执行资源注入。
+
+虽然此工具的直接用例是将 Node.js 资源文件注入主可执行文件，但许多本机程序出于多种原因发现需要将任意数据文件注入程序。出于这个原因，C23 编程语言中已经包含了 #embed 等功能。
+
+### 虚拟文件系统
+VFS 是一种只读格式，应用程序数据在注入 Node.js 可执行文件之前会以这种格式打包。VFS 的存在对于依赖文件系统的元数据（例如目录结构和文件权限）的运行至关重要。这种类型的 VFS 格式通常很简单：将文件与代表文件数据的系统结构关联起来。
+
+VFS的初始要求是：
+1. 出于性能考虑应支持随机访问读取
+2. 支持符号链接(symbolic links)的概念
+3. 支持保留文件权限，至少是可执行位
+4. 出于空间优化原因支持通用数据压缩
+5. 保留文件层次结构信息
+6. 出于性能原因增加相关文件的局部性
+7. 不干扰文件系统中的有效路径
+
+虚拟文件系统除了嵌入现有可执行文件之外，还具有广泛的适用性。范围从虚拟机和数据传输, 甚至是包管理器。  
+
+### 引导程序 bootstrapper 
+这是将所有内容联系在一起的元素。引导程序利用资源注入运行时自检功能(Resource Injection runtime introspection)来检测VFS系统的存在。它实现了将执行跳转到虚拟文件系统中捆绑的程序的逻辑，并知道如何为VFS监听 I/O 以提供无缝执行。
+
+此要素的初始要求集是：
+1. 支持加载 Node.js native addon组件
+2. 将涉及 I/O 的 Node.js API 函数调用传回 VFS
+3. 支持从 VFS 内部运行可执行程序
+4. 将命令行参数传给嵌入在 VFS 中的程序
+5. 将环境变量传给嵌入在 VFS 中的程序
+
+在 Node.js 的上下文中，社区历来被迫对 fs 等模块进行 monkey-patch，以用于高级 I/O 用例。例如，Electron 对几个 Node.js 模块进行 monkey-patch，以支持其 ASAR 集成。Vercel 的 PKG 以类似的方式对各种功能进行 monkey-patch。这种方法不仅容易出错，而且将来可能就无法实现，如果 Node.js 阻止对其内部模块进行运行时修改（比如出于安全原因）。
+
+
+## 我们目前有什么成果？
+在 Postman 中，@dsanders11、@raisinten 和 @robertgzr 在试验上述架构方面取得了突出进展。这些进展大部分建立在 #42334 和 #43432 中开展的有趣工作和讨论的基础上。
+
+在资源注入领域，我们开源了一个名为 [Postject](https://github.com/nodejs/postject) 的工具。Postject 支持将数据作为 Mach-O、PE 和 ELF 部分任意注入，并附带一个跨平台 C/C++ 头文件，提供运行时自省 API。它目前以 Python 和 C++ 的混合形式实现，并以 LIEF 项目提供的基础为基础。
+
+在VFS领域，我们目前正基于 Electron 设计和测试过的 ASAR 存档格式进行概念验证。ASAR 格式在设计上是可扩展的，允许我们向自定义实现添加任意新元数据和功能。
+
+在 Bootstrapper 领域，我们正在维护一个自定义 Node.js 补丁，该补丁利用 Postject 反射 API，提供基本的 ASAR 只读实现，并接管 Node.js 的入口点以跳转到嵌入式应用程序执行。  
+
+但是，我们远未完成！我们的目标是在社区的帮助下重新思考并继续改进这些组件，并推动一种更好的 SEA 方法，让 Node.js 生态系统及其他领域的每个人都能从中受益。  
+
+## 未来工作  
+SEA 为创新提供了有趣的可能性。例如，我们可以探索创建利用 v8 快照来加快应用程序启动时间的 SEA，或者我们可以精简 Node.js 以在 SEA 环境中优化空间效率的方法。
+
+非常欢迎提出想法！  
+
+
+[Node.js 新特性 SEA/单文件可执行应用尝鲜](https://blog.csdn.net/ssrc0604hx/article/details/133776379)   
+[https://stackoverflow.com/questions/78209775/with-node-sea-how-to-pack-node-modules-into-executable](https://stackoverflow.com/questions/78209775/with-node-sea-how-to-pack-node-modules-into-executable)    
+[An Overview of the Current State](https://github.com/nodejs/single-executable/blob/main/blog/2022-08-05-an-overview-of-the-current-state.md)  
+[How to bundle Node.js application to Single Executable Application (SEA) along Native Modules (NAPI)?](https://stackoverflow.com/questions/70662886/how-to-bundle-node-js-application-to-single-executable-application-sea-along-n)  
+[How are native addons going to interact with the VFS?](https://github.com/nodejs/single-executable/discussions/29)  
+[Some corner use cases](https://github.com/nodejs/single-executable/discussions/30)
