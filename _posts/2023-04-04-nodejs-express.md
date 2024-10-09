@@ -139,15 +139,15 @@ Express中的路由分3部分组成，分别是请求的类型、请求的UR地�
 创建路由模块  
 
     var express = require('express')  //导入express
-    var router = express.Router  //创建路由对象
+    var router = express.Router()  //创建路由对象
 
     //挂载获取用户列表的路由
-    router.get('/user/list', function(req, res) => {
-        res.send('Get user list.')
+    router.get('/user/list', function(req, res) {
+    res.send('Get user list.')
     })
     //挂载添加用户的路由
-    router.post('/user/add', function(req, res) => {
-        res.send('Add new user.')
+    router.post('/user/add', function(req, res)  {
+    res.send('Add new user.')
     })
 
     //向外导出路由对象
