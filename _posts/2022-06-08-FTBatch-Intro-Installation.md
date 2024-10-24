@@ -53,13 +53,13 @@ FTBatch 包括以下组件：
 | FactoryTalk Batch Server |是运行FT Batch的引擎。它是控制系统信息、阶段(phases)和配方的组件。是一个Windows服务|   
 | FactoryTalk Batch Recipe Editor |以图形方式创建和配置配方,指定阶段的顺序(phases sequence),高阶功能比如配方批准，配方版本控制|   
 | FactoryTalk Batch Equipment Editor |以图形的方式定义和维护Process中的各种设备|   
-| FactoryTalkBatch View |操作员启动配方和执行程序的界面，显示正在运行的批次并用图形的方式展示相关数据|   
-| FactoryTalk Batch View HMI Controls |   
-| FactoryTalk Event Archiver |是一个Windows服务，用于归档来自Batch Server的事件。事件会被写入SQL数据库。可以使用Reporting Services以 HTML报告形式查看存储在数据库中的事件|   
-| FactoryTalk Batch Network Editor |指示FT Batch和FT Batch Material服务器在网络上的位置的工具|   
-| FactoryTalk eProcedure | 分Client和Server，Client允许操作员在IE上运行批处理配方，Server则是用来提供相应的HTML指令服务(???没懂???)|  
-| FactoryTalk Batch Enterprise Integration Server |   
-| FactoryTalk Batch Material Manager |用于跟踪批处理配方中的材料消耗,分Server和Editor，Server提供数据库和FT Batch Server之间的通信， Editor提供界面帮助用户创建物料数据库|    
+| FactoryTalk Batch View |操作员启动配方和执行程序的界面，显示正在运行的Batch并用图形的方式展示相关数据|   
+| FactoryTalk Batch View HMI Controls | Batch View的HMI 版， Batch View是需要license收费的，HMI 直接运行在FactoryTalk View里，免费的|   
+| FactoryTalk Event Archiver |是一个Windows服务，用于将Batch Server传送来的事件进行归档。事件会被写入SQL数据库。可以使用Reporting Services以 HTML报告形式查看存储在数据库中的事件|   
+| FactoryTalk Batch Network Editor |指定FT Batch Server 和FT Batch Material Server在网络上的位置|   
+| FactoryTalk eProcedure | 分Client和Server，Client允许操作员在IE上运行批处理配方，Server则是用来提供相应的HTML指令服务|  
+| FactoryTalk Batch Enterprise Integration Server |  一个openapi指令接口，提供指令来获取一些Batch信息 |
+| FactoryTalk Batch Material Manager |用于跟踪批处理配方中的材料消耗,分Server和Editor，Server提供数据库和FT Batch Server之间的通信， Editor提供界面帮助用户创建管理物料数据库|    
 
 下图是FTBatch的一个典型部署结构：  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/Batch_install_structure.png?raw=true)
