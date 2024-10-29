@@ -8,7 +8,7 @@ tags:
     - FTBatch                
 ---      
 
-最近转去Batch team做开发，对FactoryTalk Batch所知甚少，需要花一些时间去了解这个产品。今后可能会开一个系列的文章介绍FTBatch这个产品，主要参考FTBatch的用户手册，目前手册只有英文版，我尽量把它写成中文版，边学边记录，虽然多花些时间，但能对产品有更深的理解。  
+对FactoryTalk Batch所知甚少，需要花一些时间去了解这个产品。今后可能会开一个系列的文章介绍FTBatch这个产品，主要参考FTBatch的用户手册，目前手册只有英文版，我尽量把它写成中文版，边学边记录，虽然多花些时间，但能对产品有更深的理解。  
 
 # 什么是Batch
 
@@ -25,13 +25,13 @@ S88 的目的是：
 1. 定义特定于批次控制系统的术语，以促进制造商和用户之间的理解。  
 2. 提供标准的数据结构批处理控制语言，以简化系统各个组件之间的编程、配置任务和通信。    
 3. 为批处理系统提供标准数据结构，这将简化系统架构内的数据通信任务。    
-4. 确定定义物理模型和功能模型的标准批量控制架构。  
+4. 确定物理模型和功能模型的标准架构。  
    
 S88 为批处理控制提供了一套一致的标准和术语，并定义了物理模型(physical model)、程序(procedures)和配方(recipes)。  
 
 该标准定义了一个过程模型(process model)，该模型由一个过程(process)组成，该过程由一组有序的过程阶段(process stages)组成，这些阶段由一组有序的过程操作(process operations)组成，这些过程操作由一组有序的过程动作(process actions)组成。  
 
-物理模型从企业(enterprise)开始，该企业可能包含一个站点(site)，该站点可能包含可能包含过程单元(process cells)的区域(areas)，过程单元必须包含一个单元(unit)，该单元可能包含可能包含控制模块(control modules)的设备模块(equipment modules)。  
+物理模型从企业(enterprise)开始，该企业可能包含一个站点(site)，该站点可能包含  含有过程单元(process cells)的区域(areas)，过程单元必须包含一个单元(unit)，该单元可能包含  含有控制模块(control modules)的设备模块(equipment modules)。  
 
 程序控制模型(procedural control model)由配方程序(recipes procedures)组成，这些程序由一组有序的单元程序(unit procedures)组成，这些单元程序由一组有序的操作(operations)组成，这些操作由一组有序的阶段(phases)组成。  
 
@@ -51,15 +51,15 @@ FTBatch 包括以下组件：
 | 组件 | 说明 |
 | --- | ----------- |
 | FactoryTalk Batch Server |是运行FT Batch的引擎。它是控制系统信息、阶段(phases)和配方的组件。是一个Windows服务|   
-| FactoryTalk Batch Recipe Editor |以图形方式创建和配置配方,指定阶段的顺序(phases sequence),高阶功能比如配方批准，配方版本控制|   
+| FactoryTalk Batch Recipe Editor |以图形方式创建和配置配方,指定阶段的顺序(phases sequence),高阶功能包括配方的批准，配方的版本控制等等|   
 | FactoryTalk Batch Equipment Editor |以图形的方式定义和维护Process中的各种设备|   
 | FactoryTalk Batch View |操作员启动配方和执行程序的界面，显示正在运行的Batch并用图形的方式展示相关数据|   
 | FactoryTalk Batch View HMI Controls | Batch View的HMI 版， Batch View是需要license收费的，HMI 直接运行在FactoryTalk View里，免费的|   
-| FactoryTalk Event Archiver |是一个Windows服务，用于将Batch Server传送来的事件进行归档。事件会被写入SQL数据库。可以使用Reporting Services以 HTML报告形式查看存储在数据库中的事件|   
-| FactoryTalk Batch Network Editor |指定FT Batch Server 和FT Batch Material Server在网络上的位置|   
+| FactoryTalk Event Archiver |是一个Windows服务，用于将Batch Server传送来的事件进行归档。事件会被写入SQL数据库。可以使用SQL Server Reporting Services以 HTML报告形式查看存储在数据库中的事件|   
+| FactoryTalk Batch Network Editor |FTBatch是分布式系统，可以将组件部署在网络中的不同位置。Network Editor用于指定FT Batch Server 和FT Batch Material Server在网络上的位置|   
 | FactoryTalk eProcedure | 分Client和Server，Client允许操作员在IE上运行批处理配方，Server则是用来提供相应的HTML指令服务|  
-| FactoryTalk Batch Enterprise Integration Server |  一个openapi指令接口，提供指令来获取一些Batch信息 |
-| FactoryTalk Batch Material Manager |用于跟踪批处理配方中的材料消耗,分Server和Editor，Server提供数据库和FT Batch Server之间的通信， Editor提供界面帮助用户创建管理物料数据库|    
+| FactoryTalk Batch Enterprise Integration Server |  openapi指令接口，提供一些指令来获取Batch信息 |
+| FactoryTalk Batch Material Manager |用于跟踪批处理配方中的材料消耗,分Server和Editor，Server提供SQL数据库以及和FT Batch Server之间的通信， Editor提供界面帮助用户创建管理物料数据库|    
 
 下图是FTBatch的一个典型部署结构：  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/Batch_install_structure.png?raw=true)
@@ -71,7 +71,11 @@ Batch View Server会自动跟着Batch Server组件一起安装，Batch View Web 
 子组件展开之后：  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/Batch_install2.png?raw=true)
 
-Batch Material Manager 需要enable以下windows组件：
+Batch Server安装需要将以下服务改成Auto执行
+
+        Remote Registry
+
+Batch Material Manager 需要激活以下windows组件：
 
         Message Queuing
 
@@ -87,5 +91,5 @@ eProcedure Server 需要激活以下IIS 组件：
 如果使用一个SQL Server存储配方，Batch报告和Material，需要使用默认的SQL实例名(MSSQLSERVER)。 Material Manager Server目前只支持默认实例名.  
 
 官方文档的安装建议  
-1. 不要把FactoryTalk Batch Material Manager 和 FactoryTalk Batch Server 装在同一台机器上，具体原因我还不知道，先在这<font color="red">挖个坑</font>，等我搞明白了再回来填  
+1. 不要把FactoryTalk Batch Material Manager 和 FactoryTalk Batch Server 装在同一台机器上，但在实际操作中我们经常把所有组件都装到一起。
 2. 把FactoryTalk Event Archiver放在有SQL Server的机器上  
