@@ -9,7 +9,7 @@ tags:
 ---      
 
 # Equipment Editor 简介
-FactoryTalk Batch Equipment Editor 是用于配置设备和相关功能以生成设施区域模型的组件。 FactoryTalk Batch Equipment Editor 中定义的组件与设施中的过程连接设备 (PCD) 交互。  
+FactoryTalk Batch Equipment Editor 是用于配置设备相关功能以生成设施区域模型的组件。 FactoryTalk Batch Equipment Editor 中定义的组件与设施中的过程连接设备 (PCD) 交互。  
 如 ISA S88.01标准中所述，工厂的区域模型分为以下物理组件：  
 • 处理单元 Process Cell  
 • 单元 Unit  
@@ -22,24 +22,33 @@ FactoryTalk Batch Equipment Editor 是用于配置设备和相关功能以生成
 2. 打开示例的区域模型。点击菜单 File > Open, 选择ice_cream1.cfg, 左侧类视图里显示名为`PARLOR`的处理单元类，右侧设计视图里为处理单元实例`WEST_PARLOR`.
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/equip1.png?raw=true)
 
-在类视图里显示的是在当前区域模型里已经存在的cell类，Unit类，Phase类以及操作顺序类(operation sequence classes)，列头显示的是当前的level是cell/unit还是phase，双击或者右键一个图标会打开编辑窗口。<font color="red">双击打开编辑窗口这个设定还挺奇怪的</font>    
+在类视图里显示的是在当前区域模型里已经存在的cell类，Unit类，Phase类以及操作顺序类(operation sequence classes)，列头显示的是当前的level是cell/unit还是phase，双击或者右键一个图标会打开编辑窗口。>双击打开编辑窗口这个设定还挺奇怪的     
 design视图里是用来构建整个区域模型，并且显示当前level的布局。双击一个图标可以进到下一个level,左侧的类视图会显示对应level的类，右键打开编辑窗口。  
 可以在设计视图里把完整路径页显示出来。View -》 Location Bar  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/equip2.png?raw=true)  
 
-使用工具栏里的向上向下箭头在不同层级之间切换。  
+使用工具栏里的向上向下箭头在不同层级之间切换。   
+Cell level：  
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/equip15.png?raw=true)    
+Unit level：  
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/equip16.png?raw=true)    
+Phase level:  
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/equip17.png?raw=true) 
 
-# Phase Class
-阶段类(Phase class) 是一个可重用的面向过程的功能模块，比如加热，搅拌，添加。把一个阶段类添加到设计视图里，就生成了一个阶段实例(Phase instance).  
-一个phase class描述的是配方里都做了什么，但不具体描述怎么做。比如冰激凌配方里有个phase class 是加牛奶(ADD_MILK)，ADD_MILK只是描述加牛奶这个动作，但没有怎么加的具体描述。   
+# 阶段类 Phase Class
+阶段类(Phase class) 是一个可重用的面向过程的功能模块，比如加热，搅拌，添加。把一个阶段类添加到设计视图里，就生成了一个阶段实例(Phase instance)。这跟编程语言中的面向对象相似，在C#中我们可以定义一个类class，在使用时通过new Class来实例化。    
+一个phase class描述的是配方里都做了什么，但不具体描述怎么做。比如冰激凌配方里有个phase class 是加牛奶(ADD_MILK)，ADD_MILK只是描述加牛奶这个动作，但具体怎么加需要结合实际设备才能解释清楚。这就超出了Phase Class的功能范围，class只定义动作。   
 
-右键ADD_MILK，弹出编辑窗口，在General页里可以编辑名字  
-Parameters页里包含跟这个phase class相关的参数，通过这些参数，Batch可以向PCD发送数据<font color="red">这个是跟设备挂钩的吗？</font>      
+右键ADD_MILK，弹出编辑窗口，在General页里可以编辑名字,图标等信息  
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/equip12.png?raw=true)  
+Parameters页里包含跟这个phase class相关的参数，通过这些参数，Batch可以向PCD发送数据.在Demo1里我们其实是向模拟器发送数据。  
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/equip13.png?raw=true)     
 Reports页里包含这个class的report参数，通过这些参数PCD可以向Batch发送数据。   
 Message页里包含跟这个class相干的消息，主要用来troubleshooting  
-如果在General页上勾选`Control Strategy`，会出现新的Tab页，用来添加控制策略。<font color="red">没懂</font>   
+如果在General页上勾选`Control Strategy`，会出现新的Tab页，用来添加控制策略。<font color="red">没懂</font>     
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/equip14.png?raw=true)     
 
-## Create Phase Class
+## 创建阶段类 Phase Class
 1. 菜单Class -> New Phase Class,弹出创建页面  
 2. Name修改成ADD_WATER,可以在图标列里选择一个合适的图标。  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/equip3.png?raw=true)  
@@ -54,13 +63,14 @@ Enum/E.U. : KG
 5. 点OK，新的Phase类会在左侧类面板上出现。  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/equip5.png?raw=true)  
 
-## Create Phase
+## 创建阶段实例 Phase instance
 当一个Phase类被添加到一个Unit的时候，它就变成了一个Phase实例。 一个unit里只能有一个phase类的实例。当需要在多个unit里使用同一个phase时，在unit之间共享该phase，或者创建多个phase实例并且取不同的名字。    
 如果在使用`material-enabled phase classes`, 则可以在一个unit里创建多个同一phase class的实例。  
 
-## 查看Phase的设定  
+## 查看Phase实例的设定  
+我们以WP_ADD_CREAM_M1为例  
 1. 右键点击WP_ADD_CREAM_M1，弹出编辑窗口。  
-2. 在General页上，可以配置Name，设备ID，Data Server名字，Auto Download/Auto Upload  
+2. 在General页上，可以看到它是ADD_CREAM类的实例。可以配置Name，设备ID，Data Server名字，Auto Download/Auto Upload  
 3. Arbitration(仲裁)页<font color="red">不知道这个页面是做什么的</font>  
 4. Cross Invocation(交叉调用)页，<font color="red">跟Batch View和ActiveX控件有关，但不知道具体作用</font>   
 5. Tag页显示Phase定义的所有tag点<font color="red">从哪来的？</font>。  
@@ -91,9 +101,9 @@ Batch 使用Phase tag来连接PCD中的phase logic。 Phase logic是指挥工厂
 2. 点New Template按钮，创建一个新的Template  
 3. 将名字修改为CommandsTemplate,点OK,新创建的模板已经添加进去了。  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/equip7.png?raw=true)  
-4. `Signoffs Required` 选择1 (this is the number of signatures that must be obtained for this signature template).  
+4. `Signoffs Required` 选择1 (这是此签名模板必须获得的签名数量，在实际生产中，可能会出现需要多人同时签字确认的情况).  
 5. 切到Signoffs页，在`Template Name` 里选择`CommandsTemplate`  
-6. `Signoff`列表选择1 (this represents the Signoff you are going to configure.)  
+6. `Signoff`列表选择1 (这代表您要配置的签名)  
 7. 在`Meaning`里输入Authorizes commands.  
 8. `Comment`选Optional.  
 9. `Security Permissions`点Add按钮添加用户，选择ShowAll，点选OPER，点击OK  
@@ -106,8 +116,8 @@ Batch 使用Phase tag来连接PCD中的phase logic。 Phase logic是指挥工厂
 3. 我们只创建了一个模板，所以它被默认选中了，点OK  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/equip9.png?raw=true)  
 4. 点 OK退出.  
-5. 点File -> Save 保存，弹出Comments窗口，无视     
-
+5. 点File -> Save 保存，弹出Comments窗口，无视      
+当我们运行一个Batch时，需要OPER的签名，Batch才会真正运行。  
 ## 在配方里使用签名模板
 1. 在 Edit 菜单里选 `Recipe Approvals Configuration`打开编辑窗口   
 2. 点击省略号，添加签名模板  
