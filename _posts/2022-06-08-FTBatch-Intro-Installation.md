@@ -1,6 +1,6 @@
 ---                
 layout: post            
-title: "FactoryTalk Batch简介，组成和安装"                
+title: "FactoryTalk Batch0 简介，组成和安装"                
 date:   2022-6-8 12:30:00                 
 categories: "FTBatch"                
 catalog: true                
