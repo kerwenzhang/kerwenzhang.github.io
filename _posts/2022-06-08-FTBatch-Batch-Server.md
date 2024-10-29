@@ -8,21 +8,24 @@ tags:
     - FTBatch                
 ---      
 
+
 FTBatch在安装的时候，会在安装目录(`C:\Program Files (x86)\Rockwell Software\Batch`)下创建一个名为`BATCHCTL`的共享文件夹，里面包含`SampleDemo1`和`SampleDemo2`两个Demo工程.   
 我们以Demo1为例.在SampleDemo1文件夹下有五个文件夹
 
 |文件夹名|说明|  
 | --- | ----------- |
-|instructions||  
+|instructions|存储eProcedure相关文件|  
 |journals||  
 |logs|日志，失败的时候可以先检查这里边的log输出|  
 |recipes|存储配方|  
-|restart||  
+|restart|restart日志|  
 
-在运行实例工程前，需要做以下准备工作:  
-1. 在FTSP里添加配置Security账户  
-2. 配置Batch Server运行Demo1工程  
-3. 验证配方  
+在运行实例工程前，需要做以下准备工作:    
+
+1. 安装Batch Server, Batch View Server。如果你安装了eProcedure 和Material，建议先卸载掉，否则这两个组件会影响SampleDemo1的正常运行。    
+2. 在FTSP里添加配置Security账户  
+3. 配置Batch Server运行Demo1工程  
+4. 验证配方  
 
 # 添加Security账户  
 1. 开始菜单 -> Rockwell Software > FactoryTalk Administration Console.   
@@ -47,28 +50,31 @@ FTBatch在安装的时候，会在安装目录(`C:\Program Files (x86)\Rockwell 
 5. 类似的操作，在`View Only`里添加OPER账户  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/server8.png?raw=true)  
 
+通过以上配置，ENG用户拥有编辑权限，OPER用户有只读权限。  
+
 # 配置 Batch Server
-Batch Server只是一个Windows服务，在我们启动服务之前我们要做一些配置，这些配置是在FTBatch Equipment Editor里。<font color="red">为啥是在这？没太懂。。。</font>  
+Batch Server只是一个Windows服务，在我们启动服务之前我们要做一些配置，这些配置是在FTBatch Equipment Editor里。把Server的配置项放在Equipment Editor里有点奇怪。    
 1. 点击开始菜单 > Rockwell Software > Equipment Editor  
 2. 在主界面的菜单里选择 Options > Server Options.默认显示`Project Settings`Tab页  
 3. 这里有几个关键配置项：Primary Journal,Error Logging, Equipment Database, Recipe Directory.  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/server9.png?raw=true)  
-默认已经选择了DEMO1，可以保持不动。 点击右边的省略号，会弹出文件夹选择框，默认定位到`BATCHCTL`共享文件夹。  
-![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/server10.png?raw=true)  
+  如果你安装了eProcedure， 在Equipment Database上面还有一个Instruction选项，用于配置eProcedure运行所需要的Instruction文件。  
+  默认已经选择了DEMO1，可以保持不动。 点击右边的省略号，会弹出文件夹选择框，默认定位到`BATCHCTL`共享文件夹。  
+  ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/server10.png?raw=true)    
 
-Equipment Databas路径我们选的是ice_cream1.cfg，这里边描述了做冰激凌所用的设备信息。  
+    Equipment Databas路径我们选的是ice_cream1.cfg，这里边描述了做冰激凌所用的设备信息。  
 
-4. Restart Control tab页里配置重启方式。<font color="red">这里指的是设备？还是Batch Server? 又或者整个生产线?</font>  
+4. Restart Control tab页里配置重启方式。这里的restart指的是Batch Server重启。    
 用户手册里把Restart Type改成了Warm Restart. 把Secondary Path配置到了Bin文件夹。不知道原因，先照着来吧。。。   
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/server11.png?raw=true)  
 
-5. Batch Reporting tab页里默认是Leave Never (No Queue)，也不知道这几个选项有啥区别，再说再说。。。   
+5. Batch Reporting tab页里默认是Leave Never (No Queue)，不记录Event事件。 常用的选项还有Archiver (End of Batch) 和 Archiver (Incremental)。 前者会在Batch运行结束后将该Batch运行期间产生的所有事件一起写入数据库，后者则是实时增量写入数据库。Archiver的数据库配置如下       
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/server12.png?raw=true)  
 
 6. 点击OK保存，之后退出Equipment Editor
 
 # 重建配方目录
-Server配置完了之后需要重建一下配方<font color="red">???为啥</font>,可能是需要保证在Server启动前配方没有什么严重问题。  
+Server配置完了之后需要重建一下配方,可能是需要保证在Server启动前配方没有什么严重问题。  
 重建配方需要用到Recipe Editor  
 1. 点击开始菜单 > Rockwell Software > Recipe Editor， 一打开就要求我们验证当前加载的配方，选择Cancel。    
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/server13.png?raw=true)  
@@ -91,13 +97,13 @@ Server配置完了之后需要重建一下配方<font color="red">???为啥</fon
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/server18.png?raw=true) 
 2. 确认机器名字是当前机器    
 3. 服务列表里选FactoryTalk Batch Server，这是默认选项  
-4. 因为产品没有激活，勾选 Allow Demo Mode，在Demo mode下，Server启动两个小时候自动停止。     
-5. 下边有server的重启方式 Cold, Warm, Warm All，<font color="red">跟Equipment Editor里的restart配置有什么区别？</font>  
+4. 因为产品没有激活，勾选 Allow Demo Mode，在Demo mode下，Server启动两个小时后自动停止。     
+5. 下边有server的重启方式 Cold, Warm, Warm All，<font color="red">三种启动方式有什么区别？</font>  
 6. 点Start/Continue启动Server,大概一分钟左右变成这样      
-![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/server19.png?raw=true) 
-同时后边有弹出一个新的窗口，这是接下来要讲的模拟器，Server启动的时候因为我们选的Demo1，模拟器被自动调起来了。<font color="red">怎么做到的？</font>   
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/server19.png?raw=true)   
+同时后边有弹出一个新的窗口，这是接下来要讲的模拟器，Server启动的时候因为我们选的Demo1，模拟器被自动调起来。标题是`Default - ICE_CREAM1.CFG`。打开文件夹`c:\Program Files(x86)\Rockwell Software\Batch\SampleDemo1\recipes`，里面有一个文件`ice_cream1.sim`. 模拟器加载的就是这个配置文件。还有另外一个文件`ice_cream1ep.sim`,如果你装了eProcedure，模拟器就需要加载这个文件。   
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/server20.png?raw=true) 
-7. 在Server Details里可以看到一些Server的详细信息。`PCD Communications`tab页里显示的是与底层设备通信状态<font color="red">？？？</font>状态是`PHASES GOOD`    
+7. 在Server Details里可以看到一些Server的详细信息。`PCD Communications`tab页里显示的是与底层设备通信状态状态是`PHASES GOOD`。这里我们的Data Server是模拟器`OPC_SIM`，在实际应用中，Data Server可能来自FTLinx。      
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/server21.png?raw=true) 
 8. 点击Start, 开始验证Tag，状态切成`IN PROGRESS`，一段时间后提示`COMPLETED`    
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/server22.png?raw=true) 
