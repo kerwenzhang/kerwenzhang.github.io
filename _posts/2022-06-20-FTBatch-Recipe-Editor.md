@@ -17,40 +17,47 @@ FactoryTalk Batch 配方编辑器(Batch Recipe Editor)用于创建和配置主�
 主窗体布局如下：       
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/recipe1.png?raw=true)
 
-• 程序视图窗格`Procedure View pane`位于编辑器的左侧，包含当前配方组件的分层列表。 从列表中选择一个组件会在“配方构造”窗格`Recipe Construction pane`中显示相应的步骤。  
-• 配方构建窗格`Recipe Construction pane`位于编辑器的右侧，用于构建主配方。 可以使用顺序功能图 (SFC) 或表格来构建和查看配方结构。 SFC 视图和表格视图都可以独占显示，或者配方构造窗格可以平铺以同时显示两个视图。   
+    • 程序视图窗格`Procedure View pane`位于编辑器的左侧，包含当前配方组件的分层列表。 从列表中选择一个组件会在“配方构建”窗格`Recipe Construction pane`中显示相应的步骤。  
+    • 配方构建窗格`Recipe Construction pane`位于编辑器的右侧，用于构建主配方。 可以使用顺序功能图 (SFC) 或表格来构建和查看配方结构。 SFC 视图和表格视图都可以独占显示，或者配方构造窗格可以平铺以同时显示两个视图。   
 
-# open a recipe
+# 打开一个配方
 1. 从文件菜单中，选择`Open Top Level`。 打开 [类型] 配方对话框。 类型是 BINARY。 （配方也可以存储为XML格式或者RDB格式。）  
 2. 从选择要打开的配方列表中，选择 `CLS_FRENCHVANILLA`。 在右侧展示配方有关的信息。有两个复选框`Release Recipe as Step`和`Release Recipe to Production`。<font color="red">暂时不知道是干嘛的，留作以后研究。</font>      
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/recipe2.png?raw=true)
 3. 点击Open.  
-打开配方`CLS_FRENCHVANILLA`后，左侧过程视图㕜显示的是配方结构，右侧显示的是配方结构的SFC版本。     
+打开配方`CLS_FRENCHVANILLA`后，左侧过程视图显示的是配方结构，右侧显示的是配方结构的SFC版本。     
 
-# Add a sequential step
-1. With the Selection Tool selected, double-click the CLS_SWEETCREAM_UP:1 unit procedure in the Procedure View. The CLS_SWEETCREAM_OP:1 operation displays.  
-2. Double-click the CLS_SWEETCREAM_OP:1 operation. The recipe steps within the operation display.  
-3. Select the ADD_MILK:1 STATE = COMPLETE transition at the bottom of the operation.  
-4. Select Add Step in the Recipe Construction Toolbox.   
+# 添加顺序步骤
+1. 选择工具栏中的指针图标后，点击左侧过程视图中的 `CLS_SWEETCREAM_UP:1` 单元过程。将显示 `CLS_SWEETCREAM_OP:1` 操作。  
+2. 点击 `CLS_SWEETCREAM_OP:1` 操作。显示改操作中的所有步骤。  
+3. 选择OP底部的 ADD_MILK:1 STATE = COMPLETE 转换(transition)。   
+4. 在配方构建工具箱中选择添加步骤。  
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/recipe7.png?raw=true)  
-A new step and transition are added below the selected transition and the Select Phase dialog box opens.  
-![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/recipe3.png?raw=true)
-5. Select XFR_OUT, and then select OK. The new step is defined as XFR_OUT:1 and the transition below the step is defined as XFR_OUT:1.STATE = COMPLETE.  
-![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/recipe4.png?raw=true)  
 
-# Add a parallel step
-1. While still in the CLS_SWEETCREAM_OP:1 operation, select the TEMP_CTL:1 step.  
-2. Select Add Parallel. A new step is added in parallel to the selected step and the Select Phase dialog box opens.  
-3. Select ADD_EGG, and then select OK.   
-![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/recipe5.png?raw=true)  
-The new step is now defined as ADD_EGG:2 and the transition below the step is automatically redefined as ADD_EGG:2.STATE = COMPLETE AND TEMP_CTL:1.STATE = COMPLETE AND ADD_CREAM:1.STATE = COMPLETE to reflect the new parallel structure.  
-![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/recipe6.png?raw=true)  
+    新的步骤和转换将添加到所选转换下方，并打开“选择阶段”对话框。  
+    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/recipe3.png?raw=true)
+5. 选择 XFR_OUT，然后选择 OK。新步骤定义为 XFR_OUT:1，步骤下方的转换定义为 XFR_OUT:1.STATE = COMPLETE。
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/recipe4.png?raw=true)    
+
+# 添加并行步骤
+
+1. 选择“添加并行”。将与所选步骤并行添加一个新步骤(Add Parallel)，并打开“选择阶段”对话框。
+2. 选择 ADD_EGG，然后选择“确定”。
+![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/recipe5.png?raw=true)   
+
+    新的步骤现在定义为 `ADD_EGG:2`，并且该步骤下方的转换自动重新定义为 `ADD_EGG:2.STATE = COMPLETE AND TEMP_CTL:1.STATE = COMPLETE AND ADD_CREAM:1.STATE = COMPLETE`，以反映新的并行结构。
+    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/recipe6.png?raw=true)  
 
 # Assign step formula values
 1. While still in the CLS_SWEETCREAM_OP:1 operation, select the ADD_EGG:2 step.  
 2. Select Value Entry. The Parameter Value Entry/Report Limit Entry dialog box opens listing the parameters associated with the step. The only parameter is ADD_AMOUNT.  
 3. Type 100 in the Value box, and then select Display so the value displays on the SFC.  
-![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/recipe8.png?raw=true)  
+# 分配步骤公式值
+1. 仍在 `CLS_SWEETCREAM_OP:1` 中，选择 `ADD_EGG:2` 步骤。
+2. 在工具栏中选择 值输入(Value Entry)。打开参数对话框，列出与该步骤相关的参数。这里唯一的参数是 ADD_AMOUNT。
+3. 在 值(value) 框中键入 100，然后勾选 “显示(Display)”，这样值就会显示在 SFC 上。
+
+    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/recipe8.png?raw=true)  
 4. Select OK to return to the FactoryTalk Batch Recipe Editor window. Next, you decide to change the parameter for TEMP_CTL:1 so that the operator can enter the amount when the batch is run.  
 5. Select the TEMP_CTL:1 step, and then select Value Entry. The Parameter Value Entry/Report Limits Entry dialog box opens listing the parameters associated with the step. There are two parameters: HOLD_TIME and TEMP_SP. You want the operator to decide how long to hold the mixture.  
 6. From the Origin list for the HOLD_TIME parameter, select Operator to indicate that the operator enters the amount when the recipe is run.  
