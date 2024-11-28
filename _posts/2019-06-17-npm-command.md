@@ -17,3 +17,7 @@ tags:
         npm i -g npm-check-updates
         ncu -u
         npm install
+
+4. 提升安装速度 
+
+        npm install --prefer-offline --no-audit --progress=false
