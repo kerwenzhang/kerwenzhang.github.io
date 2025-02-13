@@ -53,3 +53,9 @@ tags:
     const expectEqual = (arg1, arg2) => import('chai').then((mod) => mod.expect(arg1).to.equal(arg2));
 
 好处是我只需要在文件开始地方声明一下，后边就可以无限用了。但需要为每一种expect都声明一下。`expect.to.be`，`expect.to.exist`
+
+
+# Reference
+
+[JS 模块进阶：ES 模块与 CommonJS 模块的互相引用](https://zhuanlan.zhihu.com/p/703097285)  
+[如何把CommonJS项目改成ESM模块系统](https://www.imooc.com/article/375493)  
