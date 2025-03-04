@@ -9,4 +9,5 @@ tags:
 ---
 
 Reference:
-[Window: showOpenFilePicker() method](https://developer.mozilla.org/en-US/docs/Web/API/Window/showOpenFilePicker)
+[Window: showOpenFilePicker() method](https://developer.mozilla.org/en-US/docs/Web/API/Window/showOpenFilePicker)  
+[The File System Access API: simplifying access to local files ](https://developer.chrome.com/docs/capabilities/web-apis/file-system-access)
