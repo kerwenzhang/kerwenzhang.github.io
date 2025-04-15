@@ -17,7 +17,37 @@ CommonJS(简称cjs)，为node.js打包javaScript的原始方法，使用require�
 + 扩展名为.cjs的文件；
 + 扩展名为.js的文件，且离自己最近的package.json文件包含一个顶级字段“type”，其值为“commonjs”；
 + <font color="red">扩展名为.js的文件，且离自己最近的package.json文件不包含一个顶级字段“type”</font>(建议明确指定 type值，而不是不定义)；
-+ 扩展名不为.mjs, .cjs, .json, .node, .js的文件，且离自己最近的package.json文件包含一个顶级字段“type”，其值为“module”，但是这些文件通过require引入。
++ 扩展名不为.mjs, .cjs, .json, .node, .js的文件，且离自己最近的package.json文件包含一个顶级字段“type”，其值为“module”，但是这些文件通过require引入。  
+
+下面的CommonJs module导出两个函数
+
+        module.exports.add = function(a, b) {
+                return a + b;
+        } 
+
+        module.exports.subtract = function(a, b) {
+                return a - b;
+        }
+
+也可以这么写
+
+        function add(a, b) {
+                return a + b;
+        }
+
+        function subtract(a, b) {
+                return a - b;
+        }
+        
+        module.exports = {add, subtract}; 
+
+使用require引入这个module
+
+        const {add, subtract} = require('./util')
+
+        console.log(add(5, 5)) // 10
+        console.log(subtract(10, 5)) // 5
+
 # ESMAScript
 ECMAScript模块(简称esm)，是ecma262标准下封装的JavaScript代码重用的官方标准格式。使用import和export语句定义模块  
 
@@ -25,6 +55,23 @@ ECMAScript模块(简称esm)，是ecma262标准下封装的JavaScript代码重用
 
 + 扩展名为 .mjs 的文件；
 + 扩展名为.js的文件，且离自己最近的package.json文件包含一个顶级字段“type”，其值为“module”；
+
+ES module导出两个函数:
+
+        export function add(a, b) {
+                return a + b;
+        }
+
+        export function subtract(a, b) {
+                return a - b;
+        }
+
+通过import导入  
+
+        import {add, subtract} from './util.mjs'
+
+        console.log(add(5, 5)) // 10
+        console.log(subtract(10, 5)) // 5
 
 # 两者不同
 -cjs只有在node.js环境使用。  
