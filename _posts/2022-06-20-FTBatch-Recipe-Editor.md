@@ -18,7 +18,7 @@ FactoryTalk Batch 配方编辑器(Batch Recipe Editor)用于创建和配置主�
 主窗体布局如下：       
 ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/recipe1.png?raw=true)
 
-![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/recipe7.png?raw=true)  
+    ![img](https://github.com/kerwenzhang/kerwenzhang.github.io/blob/master/_posts/image/Batch/recipe7.png?raw=true)  
 
     • 程序视图窗格`Procedure View pane`位于编辑器的左侧，包含当前配方组件的分层列表。 从列表中选择一个组件会在“配方构建”窗格`Recipe Construction pane`中显示相应的步骤。  
     • 配方构建窗格`Recipe Construction pane`位于编辑器的右侧，用于编辑主配方。 可以使用顺序功能图 (SFC) 或表格来编辑和查看配方结构。 
