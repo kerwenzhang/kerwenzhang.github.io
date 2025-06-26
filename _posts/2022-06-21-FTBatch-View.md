@@ -1,6 +1,6 @@
 ---                
 layout: post            
-title: "FactoryTalk Batch入门3：Batch View"                
+title: "FactoryTalk Batch入门4：Batch View"                
 date:   2022-6-21 14:30:00                 
 categories: "FTBatch"                
 catalog: true                
