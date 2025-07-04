@@ -555,13 +555,16 @@ FactoryTalk®批次物料编辑器提供界面，帮助您创建物料数据库�
 
 ### 创建单元程序  
 创建巧克力榛子配方的下一步是创建单元程序，该程序将只包含一个操作。  
-1. 从 **文件** 菜单中，选择 **新建顶级**。打开“新建”对话框。  
-2. 选择 **单元程序**，然后单击 **确定**。打开“单元需求”对话框。  
+1. 从 **文件** 菜单中，选择 **新建顶级New Top Level**。打开“新建”对话框。  
+2. 选择 **单元程序Unit Procedure**，然后单击 **确定**。打开“单元需求”对话框。  
 3. 选择 **基于类**，选择 **MBR_FREEZER_CLS**，然后单击 **确定**。新单元程序的初始步骤和最终步骤将显示在 SFC 视图中。  
 4. 选择初始步骤，然后单击 **添加步骤** 按钮。打开“操作选择”对话框。  
 5. 选择 **MCLS_CHOCOLATE_HAZELNUT_OP**，然后单击 **确定**。  
+   ![material9](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material9.png)  
 6. 从 **配方** 菜单中，选择 **配方参数/报表**。打开“程序属性”对话框。按图中所示输入配方公式参数。
+   ![material10](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material10.png)  
 7. 选择 **MCLS_CHOCOLATE_HAZELNUT_OP**，单击 **公式值** 按钮，然后按图中所示输入公式值。  
+   ![material11](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material11.png)
 8. 从 **配方** 菜单中，选择 **标题数据**，然后输入以下内容：  
    - 程序标识符：MCLS_CHOCOLATE_HAZELNUT_UP  
    - 作者：您的姓名  
@@ -571,6 +574,7 @@ FactoryTalk®批次物料编辑器提供界面，帮助您创建物料数据库�
    - 度量单位：KG  
    - 估计持续时间：55  
    - 程序描述：巧克力榛子高级冰淇淋  
+   ![material12](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material12.png)
 9. 单击 **确定**，然后单击 **继续**。如果系统提示，请根据需要输入审核注释，然后单击 **确定**。  
 10. 保存单元程序。如果系统提示，请根据需要输入审核注释，然后单击 **确定**。  
 
@@ -578,12 +582,13 @@ FactoryTalk®批次物料编辑器提供界面，帮助您创建物料数据库�
 为了支持 NORTH_PARLOR 工艺单元内两个单元的灵活性，您需要启用动态单元分配，这将提供更多绑定选项。  
 1. 从 **视图** 菜单中，选择 **选项**。打开“选项”对话框。  
 2. 如有必要，启用 **支持动态单元分配**，然后单击 **应用**。  
+   ![material13](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material13.png)
 3. 保存单元程序。如果系统提示，请根据需要输入审核注释，然后单击 **确定**。 
 
-### 创建程序  
+### 创建程序procedure  
 构建配方的最后一步是创建程序。由于已启用动态单元分配，因此必须先定义设备需求和绑定方法，然后才能构建配方程序。  
 1. 选择 **文件 > 新建顶级**。打开“新建”对话框。  
-2. 选择 **程序**，然后单击 **确定**。打开“程序 - 单元需求”对话框。  
+2. 选择 **程序procedure**，然后单击 **确定**。打开“程序 - 单元需求”对话框。  
 3. 单击 **添加单元需求** 按钮。打开“添加单元需求”对话框。  
 4. 在 **名称** 框中，输入 **FREEZER**。  
    单元需求名称是一个标签，作用类似于 FactoryTalk Batch 服务器的查找表。当配方添加到批次列表且 FactoryTalk Batch 服务器遇到单元需求名称时，服务器会查找映射到该单元需求名称的所有单元类或实例。  
