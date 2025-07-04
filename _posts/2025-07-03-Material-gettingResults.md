@@ -467,7 +467,7 @@ FactoryTalk®批次物料编辑器提供界面，帮助您创建物料数据库�
 3. 选择“优先级”选项卡，显示添加到区域模型的容器。  
 4. 在NUT_BIN3的“优先级”框中输入 **10**。  
 5. 在NUT_BIN4的“优先级”框中输入 **20**。  
-![material1](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/batch/material1.png)
+![material1](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material1.png)
 6. 单击 **确定**。  
 
 
@@ -489,9 +489,9 @@ FactoryTalk®批次物料编辑器提供界面，帮助您创建物料数据库�
 1. 选择 **开始 > Rockwell Software > 配方编辑器**。如果打开“需要验证的配方”对话框，请单击 **取消**。  
 2. **重要提示**：执行此过程需要管理员权限。  
    选择 **文件 > 新建顶级New Top Level**。打开“新建”对话框。 
-   ![material2](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/batch/material2.png) 
+   ![material2](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material2.png) 
 3. 选择 **操作Operation**，然后单击 **确定**。打开“单元需求”对话框。
-   ![material3](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/batch/material3.png)  
+   ![material3](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material3.png)  
    您希望该配方在工艺单元中的两个单元上运行。  
 4. 选择 **基于类Class-Based**，选择 **MBR_FREEZER_CLS**，然后单击 **确定**。新操作的初始步骤和最终步骤将显示在顺序功能图 (SFC) 视图中。  
 5. 选择初始步骤，然后单击 **添加步骤** 按钮，选择 **MBR_ADD**，然后单击 **确定**。  
@@ -501,7 +501,7 @@ FactoryTalk®批次物料编辑器提供界面，帮助您创建物料数据库�
 9. 选择最后一个转换，单击 **添加步骤** 按钮，选择 **MBR_ADD**，然后单击 **确定**。  
 10. 单击 **添加并行** 按钮，选择 **RECIRC**，然后单击 **确定**。  
 11. 选择最后一个转换，单击 **添加步骤** 按钮，选择 **MBR_DUMP**，然后单击 **确定**。 
-   ![material4](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/batch/material4.png)   
+   ![material4](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material4.png)   
 12. 选择 **配方Recipe > 标题数据Header Data**，然后输入以下内容：  
    - 程序标识符：MCLS_CHOCOLATE_HAZELNUT_OP  
    - 作者：您的姓名  
@@ -511,7 +511,7 @@ FactoryTalk®批次物料编辑器提供界面，帮助您创建物料数据库�
    - 度量单位：KG  
    - 估计持续时间：55  
    - 程序描述：巧克力榛子高级冰淇淋  
-   ![material5](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/batch/material5.png)   
+   ![material5](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material5.png)   
 13. 单击 **确定**，然后单击 **继续**。如果系统提示，请根据需要输入审核注释，然后单击 **确定**。  
 
 ### 创建配方公式参数  
@@ -523,7 +523,7 @@ FactoryTalk®批次物料编辑器提供界面，帮助您创建物料数据库�
 5. 在 **枚举/工程单位** 框中，输入 **KG**。  
 6. 选择 **可缩放**。  
 7. 单击 **新建** 按钮，然后添加 **HAZELNUT_AMT**，其值与上述相同。 
-   ![material6](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/batch/material6.png)   
+   ![material6](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material6.png)   
 8. 单击 **确定**。  
 
 ### 分配公式值  
@@ -532,7 +532,7 @@ FactoryTalk®批次物料编辑器提供界面，帮助您创建物料数据库�
 2. 对于 **数量**，从 **来源** 列表中选择 **延迟**，然后从 **值** 列表中选择 **COCOA_AMT**。  
 3. 对于 **物料**，从 **值** 列表中选择 **COCOA**，并启用 **显示**。  
    容器绑定设置为默认的 **自动**。您已在设备编辑器中将进料类型设置为“添加”。  
-   ![material7](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/batch/material7.png) 
+   ![material7](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material7.png) 
 4. 单击 **确定**。SFC 将更新以显示 MBR_ADD:1 的“COCOA 物料”。  
 5. 按照下表为其余步骤输入公式参数。其他所有条目使用默认值。 
 
@@ -549,7 +549,7 @@ FactoryTalk®批次物料编辑器提供界面，帮助您创建物料数据库�
 |            | MATERIAL   | 值     | IC_CHOCOLATE_HAZELNUT | 否   |
 
 6. 从 **视图** 菜单中，选择 **表格**。完成的操作应与此类似。
-   ![material8](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/batch/material8.png)  
+   ![material8](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material8.png)  
 7. 从 **视图** 菜单中，选择 **SFC**。  
 8. 保存操作。  
 
