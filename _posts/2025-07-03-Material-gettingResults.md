@@ -467,7 +467,7 @@ FactoryTalk®批次物料编辑器提供界面，帮助您创建物料数据库�
 3. 选择“优先级”选项卡，显示添加到区域模型的容器。  
 4. 在NUT_BIN3的“优先级”框中输入 **10**。  
 5. 在NUT_BIN4的“优先级”框中输入 **20**。  
-![material1](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/material1.png)
+![material1](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/batch/material1.png)
 6. 单击 **确定**。  
 
 
