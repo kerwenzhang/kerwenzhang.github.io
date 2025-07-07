@@ -639,8 +639,7 @@ FactoryTalk®批次物料编辑器提供界面，帮助您创建物料数据库�
 24. 选择最后一个转换，单击 **添加步骤** 按钮，然后添加 **MCLS_CHOCOLATE_HAZELNUT_UP**，并将 **FREEZER** 作为设备需求。  
        ![material24](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material24.png) 
     您的配方应与下图类似。 
-
-           ![material25](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material25.png)  
+   ![material25](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material25.png)  
 25. 选择 **MCLS_SWEETCREAM_UP:1**，单击 **公式值** 按钮，按图中所示添加公式值，然后单击 **确定**。  
            ![material26](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material26.png)
 26. 选择 **MCLS_CHOCOLATE_HAZELNUT_UP:1**，单击 **公式值** 按钮，然后按图中所示添加公式值。  
@@ -671,12 +670,44 @@ FactoryTalk®批次物料编辑器提供界面，帮助您创建物料数据库�
 2. 验证完成后，单击 **接受**，然后单击 **关闭**。如果系统提示，请根据需要输入审核注释，然后单击 **确定**。  
 3. 退出 FactoryTalk Batch 配方编辑器。  
 
-### 总结  
-在本章中，您：  
-- 创建了基于物料的操作  
-- 创建了配方公式参数  
-- 分配了公式值  
-- 创建了单元程序  
-- 链接了阶段组  
 
-本章简要概述了配方编辑器与物料管理器配合使用时的功能。（有关创建基于物料的配方、单元绑定和链接阶段组的更多信息，请参阅《FactoryTalk Batch 配方编辑器用户指南》。）
+# 基于物料的配方运行  
+
+运行基于物料的控制配方可在绑定过程中提供更高的灵活性，并支持库存追踪功能。FactoryTalk Batch 服务器与 FactoryTalk Batch 物料服务器协同工作，从物料数据库中提取必要信息，以便 FactoryTalk Batch 或操作员能够选择合适的容器为配方供应物料。  
+
+在本章中，您将使用 FactoryTalk Batch 阶段模拟器运行基于物料的配方。阶段模拟器会提供 ACTUAL_AMOUNT（实际数量）和 FEED_COMPLETE（进料完成）参数，使批次能够运行。这些数据通常由过程连接设备 (PCD) 中的阶段逻辑提供。  
+
+
+### 以模拟模式运行  
+以模拟模式运行配方是测试配方的有效方式。在本节中，您将使用 ice_cream2.cfg 文件的 .sim 文件，该文件已配置为运行巧克力榛子配方。  
+1. 选择 **开始 > Rockwell Software > Simulator**。  
+2. **重要：** 执行此过程需要管理员权限。  
+   选择 **文件 > 打开**，打开“打开模拟器配置文件”对话框。  
+3. 在“查找范围”列表中，打开路径 **c:\Program Files\RockwellSoftware\ Batch\SampleDemo2\ Recipes** 文件夹。选择 ice_cream2.sim 文件，然后点击 **打开**。  
+4. 最小化阶段模拟器窗口。  
+
+
+### 运行基于物料的配方  
+1. 打开浏览器，访问Batch View https://localhost:3443。  
+2. 在Batches页面，点击 **添加** 按钮，选择 **MCLS_CHOCOLATE_HAZELNUT**，然后点击 **确定**。此时将打开“批次创建”对话框。  
+   批次创建对话框中会显示延迟的配方参数及其默认设置。如果需要调整配方，可修改这些值。  
+   在“单元绑定”区域中，会显示您定义的两个别名。您可以选择要绑定到配方的单元。由于所有容器中都有足够的物料，因此会向您展示两个单元。  
+3. 在“单元绑定”区域中，选择 **NP_MIXER1** 和 **NP_FREEZER1**（如果尚未选中）。  
+4. 在“批次 ID”框中输入 **BATCH101**，然后点击 **创建** 按钮。  
+   ![material31](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material31.png)
+5. 选择该批次，点击 **启动** 按钮，然后点击 **是** 开始运行批次。  
+6. 点击 **SFC 过程** 按钮。
+8. 让批次运行至完成。  
+
+
+### 检查库存水平  
+批次完成后，FactoryTalk Batch 服务器会将消耗或分配的库存发送至物料服务器，随后物料服务器会将其添加到物料数据库中。您可以在物料编辑器中查看库存水平。如果物料服务器故障，导致您必须在无服务器的情况下运行基于物料的配方，则必须手动更新物料数据库中的库存。  
+
+在本练习中，您将查看批次运行期间消耗的库存，然后在物料编辑器中验证该消耗情况。  
+1. 批次完成后，点击 **诊断**页面 - **日志** 选项卡
+2. 选择 **BATCH101**。  
+3. 在“列 1”框中选择 **描述**，在“筛选器 1”框中输入 **物料添加Material Addition**, 可以看到最后一个阶段**NP_ADDNUT_F1**, 选择的容器Container是**NUT_BIN3**.
+4. 启动物料编辑器，展开“物料”文件夹，双击 **榛子**，然后选择 **库存** 选项卡。物料编辑器会显示从 NUT_BIN3 中消耗了 250 KG。  
+
+若要手动更新库存水平，请选择批次，然后点击 **编辑分配** 按钮，打开“查看批次分配”对话框。在“数量”框中更改库存水平，然后点击 **确定**。  
+
