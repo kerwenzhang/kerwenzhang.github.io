@@ -588,18 +588,23 @@ FactoryTalk®批次物料编辑器提供界面，帮助您创建物料数据库�
 ### 创建程序procedure  
 构建配方的最后一步是创建程序。由于已启用动态单元分配，因此必须先定义设备需求和绑定方法，然后才能构建配方程序。  
 1. 选择 **文件 > 新建顶级**。打开“新建”对话框。  
-2. 选择 **程序procedure**，然后单击 **确定**。打开“程序 - 单元需求”对话框。  
+   ![material14](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material14.png)
+2. 选择 **程序procedure**，然后单击 **确定**。打开“程序 - 单元需求”对话框。
+      ![material15](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material15.png)
 3. 单击 **添加单元需求** 按钮。打开“添加单元需求”对话框。  
 4. 在 **名称** 框中，输入 **FREEZER**。  
    单元需求名称是一个标签，作用类似于 FactoryTalk Batch 服务器的查找表。当配方添加到批次列表且 FactoryTalk Batch 服务器遇到单元需求名称时，服务器会查找映射到该单元需求名称的所有单元类或实例。  
    North_Parlor 有两个可用于生产巧克力榛子冰淇淋的单元。在区域模型中，有两个基于 MBR_MIXER_CLS 单元类的单元实例（NP_MIXER_1 和 NP_MIXER_2）和两个基于 MBR_FREEZER_CLS 单元类的单元实例（NP_FREEZER_1 和 NP_FREEZER2）。您希望操作员在创建批次时选择使用哪个混合器和冷冻机。为此，需要创建一个配置为 MBR_MIXER_CLS 单元类的单元需求名称（MIXER）和一个配置为 MBR_FREEZER_CLS 单元类的单元需求名称（FREEZER）。您还需要选择批次创建绑定方法。  
 5. 如果未启用“基于类”部分，请选择 **基于类** 选项。  
 6. 从“基于类”区域的 **单元类** 列表中选择 **MBR_FREEZER_CLS**，然后单击 **确定**。  
+      ![material16](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material16.png)
 7. 从“程序 - 单元需求”对话框中选择 **Alias_MIXER_CLS**，然后单击 **编辑单元需求** 按钮。  
 8. 在 **名称** 框中，输入 **MIXER**。  
 9. 从“基于类”列表中选择 **MBR_MIXER_CLS**。  
 10. 在 **可用下游单元** 框中，选择 **FREEZER**，然后单击向右箭头按钮。  
+      ![material17](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material17.png)
 11. 单击 **确定**。  
+      ![material18](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material18.png)
     当配方添加到批次列表时，FactoryTalk Batch 服务器会遇到 MIXER 单元需求名称（指定配方所需的设备），查找具有 MIXER 单元需求名称的单元类的所有单元实例，然后提示操作员选择 NP_MIXER_1 或 NP_MIXER_2。FREEZER 单元需求名称的处理过程相同。  
 12. 单击 **关闭**。  
 13. 从 **配方** 菜单中，选择 **标题数据**，然后输入以下内容：  
@@ -613,23 +618,34 @@ FactoryTalk®批次物料编辑器提供界面，帮助您创建物料数据库�
     - 度量单位：KG  
     - 估计持续时间：55  
     - 程序描述：Chocolate Hazelnut Premium - 基于类/基于物料  
-14. 启用 **已发布至生产**，以便在 FactoryTalk Batch 视图中将批次添加到批次列表时显示此配方。  
+
+14. 启用 **已发布至生产**，以便在 FactoryTalk Batch 视图中将批次添加到批次列表时显示此配方。
+   ![material19](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material19.png)  
 15. 单击 **确定**。  
 16. 按图中所示输入配方公式参数。  
     这些默认值会在创建批次时提供给操作员。由于公式值是延迟的，操作员可以更改默认值。  
+       ![material20](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material20.png) 
 17. 选择初始步骤，然后单击 **添加步骤** 按钮。打开“单元程序选择”对话框。  
 18. 从 **单元需求名称** 列表中，选择 **MIXER**。  
 19. 从 **配方名称** 列表中，选择 **MCLS_SWEETCREAM_UP**，然后单击 **确定**。  
+       ![material21](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material21.png) 
 20. 以相同方式添加 **MCLS_TRANSFER_OUT_UP**。  
+       ![material22](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material22.png) 
     到目前为止，您已将原料放入混合器中以生产冰淇淋的甜奶油基料，并添加了将混合物从混合器中转移出来的步骤。接下来，添加将甜奶油基料转移到冷冻机中的步骤。  
 21. 单击 **添加并行** 按钮。打开“单元程序选择”对话框。  
 22. 从 **单元需求名称** 列表中，选择 **FREEZER**。 
 23. 从 **配方名称** 列表中，选择 **MCLS_TRANSFER_IN_UP**，然后单击 **确定**。  
+       ![material23](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material23.png) 
 24. 选择最后一个转换，单击 **添加步骤** 按钮，然后添加 **MCLS_CHOCOLATE_HAZELNUT_UP**，并将 **FREEZER** 作为设备需求。  
-    您的配方应与下图类似。  
+       ![material24](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material24.png) 
+    您的配方应与下图类似。 
+
+           ![material25](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material25.png)  
 25. 选择 **MCLS_SWEETCREAM_UP:1**，单击 **公式值** 按钮，按图中所示添加公式值，然后单击 **确定**。  
+           ![material26](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material26.png)
 26. 选择 **MCLS_CHOCOLATE_HAZELNUT_UP:1**，单击 **公式值** 按钮，然后按图中所示添加公式值。  
     公式值的来源是延迟的，因此当批次添加到批次列表时，参数会显示出来，以便操作员有机会输入值。  
+               ![material27](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material27.png)
 27. 保存程序。如果系统提示，请根据需要输入审核注释，然后单击 **确定**。  
 
 ### 链接阶段组  
@@ -638,12 +654,15 @@ FactoryTalk®批次物料编辑器提供界面，帮助您创建物料数据库�
 #### 设备编辑器：阶段消息伙伴  
 在配方编辑器中，必须在程序层级创建阶段链接组以完成关联。  
 1. 在程序层次结构或 SFC 视图中选择 **XFR_IN:1**。  
+               ![material28](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material28.png)
 2. 从 **链接** 菜单中，选择 **链接组**。打开“阶段链接组”对话框。  
 3. 单击 **组1** 列标题以选择“组1”列，然后单击 **添加** 按钮。  
+               ![material29](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material29.png)
 4. 单击 **确定**。  
 5. 单击 **XFR_OUT:1**。  
 6. 从 **链接** 菜单中，选择 **链接组**。打开“阶段链接组”对话框。  
 7. 选择 **组1** 列，单击 **添加** 按钮，然后单击 **确定**。  
+               ![material30](https://raw.githubusercontent.com/kerwenzhang/kerwenzhang.github.io/master/_posts/image/Batch/material30.png)
 
 ### 验证配方  
 将所有支持物料的阶段添加到配方后，在配方准备运行之前验证配方。  
