@@ -76,4 +76,4 @@ tags:
 
 
 # Reference
-使用Webpack和Babel将ES Modules代码转换为CommonJS代码的配置）](https://juejin.cn/post/7280436213886779433)
+[使用Webpack和Babel将ES Modules代码转换为CommonJS代码的配置](https://juejin.cn/post/7280436213886779433)

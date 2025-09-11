@@ -88,3 +88,5 @@ ES module导出两个函数:
 # Reference
 [CommonJS模块和ECMAScript模块](https://www.cnblogs.com/withheart/p/17861005.html)  
 [CommonJS 与 Node.js 中的 ES 模块](https://blog.logrocket.com/commonjs-vs-es-modules-node-js/)  
+[Nodejs official CommonJs](https://nodejs.org/api/modules.html)  
+[Nodejs official ECMAScript Modules](https://nodejs.org/api/esm.html)  
