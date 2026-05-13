@@ -10,9 +10,12 @@ tags:
 
 # FTBatch：怎么理解几种 Data Server
 
-FTBatch支持的Data Server有 `Live Data`、`Logix5000 CIP`、`PC Phase OPC`、`Simulator OPC`、`InstructionBasedServer`。
+FTBatch 里常见的 Data Server 有 `Live Data`、`Logix5000 CIP`、`PC Phase OPC`、`Simulator OPC`、`InstructionBasedServer`。
 
-这篇就把我目前对这几种 Data Server 的理解整理一下，重点还是放在“它们在系统里分别扮演什么角色”上。
+一开始看这些名字，其实很容易混：有的像在说通信协议，有的像在说平台能力，有的又像在说底层实现方式。
+
+所以这篇不打算从手册定义出发，而是想用更好理解的方式，把这几种 Data Server 在系统里分别扮演什么角色串起来。
+
 
 ---
 
@@ -20,9 +23,17 @@ FTBatch支持的Data Server有 `Live Data`、`Logix5000 CIP`、`PC Phase OPC`、
 
 在 FTBatch 里，**Data Server** 可以先理解成 Batch Server 和底层控制系统之间的通信桥梁。
 
+不过如果结合 Equipment Editor 来看，它又不只是一个抽象概念，而是一个真正会被配置、被引用的对象：
+
+- 在 `Edit > Data Server...` 里集中管理
+- Phase / Operation Sequence 创建时会依赖它
+- Phase Tag、Unit Tag 也可能直接引用它
+- 删除 Data Server 时，相关对象可能会一起被删除
+
 它主要负责几件事：
 
 - 读 Phase 状态
+
 - 写 Phase 命令
 - 传递参数
 - 读取完成或故障信息
@@ -35,17 +46,21 @@ FTBatch支持的Data Server有 `Live Data`、`Logix5000 CIP`、`PC Phase OPC`、
 
 也就是说，Batch 并不是直接去控制现场设备，而是通过不同类型的 Data Server 和底层实现打交道。
 
+如果再说得更贴近一点：**Data Server 决定的，其实就是 FTBatch 到底通过哪条路去找到它要控制的那个 Phase。**
+
+
 ---
 
 ## 2. 先有个整体印象：FTBatch 里常见的 Data Server
 
 | Data Server | 主要连接对象 | 通信方式 | 典型用途 |
 |---|---|---|---|
-| Live Data | FactoryTalk 数据层 | FactoryTalk Live Data | 接入 FT 平台实时数据 |
-| Logix5000 CIP | Logix PLC | CIP | 直接连接 Logix 控制器 |
-| PC Phase OPC | PC 上的 phase 逻辑 | OPC | 连接 PC 侧实现的 Phase |
+| Live Data | FactoryTalk Linx / FT 数据层 | FTD | 接入 FT 平台实时数据 |
+| Logix5000 CIP | Logix PLC / Logix Designer | CIP | 直接连接 Logix 控制器，并支持同步 |
+| PC Phase OPC | OPC 型 PC Phase 实现 | OPC | 连接 PC 侧实现的 Phase |
 | Simulator OPC | 仿真系统 | OPC | 开发、测试、培训、演示 |
-| InstructionBasedServer | 指令式 phase 实现 | 专用接口 | 特定批处理架构 |
+| InstructionBasedServer | eProcedure / instruction-based 场景 | 专用接口 | 特定批处理架构 |
+
 
 如果先不抠细节，可以先这样记：
 
@@ -59,11 +74,15 @@ FTBatch支持的Data Server有 `Live Data`、`Logix5000 CIP`、`PC Phase OPC`、
 
 ## 3. 逐个来看这几种 Data Server
 
-## 3.1 Live Data
+### 3.1 Live Data
+
 
 `Live Data` 是通过 **FactoryTalk Live Data** 机制访问实时数据的一种方式，更偏向 Rockwell FactoryTalk 平台内部的数据层。
 
+如果从 Equipment Editor 的配置动作去看，它通常不是直接让你去绑一个 PLC 工程文件，而是通过 **FactoryTalk Linx Server Path** 这类路径来定位数据源。换句话说，它更像是“先进入 FT 平台的数据路径，再去访问运行时数据”。
+
 它通常连的不是抽象的 Phase 本体，而是：
+
 
 - PLC 标签
 - HMI 标签
@@ -72,7 +91,8 @@ FTBatch支持的Data Server有 `Live Data`、`Logix5000 CIP`、`PC Phase OPC`、
 
 也就是说，FTBatch 真正读写的，还是那些承载了 Phase 状态、命令和参数的数据点。
 
-我现在对它的理解更接近于：**先走 FactoryTalk 的数据层，再去拿底层数据**。
+所以我现在对它的理解更接近于：**先走 FactoryTalk 的数据层，再去拿底层数据**。
+
 
 所以它比较适合这些场景：
 
@@ -83,17 +103,26 @@ FTBatch支持的Data Server有 `Live Data`、`Logix5000 CIP`、`PC Phase OPC`、
 
 它的好处是和 FactoryTalk 平台集成得比较深，已有的数据架构也容易复用；但代价是比起直连 PLC，会多一层抽象，排障时往往也要多看几层。
 
+所以如果一个项目本来就深度依赖 FT Directory、shortcut 和平台内数据路径，那 `Live Data` 往往会显得很顺手。
+
+
 如果只用一句话记它，可以理解成：
 
-**Live Data = 通过 FactoryTalk 数据层访问 Batch 所需实时点位。**
+**Live Data = 通过 FactoryTalk 数据层和 FT Linx 路径访问 Batch 所需实时点位。**
 
 ---
 
-## 3.2 Logix5000 CIP
+### 3.2 Logix5000 CIP
+
 
 `Logix5000 CIP` 是 FTBatch 直接通过 **CIP（Common Industrial Protocol）** 跟 Logix 控制器通信的方式。
 
+如果只从概念上理解，它很好记：**就是 FTBatch 直接跟 Logix PLC 说话。**
+
+但从 Equipment Editor 的实际行为来看，`Logix5000 CIP` 还有一个特别关键的角色：它不仅是通信方式，也是 Equipment Editor 和 **Logix Designer** 之间做 phase 同步的桥梁。它通常会配置 FactoryTalk Linx Controller Shortcut，必要时还会关联 Logix Designer Project File。
+
 它主要连的是：
+
 
 - ControlLogix / CompactLogix
 - PLC 里的 tag
@@ -111,19 +140,26 @@ FTBatch支持的Data Server有 `Live Data`、`Logix5000 CIP`、`PC Phase OPC`、
 
 它的限制也很明显：主要就是面向 Logix 控制器，跨平台通用性不如 OPC。
 
+但如果你的底层本来就是 Logix + PhaseManager，那这个“限制”很多时候反而不是问题，因为项目本身就没打算走跨平台路线。
+
+
 一句话概括就是：
 
-**Logix5000 CIP = FTBatch 直接跟 Logix PLC 通信。**
+**Logix5000 CIP = FTBatch 直接跟 Logix PLC 通信，并承担与 Logix Designer 同步的桥梁角色。**
 
 ---
 
-## 3.3 PC Phase OPC
+### 3.3 PC Phase OPC
+
 
 `PC Phase OPC` 是这几个名字里最容易让人误会的一个。
 
-它指的是：**FTBatch 通过 OPC 去连接运行在 PC 上的 Phase 执行逻辑**。关键点不是“OPC 连 PLC”，而是：**OPC 连的是 PC 上的 phase 程序。**
+我目前更倾向于把它理解成：**FTBatch 通过 OPC 去连接 PC 侧实现的 Phase 执行逻辑**。关键点不是“OPC 连 PLC”，而是：**OPC 更可能连的是 PC 上的 phase 程序。**
+
+这里我刻意把语气放保守一点，因为从 test case 本身能确认的是“它属于 OPC 类 Data Server”，至于具体项目里 PC 侧 phase logic 怎么实现，还是得看现场架构。
 
 这里面有两个容易混的概念。
+
 
 第一个是 **OPC Server**。可以先把它理解成一个标准化的数据接口服务，它把设备或程序里的数据点暴露出来，供其他软件读写。比如它可以提供：
 
@@ -143,7 +179,8 @@ FTBatch支持的Data Server有 `Live Data`、`Logix5000 CIP`、`PC Phase OPC`、
 - PC 程序监控 PLC 执行结果，再把 `Running / Complete / Aborted` 等状态写回 OPC
 - FTBatch 读取这些状态并继续配方
 
-所以它比较适合这些情况：
+这样一来，它比较适合这些情况：
+
 
 - 历史系统本来就是 PC-based phase 架构
 - 某些 Phase 需要大量上层业务逻辑
@@ -151,13 +188,17 @@ FTBatch支持的Data Server有 `Live Data`、`Logix5000 CIP`、`PC Phase OPC`、
 
 它的优点是更方便处理 IT/业务系统集成；缺点是实时性和稳定性通常不如 PLC，而且整体架构会更复杂。
 
+所以我会把它看成一种“把 phase 逻辑上提到 PC 层”的做法：灵活，但也更考验系统设计。
+
+
 一句话理解就是：
 
 **PC Phase OPC = FTBatch 通过 OPC 连接一个运行在 PC 上的 Phase 程序。**
 
 ---
 
-## 3.4 Simulator OPC
+### 3.4 Simulator OPC
+
 
 `Simulator OPC` 比较好理解，它本质上就是用于仿真环境的 OPC Data Server。
 
@@ -183,11 +224,21 @@ FTBatch支持的Data Server有 `Live Data`、`Logix5000 CIP`、`PC Phase OPC`、
 
 ---
 
-## 3.5 InstructionBasedServer
+### 3.5 InstructionBasedServer
+
 
 `InstructionBasedServer` 也是一个比较偏专用的 Data Server。它主要用于支持 **instruction-based** 的 phase / equipment 实现方式。
 
-这个名字不太直观，但可以先简单理解成：
+从 test case 看，它还有两个很值得记住的特征：
+
+- 它和 **eProcedure** 开关有关
+- 它不是普通意义上可以随意编辑的 Data Server
+
+也就是说，`InstructionBasedServer` 更像是启用 eProcedure 后系统提供的一个特殊 Data Server，而不是像普通 OPC / CIP 那样完全自由配置。
+
+
+这个名字本身不算直观，但可以先简单理解成：
+
 
 - Batch 发出标准化指令
 - 底层按约定去解释和执行这些指令
@@ -203,19 +254,50 @@ FTBatch支持的Data Server有 `Live Data`、`Logix5000 CIP`、`PC Phase OPC`、
 
 它的好处是接口规范化程度更高，但问题也在于使用场景相对专门，前提是你得先清楚底层实现模型到底是什么。
 
+所以和前面几类比起来，它更像“某种特定架构下的专用选项”，而不是默认就会碰到的通用型 Data Server。
+
+
 一句话理解就是：
 
-**InstructionBasedServer = 为指令式 phase 架构准备的专用数据服务器。**
+**InstructionBasedServer = 为 eProcedure / 指令式 phase 架构准备的专用数据服务器。**
+
 
 ---
 
-## 4. 顺便补一下：PLC Phase 和 PC Phase 到底差在哪？
+## 4. 再补一层：Data Server 不只影响通信，还影响 Phase / Tag 行为
+
+这一点在 Equipment Editor 里其实很明显。
+
+同一个 Phase 虽然会有一个默认的 assigned data server，但具体 tag 也可以单独重新分配到别的 server。也就是说：
+
+- Phase 有自己的 Data Server
+- Tag 通常继承 Phase 的 Data Server
+- 但某些 Tag 可以单独 override 到另一个 Data Server
+
+另外，Data Server 还会直接影响这些行为：
+
+- 创建 Phase Instance 时默认选哪个 server
+- 创建 Operation Sequence 时可选哪些 server
+- 默认 `Access Path` / `Item Name` 怎么生成
+- 切换 server 时，是否应用到所有 phase tags，还是只应用到 control/request tags
+- 从 OPC / CIP / Live Data 之间切换时，Limit Tags 怎么保留、清除或重建
+
+其中有一个很有代表性的限制：**Operation Sequence 基本上只能使用 CIP Data Server**。这也说明不同 Data Server 在 FTBatch 里并不只是“名字不同”，而是能力边界也不同。
+
+所以如果只把 Data Server 理解成“通信协议”，其实还是会少看一层。它在 FTBatch 里同时也是一个会影响建模结果的配置对象。
+
+
+---
+
+## 5. 顺便补一下：PLC Phase 和 PC Phase 到底差在哪？
 
 理解 `PC Phase OPC` 时，顺手把 **PLC Phase** 和 **PC Phase** 的区别一起看掉，会更容易不混。
 
+
 同样一个 Phase，比如 `TRANSFER`，底层其实可以有两种典型实现方式。
 
-### 4.1 纯 PLC Phase
+### 5.1 纯 PLC Phase
+
 
 ```text
 FTBatch
@@ -237,7 +319,8 @@ PLC 中的 Phase
 
 它更适合设备控制型 Phase，以及那些强调实时联锁和稳定执行的场景。
 
-### 4.2 PC Phase
+### 5.2 PC Phase
+
 
 ```text
 FTBatch
@@ -270,9 +353,10 @@ PLC（设备执行）
 
 ---
 
-## 5. 为什么很多新项目更偏向 Logix5000 CIP / PLC Phase
+## 6. 为什么很多新项目更偏向 Logix5000 CIP / PLC Phase
 
 当底层是 Logix PLC，且 Phase 在 PLC / PhaseManager 中实现时，很多项目会优先选 **Logix5000 CIP**。
+
 
 原因其实很朴素：
 
@@ -289,18 +373,23 @@ PLC（设备执行）
 
 所以这也不是谁绝对更高级，而是谁更适合当前系统架构。
 
+换句话说，很多时候不是先问“哪种 Data Server 最强”，而是先问“我的 Phase 到底实现在哪里，我希望 Batch 通过哪条路径去碰它”。
+
+
 ---
 
-## 6. 最后收一下
+## 7. 最后收一下
 
 如果只想先记住最核心的几点，我觉得下面这几句就够了：
 
-- **Live Data**：走 FactoryTalk 数据层
-- **Logix5000 CIP**：直接连 Logix PLC
-- **PC Phase OPC**：连运行在 PC 上的 Phase 程序
+
+- **Live Data**：走 FactoryTalk 数据层和 FT Linx 路径
+- **Logix5000 CIP**：直接连 Logix PLC，并可与 Logix Designer 同步
+- **PC Phase OPC**：通常可理解为连运行在 PC 上的 Phase 程序
 - **Simulator OPC**：连仿真环境
-- **InstructionBasedServer**：连指令式 Phase 架构
+- **InstructionBasedServer**：连 eProcedure / 指令式 Phase 架构
+
 
 如果再进一步压缩成一句话，那就是：
 
-**Data Server 的区别，本质上就是 FTBatch 到底通过哪种路径，去和底层的 Phase 实现打交道。**
+**Data Server 的区别，本质上就是 FTBatch 到底通过哪种路径，去和底层的 Phase 实现打交道；而在 Equipment Editor 里，它还进一步决定了 Phase、Tag、Operation Sequence 和同步行为怎么落地。**
