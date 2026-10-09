@@ -1,6 +1,6 @@
 ---                
 layout: post                
-title: ""                
+title: "十分钟冥想"                
 date:   2026-10-09 18:30:00                 
 categories: "Book"                
 catalog: true                
